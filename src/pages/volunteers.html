@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Signup - ProtestAid Kenya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../assets/js/volunteers.js" defer></script>
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-4xl mx-auto py-12 px-4">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl font-bold text-blue-800">Volunteer Signup</h1>
+            <p class="mt-4 text-gray-600">Join our network of medics, legal experts, and support volunteers</p>
+        </div>
+
+        <form id="volunteerForm" class="bg-white shadow-md rounded-lg p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Personal Information -->
+                <div class="col-span-2">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Personal Information</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" required 
+                                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" id="email" name="email" required 
+                                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required 
+                                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="location" class="block text-sm font-medium text-gray-700">Primary Location (County)</label>
+                            <select id="location" name="location" required 
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">Select your county</option>
+                                <option value="Nairobi">Nairobi</option>
+                                <option value="Mombasa">Mombasa</option>
+                                <option value="Kisumu">Kisumu</option>
+                                <!-- Add all Kenyan counties -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Volunteer Role -->
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Volunteer Role</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Service Type</label>
+                            <div class="mt-2 space-y-2">
+                                <div class="flex items-center">
+                                    <input id="medic" name="serviceType" type="radio" value="medic" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
+                                    <label for="medic" class="ml-3 block text-sm font-medium text-gray-700">Medical Professional</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="legal" name="serviceType" type="radio" value="legal" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
+                                    <label for="legal" class="ml-3 block text-sm font-medium text-gray-700">Legal Expert</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="logistics" name="serviceType" type="radio" value="logistics" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
+                                    <label for="logistics" class="ml-3 block text-sm font-medium text-gray-700">Logistics/Driver</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="other" name="serviceType" type="radio" value="other" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
+                                    <label for="other" class="ml-3 block text-sm font-medium text-gray-700">Other Support</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="specializationField" class="hidden">
+                            <label for="specialization" class="block text-sm font-medium text-gray-700">Specialization</label>
+                            <input type="text" id="specialization" name="specialization" 
+                                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Contacts -->
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Emergency Contacts</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="emergencyContact1" class="block text-sm font-medium text-gray-700">Primary Emergency Contact</label>
+                            <input type="text" id="emergencyContact1" name="emergencyContact1" required 
+                                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="emergencyContact2" class="block text-sm font-medium text-gray-700">Secondary Emergency Contact</label>
+                            <input type="text" id="emergencyContact2" name="emergencyContact2" 
+                                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="availability" class="block text-sm font-medium text-gray-700">Availability</label>
+                            <select id="availability" name="availability" required 
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">Select availability</option>
+                                <option value="full-time">Full-time during protests</option>
+                                <option value="part-time">Part-time (specific hours)</option>
+                                <option value="on-call">On-call basis</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Information -->
+                <div class="col-span-2">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Additional Information</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="experience" class="block text-sm font-medium text-gray-700">Relevant Experience</label>
+                            <textarea id="experience" name="experience" rows="3" 
+                                      class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                        <div>
+                            <label for="training" class="block text-sm font-medium text-gray-700">Training/Certifications</label>
+                            <textarea id="training" name="training" rows="2" 
+                                      class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                <input id="consent" name="consent" type="checkbox" required 
+                                       class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="consent" class="font-medium text-gray-700">I consent to my information being stored and used for protest emergency response purposes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-end">
+                <button type="submit" class="inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Submit Volunteer Application
+                </button>
+            </div>
+        </form>
+
+        <div id="successMessage" class="hidden mt-8 bg-green-50 border border-green-200 rounded-md p-4">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-check-circle text-green-400"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-green-800">Thank you for volunteering!</h3>
+                    <div class="mt-2 text-sm text-green-700">
+                        <p>Your information has been saved. We'll contact you soon with more details.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
