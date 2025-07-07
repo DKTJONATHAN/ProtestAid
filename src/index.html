@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProtestAid Kenya - Emergency Support for Protesters</title>
+    <meta name="description" content="A platform connecting protesters with medical assistance, emergency response, and essential aid during demonstrations in Kenya">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1d4ed8 100%);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-hand-holding-medical text-blue-600 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-gray-900">ProtestAid Kenya</span>
+                    </div>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="#features" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Features</a>
+                    <a href="#about" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">About</a>
+                    <a href="#volunteer" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Volunteer</a>
+                    <a href="#contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">Contact</a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-gradient text-white">
+        <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+                    Emergency Support for Kenyan Protesters
+                </h1>
+                <p class="mt-6 max-w-lg mx-auto text-xl">
+                    Connecting protesters with medical assistance, emergency response, and essential aid during demonstrations.
+                </p>
+                <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#emergency" class="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 md:py-4 md:text-lg md:px-10">
+                        <i class="fas fa-bell mr-2"></i> Emergency Help
+                    </a>
+                    <a href="#volunteer" class="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-800 hover:bg-blue-700 md:py-4 md:text-lg md:px-10">
+                        <i class="fas fa-hands-helping mr-2"></i> Become a Volunteer
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Alert (Sticky) -->
+    <div id="emergency" class="bg-red-600 text-white py-3 px-4 sticky top-16 z-40 shadow-lg">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="flex items-center mb-2 md:mb-0">
+                <i class="fas fa-exclamation-triangle mr-2"></i>
+                <span class="font-bold">IN EMERGENCY?</span>
+            </div>
+            <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
+                <a href="#" class="bg-white text-red-600 px-4 py-1 rounded-md font-medium hover:bg-gray-100">
+                    Request Medical Help
+                </a>
+                <a href="#" class="text-white underline hover:no-underline">
+                    Report Abduction
+                </a>
+                <a href="#" class="text-white underline hover:no-underline">
+                    Find Safe Zones
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div id="features" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    How We Help Protesters
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-600 mx-auto">
+                    Our platform provides critical support during demonstrations across Kenya.
+                </p>
+            </div>
+
+            <div class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-gray-50 p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                        <i class="fas fa-ambulance text-xl"></i>
+                    </div>
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">Emergency Medical Help</h3>
+                    <p class="mt-2 text-base text-gray-600">
+                        Quickly connect with volunteer medics in your area for immediate assistance with protest-related injuries.
+                    </p>
+                    <div class="mt-4">
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                            Learn more <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card bg-gray-50 p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                        <i class="fas fa-map-marked-alt text-xl"></i>
+                    </div>
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">Safe Zone Locator</h3>
+                    <p class="mt-2 text-base text-gray-600">
+                        Find verified safe zones and escape routes near protest areas to avoid police violence.
+                    </p>
+                    <div class="mt-4">
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                            Learn more <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card bg-gray-50 p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                        <i class="fas fa-shield-alt text-xl"></i>
+                    </div>
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">Legal Support</h3>
+                    <p class="mt-2 text-base text-gray-600">
+                        Access to lawyers and legal resources if you're arrested or face police brutality.
+                    </p>
+                    <div class="mt-4">
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                            Learn more <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card bg-gray-50 p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                        <i class="fas fa-first-aid text-xl"></i>
+                    </div>
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">First Aid Resources</h3>
+                    <p class="mt-2 text-base text-gray-600">
+                        Guides on treating tear gas exposure, bruises, and other common protest injuries.
+                    </p>
+                    <div class="mt-4">
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                            Learn more <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card bg-gray-50 p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                        <i class="fas fa-users text-xl"></i>
+                    </div>
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">Crowdsourced Alerts</h3>
+                    <p class="mt-2 text-base text-gray-600">
+                        Real-time updates on police movements, danger zones, and protest developments.
+                    </p>
+                    <div class="mt-4">
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                            Learn more <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card bg-gray-50 p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                        <i class="fas fa-language text-xl"></i>
+                    </div>
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">Bilingual Support</h3>
+                    <p class="mt-2 text-base text-gray-600">
+                        Available in both English and Swahili to serve all Kenyans.
+                    </p>
+                    <div class="mt-4">
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                            Learn more <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div id="about" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-8">
+                <div class="mb-8 lg:mb-0">
+                    <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                        About ProtestAid Kenya
+                    </h2>
+                    <p class="mt-4 text-lg text-gray-600">
+                        Born from the 2023-2024 youth-led protest movements like #RejectFinanceBill2024 and #RutoMustGo, ProtestAid Kenya provides critical support to demonstrators facing police violence, abductions, and medical emergencies.
+                    </p>
+                    <p class="mt-4 text-lg text-gray-600">
+                        Our platform is built by activists for activists, prioritizing safety, accessibility, and rapid response in Kenya's high-risk protest environment.
+                    </p>
+                    <div class="mt-8">
+                        <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+                            Read Our Story
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Our Impact</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 text-blue-500">
+                                    <i class="fas fa-user-md"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-base text-gray-700">
+                                        <span class="font-bold">150+</span> volunteer medics trained and connected with protesters
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 text-blue-500">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-base text-gray-700">
+                                        <span class="font-bold">25</span> safe zones established across Nairobi, Mombasa, and Kisumu
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 text-blue-500">
+                                    <i class="fas fa-gavel"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-base text-gray-700">
+                                        <span class="font-bold">40+</span> legal interventions during arrests and abductions
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Volunteer Section -->
+    <div id="volunteer" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Join Our Volunteer Network
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-600 mx-auto">
+                    Medics, lawyers, drivers, and organizers are needed to support protesters across Kenya.
+                </p>
+            </div>
+
+            <div class="mt-12 grid gap-8 md:grid-cols-3">
+                <!-- Volunteer Role 1 -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mb-4">
+                        <i class="fas fa-user-md text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900">Medical Volunteers</h3>
+                    <p class="mt-2 text-base text-gray-600">
+                        Doctors, nurses, first aid responders, and mental health professionals to provide emergency care.
+                    </p>
+                    <div class="mt-6">
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                            Sign up as medic <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Volunteer Role 2 -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mb-4">
+                        <i class="fas fa-gavel text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900">Legal Volunteers</h3>
+                    <p class="mt-2 text-base text-gray-600">
+                        Lawyers and legal observers to monitor protests and assist with arrests or rights violations.
+                    </p>
+                    <div class="mt-6">
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                            Join legal team <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Volunteer Role 3 -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mb-4">
+                        <i class="fas fa-car text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900">Logistics Volunteers</h3>
+                    <p class="mt-2 text-base text-gray-600">
+                        Drivers, organizers, and communicators to coordinate aid and emergency response.
+                    </p>
+                    <div class="mt-6">
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                            Help with logistics <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+                    <i class="fas fa-hands-helping mr-2"></i> Become a Volunteer
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Safety Tips Section -->
+    <div class="bg-blue-800 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold sm:text-4xl">
+                    Protest Safety Tips
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl mx-auto">
+                    Essential knowledge for staying safe during demonstrations
+                </p>
+            </div>
+
+            <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                <!-- Tip 1 -->
+                <div class="bg-blue-700 p-6 rounded-lg">
+                    <div class="flex items-center justify-center h-10 w-10 rounded-full bg-white text-blue-700 mb-4">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="text-lg font-medium">Buddy System</h3>
+                    <p class="mt-2 text-blue-100">
+                        Never protest alone. Stay with trusted friends who can help if you're injured or arrested.
+                    </p>
+                </div>
+
+                <!-- Tip 2 -->
+                <div class="bg-blue-700 p-6 rounded-lg">
+                    <div class="flex items-center justify-center h-10 w-10 rounded-full bg-white text-blue-700 mb-4">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="text-lg font-medium">Emergency Contacts</h3>
+                    <p class="mt-2 text-blue-100">
+                        Write important numbers on your arm in permanent marker in case your phone is confiscated.
+                    </p>
+                </div>
+
+                <!-- Tip 3 -->
+                <div class="bg-blue-700 p-6 rounded-lg">
+                    <div class="flex items-center justify-center h-10 w-10 rounded-full bg-white text-blue-700 mb-4">
+                        <i class="fas fa-gas-pump"></i>
+                    </div>
+                    <h3 class="text-lg font-medium">Tear Gas Response</h3>
+                    <p class="mt-2 text-blue-100">
+                        Don't rub your eyes. Rinse with clean water or milk. Move upwind and to higher ground.
+                    </p>
+                </div>
+
+                <!-- Tip 4 -->
+                <div class="bg-blue-700 p-6 rounded-lg">
+                    <div class="flex items-center justify-center h-10 w-10 rounded-full bg-white text-blue-700 mb-4">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h3 class="text-lg font-medium">Know Your Rights</h3>
+                    <p class="mt-2 text-blue-100">
+                        You have the right to remain silent. Demand to see a lawyer if arrested. Don't resist.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div id="contact" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Contact Us
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-600 mx-auto">
+                    Get in touch for partnerships, media inquiries, or support.
+                </p>
+            </div>
+
+            <div class="mt-12 grid gap-8 md:grid-cols-2">
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                    <h3 class="text-lg font-medium text-gray-900">Send Us a Message</h3>
+                    <form class="mt-6 space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                            <input type="text" id="name" name="name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" id="email" name="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                            <textarea id="message" name="message" rows="4" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                    <h3 class="text-lg font-medium text-gray-900">Other Ways to Connect</h3>
+                    <div class="mt-6 space-y-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0 text-blue-500">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-base text-gray-700">
+                                    <span class="font-medium">Email:</span> info@protestaidke.org
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex-shrink-0 text-blue-500">
+                                <i class="fab fa-twitter"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-base text-gray-700">
+                                    <span class="font-medium">Twitter:</span> @ProtestAidKE
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex-shrink-0 text-blue-500">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-base text-gray-700">
+                                    <span class="font-medium">WhatsApp:</span> +254 700 123456
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <h4 class="text-md font-medium text-gray-900">Partnerships</h4>
+                        <p class="mt-2 text-sm text-gray-600">
+                            We collaborate with medical organizations, legal aid groups, and civil society. Contact us to explore partnerships.
+                        </p>
+                        <div class="mt-4">
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                                Learn about partnerships <span aria-hidden="true">→</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Resources</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">First Aid Guides</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Know Your Rights</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Safety Tips</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Downloadable PDFs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Get Help</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Emergency Request</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Find Medics</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Safe Zones Map</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Legal Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Organization</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Volunteer</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Partners</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Transparency</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Connect</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Twitter</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">WhatsApp</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Email</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Donate</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between">
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-tiktok text-xl"></i>
+                    </a>
+                </div>
+                <p class="mt-4 md:mt-0 text-base text-gray-400">
+                    &copy; 2024 ProtestAid Kenya. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Language Switcher (Fixed) -->
+    <div class="fixed bottom-4 right-4">
+        <div class="bg-blue-600 text-white rounded-full p-3 shadow-lg">
+            <i class="fas fa-language text-xl"></i>
+        </div>
+    </div>
+
+    <script>
+        // Simple mobile menu toggle
+        document.querySelector('nav button').addEventListener('click', function() {
+            const mobileMenu = document.createElement('div');
+            mobileMenu.className = 'md:hidden fixed inset-0 bg-white z-50 p-4';
+            mobileMenu.innerHTML = `
+                <div class="flex justify-end">
+                    <button type="button" class="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="mt-8 space-y-4">
+                    <a href="#features" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">Features</a>
+                    <a href="#about" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">About</a>
+                    <a href="#volunteer" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">Volunteer</a>
+                    <a href="#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600">Contact</a>
+                </div>
+            `;
+            mobileMenu.querySelector('button').addEventListener('click', function() {
+                document.body.removeChild(mobileMenu);
+            });
+            document.body.appendChild(mobileMenu);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
