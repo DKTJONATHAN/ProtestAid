@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Help - ProtestAid Kenya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../assets/js/emergency.js" defer></script>
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-4xl mx-auto py-12 px-4">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl font-bold text-red-600">Emergency Assistance</h1>
+            <p class="mt-4 text-gray-600">Request immediate help from our volunteer network</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Emergency Form -->
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Request Help</h2>
+                <form id="emergencyForm">
+                    <div class="space-y-4">
+                        <div>
+                            <label for="emergencyType" class="block text-sm font-medium text-gray-700">Type of Emergency</label>
+                            <select id="emergencyType" name="emergencyType" required 
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">Select emergency type</option>
+                                <option value="medical">Medical Emergency</option>
+                                <option value="police">Police Brutality</option>
+                                <option value="abduction">Abduction Risk</option>
+                                <option value="legal">Legal Assistance</option>
+                                <option value="other">Other Emergency</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="location" class="block text-sm font-medium text-gray-700">Your Location</label>
+                            <div class="mt-1 flex rounded-md shadow-sm">
+                                <input type="text" id="location" name="location" required 
+                                       class="flex-1 block w-full border border-gray-300 rounded-l-md py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <button type="button" id="getLocation" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 hover:bg-gray-100">
+                                    <i class="fas fa-location-arrow"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="details" class="block text-sm font-medium text-gray-700">Emergency Details</label>
+                            <textarea id="details" name="details" rows="3" required 
+                                      class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                <input id="shareContact" name="shareContact" type="checkbox" 
+                                       class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="shareContact" class="font-medium text-gray-700">Share my contact information with responders</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            Request Emergency Help
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Emergency Contacts -->
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Immediate Contacts</h2>
+                <div class="space-y-4">
+                    <div class="p-4 border border-gray-200 rounded-md">
+                        <h3 class="font-medium text-gray-900">Medical Emergency</h3>
+                        <div class="mt-2 flex justify-between items-center">
+                            <span class="text-sm text-gray-600">Nearest volunteer medics</span>
+                            <button class="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-green-600 hover:bg-green-700">
+                                <i class="fas fa-phone mr-1"></i> Call Now
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 border border-gray-200 rounded-md">
+                        <h3 class="font-medium text-gray-900">Legal Assistance</h3>
+                        <div class="mt-2 flex justify-between items-center">
+                            <span class="text-sm text-gray-600">Protest legal aid hotline</span>
+                            <button class="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+                                <i class="fas fa-phone mr-1"></i> Call Now
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 border border-gray-200 rounded-md">
+                        <h3 class="font-medium text-gray-900">Police Brutality</h3>
+                        <div class="mt-2 flex justify-between items-center">
+                            <span class="text-sm text-gray-600">Independent police oversight</span>
+                            <button class="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-purple-600 hover:bg-purple-700">
+                                <i class="fas fa-phone mr-1"></i> Call Now
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 border border-gray-200 rounded-md bg-yellow-50">
+                        <h3 class="font-medium text-gray-900">Safe Zones Nearby</h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-600">Loading safe locations near you...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Emergency Instructions -->
+        <div class="mt-8 bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Emergency Instructions</h2>
+            <div class="prose prose-sm max-w-none">
+                <h3 class="text-lg font-medium text-gray-900">If you're injured:</h3>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li>Find a safe place away from the conflict</li>
+                    <li>Apply pressure to bleeding wounds with clean cloth</li>
+                    <li>For tear gas, rinse eyes with clean water or milk</li>
+                    <li>Call for medical help using the form or buttons above</li>
+                </ul>
+                
+                <h3 class="text-lg font-medium text-gray-900 mt-4">If you're arrested:</h3>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li>Remain calm and don't resist</li>
+                    <li>Demand to see a lawyer immediately</li>
+                    <li>You have the right to remain silent - don't sign anything</li>
+                    <li>Ask to contact ProtestAid legal team</li>
+                </ul>
+                
+                <h3 class="text-lg font-medium text-gray-900 mt-4">If you witness an abduction:</h3>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li>Note the vehicle details (color, plate, direction)</li>
+                    <li>Record video if safe to do so</li>
+                    <li>Alert others nearby loudly</li>
+                    <li>Immediately contact our network using the form</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
