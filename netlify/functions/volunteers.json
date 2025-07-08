@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Dr. Wanjiku Mwangi",
+    "county": "Nairobi",
+    "phone": "+254722345678",
+    "service": "medic",
+    "availability": "full-time",
+    "message": "Emergency physician available 24/7 for trauma cases",
+    "lastActive": "Today",
+    "distance": "3km away"
+  },
+  {
+    "name": "Advocate James Omondi",
+    "county": "Kisumu",
+    "phone": "+254733456789",
+    "service": "legal",
+    "availability": "on-call",
+    "message": "Specializing in human rights and protest-related legal issues",
+    "lastActive": "Yesterday",
+    "distance": "15km away"
+  },
+  {
+    "name": "Sarah Atieno",
+    "county": "Mombasa",
+    "phone": "+254711987654",
+    "service": "logistics",
+    "availability": "part-time",
+    "message": "Can provide transport and safe spaces in coastal region",
+    "lastActive": "This week",
+    "distance": "8km away"
+  },
+  {
+    "name": "Counselor Peter Kamau",
+    "county": "Nakuru",
+    "phone": "+254700112233",
+    "service": "counseling",
+    "availability": "full-time",
+    "message": "Trauma counseling and psychological first aid",
+    "lastActive": "Today",
+    "distance": "12km away"
+  },
+  {
+    "name": "Tech Team Alpha",
+    "county": "Nairobi",
+    "phone": "+254755667788",
+    "service": "tech",
+    "availability": "on-call",
+    "message": "Digital security and emergency communications support",
+    "lastActive": "Recently",
+    "distance": "5km away"
+  }
+]
