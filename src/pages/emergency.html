@@ -632,7 +632,7 @@
 
                     pleaseCallBtn.addEventListener('click', () => {
                         // Correct Safaricom/Airtel Please Call Me code for Kenya (*130#)
-                        const pleaseCallCode = `*130*${phoneNumber.replace(/\D/g, '')}#`;
+                        const pleaseCallCode = `*130*${phoneNumber.replace(/\D/g, '')}%23`;
                         window.location.href = `tel:${pleaseCallCode}`;
                     });
                 } else {
