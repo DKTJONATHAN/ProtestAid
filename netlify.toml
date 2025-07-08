@@ -1,5 +1,12 @@
 [build]
-  publish = "dist"
+  # Point to your source directory
+  publish = "src"
+  # Or if you need to build first, set this to your build output directory
+  # publish = "dist"
+  
+  # Set the base directory for your pages
+  base = "src"
+
   functions = "netlify/functions"
 
 [[redirects]]
@@ -9,3 +16,9 @@
 
 [functions]
   node_bundler = "esbuild"
+
+# Add this to handle client-side routing if you're using a SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
