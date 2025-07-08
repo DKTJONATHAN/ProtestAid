@@ -352,6 +352,24 @@
         function getRandomDistance() {
             return `${Math.floor(Math.random() * 20) + 1}km away`;
         }
+async function loadVolunteerData() {
+  try {
+    // Try Netlify Function first
+    let response = await fetch('/.netlify/functions/volunteers');
+    
+    // Fallback to direct GitHub if function fails
+    if (!response.ok) {
+      console.warn('Falling back to GitHub API');
+      response = await fetch(
+        'https://raw.githubusercontent.com/DKTJONATHAN/ProtestAid/main/data/volunteers.json'
+      );
+    }
+    
+    // ... rest of your code
+  } catch (error) {
+    console.error('Both methods failed:', error);
+  }
+}
     </script>
 </body>
 </html>
