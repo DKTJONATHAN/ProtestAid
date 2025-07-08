@@ -298,9 +298,10 @@
         async function loadVolunteerData() {
             try {
                 // Try multiple possible paths
-                let response = await fetch('data/volunteers.json');
+                let response = await fetch('../../data/volunteers.json');
                 if (!response.ok) {
-                    response = await fetch('../data/volunteers.json');
+                    // Fallback to absolute path if relative path fails
+                    response = await fetch('/data/volunteers.json');
                     if (!response.ok) throw new Error('Failed to load volunteer data');
                 }
                 volunteersData = await response.json();
@@ -311,7 +312,7 @@
                     <div class="text-center py-10">
                         <i class="fas fa-exclamation-triangle text-red-300 text-4xl mb-3"></i>
                         <p class="text-gray-500">Failed to load volunteer data</p>
-                        <p class="text-sm text-gray-400 mt-2">Please check your internet connection</p>
+                        <p class="text-sm text-gray-400 mt-2">${error.message}</p>
                     </div>
                 `;
             }
