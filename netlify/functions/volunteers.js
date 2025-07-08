@@ -17,9 +17,8 @@ exports.handler = async function(event, context) {
         });
 
         // Get the current content of the file
-        const repoInfo = process.env.GITHUB_REPO.split('/');
-        const owner = repoInfo[0];
-        const repo = repoInfo[1];
+        const owner = "DKTJONATHAN";
+        const repo = "ProtestAid";
         const path = "data/volunteers.json";
 
         let currentData = [];
