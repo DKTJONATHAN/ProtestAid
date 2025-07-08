@@ -3,191 +3,727 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emergency Assistance</title>
+    <title>Kenya Emergency Contacts</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
+        .emergency-header {
+            background: linear-gradient(135deg, #d10000 0%, #8b0000 100%);
+        }
+        
         .service-tag {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.375rem;
-            font-size: 0.75rem;
-            font-weight: 500;
+            @apply text-xs font-semibold px-2 py-1 rounded;
         }
+        
         .medic-tag {
-            background-color: #fee2e2;
-            color: #b91c1c;
+            @apply bg-red-100 text-red-800;
         }
+        
         .legal-tag {
-            background-color: #dbeafe;
-            color: #1d4ed8;
+            @apply bg-blue-100 text-blue-800;
         }
-        .logistics-tag {
-            background-color: #ecfccb;
-            color: #3f6212;
+        
+        .police-tag {
+            @apply bg-gray-100 text-gray-800;
         }
-        .availability-badge {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-        .full-time {
-            background-color: #dcfce7;
-            color: #166534;
-        }
-        .part-time {
-            background-color: #fef9c3;
-            color: #854d0e;
-        }
+        
         .on-call {
-            background-color: #e0f2fe;
-            color: #075985;
+            @apply bg-red-500 text-white text-xs px-2 py-1 rounded;
         }
-        .card-hover {
-            transition: all 0.2s ease;
-        }
+        
         .card-hover:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
+        
         .fade-in {
             animation: fadeIn 0.3s ease-in;
         }
+        
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        
+        .filter-btn {
+            @apply px-4 py-2 rounded-md font-medium transition-colors;
+        }
+        
+        .filter-btn.active {
+            @apply bg-red-600 text-white;
+        }
+        
+        .filter-btn.inactive {
+            @apply bg-gray-200 text-gray-700 hover:bg-gray-300;
+        }
+        
+        .call-btn {
+            transition: all 0.2s;
+        }
+        
+        .call-btn:hover {
+            transform: scale(1.1);
+            background-color: #e53e3e;
+            color: white;
+        }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 py-8">
-        <!-- Header -->
-        <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-800 mb-2">Emergency Assistance</h1>
-            <p class="text-lg text-gray-600">Connect with verified volunteers across Kenya</p>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="emergency-header text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fas fa-ambulance text-3xl mr-3"></i>
+                    <h1 class="text-2xl md:text-3xl font-bold">Kenya Emergency Contacts</h1>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-phone-alt mr-2"></i>
+                    <span class="font-semibold">Emergency: 999 / 112</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Emergency Alert -->
+        <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-8">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-exclamation-triangle text-red-500"></i>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-red-700">
+                        <span class="font-bold">Emergency Tip:</span> Call 999 or 112 for immediate police, fire or medical assistance. Use the contacts below for specialized help.
+                    </p>
+                </div>
+            </div>
         </div>
 
-        <!-- Alerts Container -->
-        <div id="alertsContainer"></div>
-
-        <!-- Filter Panel -->
-        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <!-- County Filter -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">County</label>
-                    <select id="countyFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">All Counties</option>
-                        <option value="Baringo">Baringo</option>
-                        <option value="Bomet">Bomet</option>
-                        <option value="Bungoma">Bungoma</option>
-                        <option value="Busia">Busia</option>
-                        <option value="Elgeyo-Marakwet">Elgeyo-Marakwet</option>
-                        <option value="Embu">Embu</option>
-                        <option value="Garissa">Garissa</option>
-                        <option value="Homa Bay">Homa Bay</option>
-                        <option value="Isiolo">Isiolo</option>
-                        <option value="Kajiado">Kajiado</option>
-                        <option value="Kakamega">Kakamega</option>
-                        <option value="Kericho">Kericho</option>
-                        <option value="Kiambu">Kiambu</option>
-                        <option value="Kilifi">Kilifi</option>
-                        <option value="Kirinyaga">Kirinyaga</option>
-                        <option value="Kisii">Kisii</option>
-                        <option value="Kisumu">Kisumu</option>
-                        <option value="Kitui">Kitui</option>
-                        <option value="Kwale">Kwale</option>
-                        <option value="Laikipia">Laikipia</option>
-                        <option value="Lamu">Lamu</option>
-                        <option value="Machakos">Machakos</option>
-                        <option value="Makueni">Makueni</option>
-                        <option value="Mandera">Mandera</option>
-                        <option value="Marsabit">Marsabit</option>
-                        <option value="Meru">Meru</option>
-                        <option value="Migori">Migori</option>
-                        <option value="Mombasa">Mombasa</option>
-                        <option value="Murang'a">Murang'a</option>
-                        <option value="Nairobi">Nairobi</option>
-                        <option value="Nakuru">Nakuru</option>
-                        <option value="Nandi">Nandi</option>
-                        <option value="Narok">Narok</option>
-                        <option value="Nyamira">Nyamira</option>
-                        <option value="Nyandarua">Nyandarua</option>
-                        <option value="Nyeri">Nyeri</option>
-                        <option value="Samburu">Samburu</option>
-                        <option value="Siaya">Siaya</option>
-                        <option value="Taita-Taveta">Taita-Taveta</option>
-                        <option value="Tana River">Tana River</option>
-                        <option value="Tharaka-Nithi">Tharaka-Nithi</option>
-                        <option value="Trans Nzoia">Trans Nzoia</option>
-                        <option value="Turkana">Turkana</option>
-                        <option value="Uasin Gishu">Uasin Gishu</option>
-                        <option value="Vihiga">Vihiga</option>
-                        <option value="Wajir">Wajir</option>
-                        <option value="West Pokot">West Pokot</option>
-                    </select>
-                </div>
-
-                <!-- Service Filter -->
+        <!-- Filter Section -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Find Emergency Services</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Service Type</label>
-                    <select id="serviceFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">All Services</option>
-                        <option value="medic">Medical</option>
-                        <option value="legal">Legal</option>
-                        <option value="logistics">Logistics</option>
+                    <div class="flex space-x-2">
+                        <button id="filterMedic" class="filter-btn active">
+                            <i class="fas fa-ambulance mr-1"></i> Medical
+                        </button>
+                        <button id="filterPolice" class="filter-btn inactive">
+                            <i class="fas fa-shield-alt mr-1"></i> Police
+                        </button>
+                        <button id="filterLegal" class="filter-btn inactive">
+                            <i class="fas fa-gavel mr-1"></i> Legal
+                        </button>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">County</label>
+                    <select id="countyFilter" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
+                        <option value="">All Counties</option>
+                        <option value="Nairobi">Nairobi</option>
+                        <option value="Mombasa">Mombasa</option>
+                        <option value="Kisumu">Kisumu</option>
+                        <option value="Nakuru">Nakuru</option>
+                        <option value="Uasin Gishu">Uasin Gishu</option>
+                        <option value="Nyeri">Nyeri</option>
+                        <option value="Garissa">Garissa</option>
+                        <option value="Kakamega">Kakamega</option>
+                        <option value="Meru">Meru</option>
+                        <option value="Kitui">Kitui</option>
+                        <option value="Machakos">Machakos</option>
+                        <option value="Kilifi">Kilifi</option>
+                        <option value="Tana River">Tana River</option>
+                        <option value="Lamu">Lamu</option>
+                        <option value="Taita Taveta">Taita Taveta</option>
+                        <option value="Wajir">Wajir</option>
+                        <option value="Mandera">Mandera</option>
+                        <option value="Marsabit">Marsabit</option>
+                        <option value="Isiolo">Isiolo</option>
+                        <option value="Embu">Embu</option>
+                        <option value="Kirinyaga">Kirinyaga</option>
+                        <option value="Murang'a">Murang'a</option>
+                        <option value="Kiambu">Kiambu</option>
                     </select>
                 </div>
-
-                <!-- Availability Filter -->
+                
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Availability</label>
-                    <select id="availabilityFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">Any Availability</option>
-                        <option value="full-time">Immediate</option>
-                        <option value="on-call">Urgent</option>
+                    <select id="availabilityFilter" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
+                        <option value="on-call">On Call (24/7)</option>
                     </select>
                 </div>
+            </div>
+            
+            <div class="flex justify-end">
+                <button id="resetFilters" class="text-sm text-red-600 hover:text-red-800 font-medium">
+                    <i class="fas fa-redo mr-1"></i> Reset Filters
+                </button>
             </div>
         </div>
 
         <!-- Results Section -->
-        <div id="resultsContainer">
-            <!-- Loading State -->
-            <div id="loadingState" class="text-center py-16 fade-in">
-                <i class="fas fa-spinner fa-spin text-blue-500 text-4xl mb-4"></i>
-                <p class="text-gray-500">Loading volunteers...</p>
+        <div class="mb-8">
+            <div id="loadingState" class="text-center py-12">
+                <i class="fas fa-spinner fa-spin text-3xl text-red-500 mb-3"></i>
+                <p class="text-gray-600">Loading emergency contacts...</p>
             </div>
-
-            <!-- Empty State (hidden by default) -->
-            <div id="emptyState" class="text-center py-16 hidden fade-in">
-                <i class="fas fa-user-slash text-gray-300 text-4xl mb-4"></i>
-                <h3 class="text-lg font-medium text-gray-700">No volunteers found</h3>
-                <p class="text-gray-500 mt-1">Try adjusting your filters or check back later</p>
+            
+            <div id="emptyState" class="hidden text-center py-12 bg-white rounded-lg shadow">
+                <i class="fas fa-exclamation-circle text-3xl text-gray-400 mb-3"></i>
+                <h3 class="text-lg font-medium text-gray-700">No contacts found</h3>
+                <p class="text-gray-500 mt-1">Try adjusting your filters or call 999 for immediate assistance.</p>
             </div>
-
-            <!-- Error State (hidden by default) -->
-            <div id="errorState" class="text-center py-16 hidden fade-in">
-                <i class="fas fa-exclamation-triangle text-red-400 text-4xl mb-4"></i>
-                <h3 class="text-lg font-medium text-gray-700">Connection Error</h3>
-                <p id="errorMessage" class="text-gray-500 mt-1 mb-4"></p>
-                <button id="retryButton" class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
-                    <i class="fas fa-sync-alt mr-2"></i> Retry
-                </button>
-                <p class="text-xs text-gray-400 mt-4">Last attempt: <span id="lastAttemptTime">Just now</span></p>
+            
+            <div id="volunteerGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Volunteer cards will be inserted here by JavaScript -->
             </div>
-
-            <!-- Volunteer Grid -->
-            <div id="volunteerGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
-    </div>
+    </main>
 
-    <!-- Data File -->
-    <script src="../../data/data.js"></script>
-    
-    <!-- Main Script -->
-    <script src="../../scripts/main.js"></script>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="text-xl font-bold mb-2">Kenya Emergency Contacts</h2>
+                    <p class="text-gray-300">Important emergency services across Kenya</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-300 hover:text-white">
+                        <i class="fas fa-info-circle text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-white">
+                        <i class="fas fa-phone-alt text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 pt-6 text-sm text-gray-400">
+                <p>© 2023 Kenya Emergency Services. This is not an official government website.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Emergency Data and Script -->
+    <script>
+        // Emergency responders data
+        window.emergencyVolunteers = [
+            {
+                "name": "Kenya Red Cross Nairobi",
+                "county": "Nairobi",
+                "phone": "1199",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "St. John Ambulance Mombasa",
+                "county": "Mombasa",
+                "phone": "0722600600",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Kisumu Fire Brigade",
+                "county": "Kisumu",
+                "phone": "0202222181",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Nakuru Red Cross",
+                "county": "Nakuru",
+                "phone": "1199",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "AAR Healthcare Eldoret",
+                "county": "Uasin Gishu",
+                "phone": "0725225225",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Nyeri Fire Brigade",
+                "county": "Nyeri",
+                "phone": "0202222181",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Kenya Red Cross Nyeri",
+                "county": "Nyeri",
+                "phone": "1199",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "AMREF Flying Doctors",
+                "county": "Garissa",
+                "phone": "0206000552",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Kakamega Fire Brigade",
+                "county": "Kakamega",
+                "phone": "0202222181",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Jonathan Mwaniki",
+                "county": "Kakamega",
+                "phone": "0706396305",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "JONATHAN MMWANIKI",
+                "county": "Meru",
+                "phone": "0706396305",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Kitui Red Cross",
+                "county": "Kitui",
+                "phone": "1199",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "OCOA Ambulance Services",
+                "county": "Machakos",
+                "phone": "0758692000",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Kilifi Fire Brigade",
+                "county": "Kilifi",
+                "phone": "0202222181",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Kenya Red Cross Kilifi",
+                "county": "Kilifi",
+                "phone": "1199",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "AMREF Flying Doctors",
+                "county": "Tana River",
+                "phone": "0206000552",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Lamu Fire Brigade",
+                "county": "Lamu",
+                "phone": "0202222181",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Kenya Red Cross Lamu",
+                "county": "Lamu",
+                "phone": "1199",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "St. John Ambulance",
+                "county": "Taita Taveta",
+                "phone": "0722600600",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Wajir Fire Brigade",
+                "county": "Wajir",
+                "phone": "0202222181",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Kenya Red Cross Wajir",
+                "county": "Wajir",
+                "phone": "1199",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "AMREF Flying Doctors",
+                "county": "Mandera",
+                "phone": "0206000552",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Marsabit Fire Brigade",
+                "county": "Marsabit",
+                "phone": "0202222181",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Kenya Red Cross Marsabit",
+                "county": "Marsabit",
+                "phone": "1199",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "St. John Ambulance",
+                "county": "Isiolo",
+                "phone": "0722600600",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Embu Fire Brigade",
+                "county": "Embu",
+                "phone": "0202222181",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Kenya Red Cross Embu",
+                "county": "Embu",
+                "phone": "1199",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "AMREF Flying Doctors",
+                "county": "Kirinyaga",
+                "phone": "0206000552",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Murang'a Fire Brigade",
+                "county": "Murang'a",
+                "phone": "0202222181",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Kenya Red Cross Murang'a",
+                "county": "Murang'a",
+                "phone": "1199",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "St. John Ambulance",
+                "county": "Kiambu",
+                "phone": "0722600600",
+                "service": "medic",
+                "availability": "on-call"
+            },
+            {
+                "name": "Law Society of Kenya",
+                "county": "Nairobi",
+                "phone": "0800720434",
+                "service": "legal",
+                "availability": "on-call"
+            },
+            {
+                "name": "Gikera & Vadgama Advocates",
+                "county": "Kisumu",
+                "phone": "0201234567",
+                "service": "legal",
+                "availability": "on-call"
+            },
+            {
+                "name": "Chepchieng & Company Advocates",
+                "county": "Nakuru",
+                "phone": "0712345678",
+                "service": "legal",
+                "availability": "on-call"
+            },
+            {
+                "name": "Wacu Mureithi & Co. Advocates",
+                "county": "Kitui",
+                "phone": "0712345679",
+                "service": "legal",
+                "availability": "on-call"
+            },
+            {
+                "name": "Mombasa Police Station",
+                "county": "Mombasa",
+                "phone": "999",
+                "service": "police",
+                "availability": "on-call"
+            },
+            {
+                "name": "Eldoret Police Station",
+                "county": "Uasin Gishu",
+                "phone": "999",
+                "service": "police",
+                "availability": "on-call"
+            },
+            {
+                "name": "Garissa Police Station",
+                "county": "Garissa",
+                "phone": "999",
+                "service": "police",
+                "availability": "on-call"
+            },
+            {
+                "name": "Tana River Police Station",
+                "county": "Tana River",
+                "phone": "999",
+                "service": "police",
+                "availability": "on-call"
+            },
+            {
+                "name": "Taita Taveta Police Station",
+                "county": "Taita Taveta",
+                "phone": "999",
+                "service": "police",
+                "availability": "on-call"
+            },
+            {
+                "name": "Mandera Police Station",
+                "county": "Mandera",
+                "phone": "999",
+                "service": "police",
+                "availability": "on-call"
+            },
+            {
+                "name": "Isiolo Police Station",
+                "county": "Isiolo",
+                "phone": "999",
+                "service": "police",
+                "availability": "on-call"
+            },
+            {
+                "name": "Kirinyaga Police Station",
+                "county": "Kirinyaga",
+                "phone": "999",
+                "service": "police",
+                "availability": "on-call"
+            },
+            {
+                "name": "Kiambu Police Station",
+                "county": "Kiambu",
+                "phone": "999",
+                "service": "police",
+                "availability": "on-call"
+            }
+        ];
+
+        // Main application script
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const volunteerGrid = document.getElementById('volunteerGrid');
+            const loadingState = document.getElementById('loadingState');
+            const emptyState = document.getElementById('emptyState');
+            const countyFilter = document.getElementById('countyFilter');
+            const availabilityFilter = document.getElementById('availabilityFilter');
+            const filterMedic = document.getElementById('filterMedic');
+            const filterPolice = document.getElementById('filterPolice');
+            const filterLegal = document.getElementById('filterLegal');
+            const resetFilters = document.getElementById('resetFilters');
+            
+            // Current filters
+            let currentFilters = {
+                service: 'medic',
+                county: '',
+                availability: 'on-call'
+            };
+            
+            // Initialize the app
+            function init() {
+                loadingState.classList.add('hidden');
+                filterVolunteers();
+                
+                // Set up event listeners
+                countyFilter.addEventListener('change', function() {
+                    currentFilters.county = this.value;
+                    filterVolunteers();
+                });
+                
+                availabilityFilter.addEventListener('change', function() {
+                    currentFilters.availability = this.value;
+                    filterVolunteers();
+                });
+                
+                filterMedic.addEventListener('click', function() {
+                    setActiveServiceFilter('medic');
+                });
+                
+                filterPolice.addEventListener('click', function() {
+                    setActiveServiceFilter('police');
+                });
+                
+                filterLegal.addEventListener('click', function() {
+                    setActiveServiceFilter('legal');
+                });
+                
+                resetFilters.addEventListener('click', resetAllFilters);
+            }
+            
+            // Set active service filter
+            function setActiveServiceFilter(service) {
+                currentFilters.service = service;
+                
+                // Update button states
+                filterMedic.classList.remove('active');
+                filterMedic.classList.add('inactive');
+                filterPolice.classList.remove('active');
+                filterPolice.classList.add('inactive');
+                filterLegal.classList.remove('active');
+                filterLegal.classList.add('inactive');
+                
+                // Activate the selected button
+                if (service === 'medic') {
+                    filterMedic.classList.remove('inactive');
+                    filterMedic.classList.add('active');
+                } else if (service === 'police') {
+                    filterPolice.classList.remove('inactive');
+                    filterPolice.classList.add('active');
+                } else if (service === 'legal') {
+                    filterLegal.classList.remove('inactive');
+                    filterLegal.classList.add('active');
+                }
+                
+                filterVolunteers();
+            }
+            
+            // Reset all filters
+            function resetAllFilters() {
+                currentFilters = {
+                    service: 'medic',
+                    county: '',
+                    availability: 'on-call'
+                };
+                
+                countyFilter.value = '';
+                availabilityFilter.value = 'on-call';
+                setActiveServiceFilter('medic');
+                filterVolunteers();
+            }
+            
+            // Filter volunteers based on current filters
+            function filterVolunteers() {
+                const filtered = emergencyVolunteers.filter(volunteer => {
+                    return (
+                        volunteer.service === currentFilters.service &&
+                        (!currentFilters.county || volunteer.county === currentFilters.county) &&
+                        volunteer.availability === currentFilters.availability
+                    );
+                });
+                
+                displayVolunteers(filtered);
+            }
+            
+            // Display volunteers in the grid
+            function displayVolunteers(volunteersToDisplay) {
+                volunteerGrid.innerHTML = '';
+                
+                if (volunteersToDisplay.length === 0) {
+                    emptyState.classList.remove('hidden');
+                    return;
+                }
+                
+                emptyState.classList.add('hidden');
+                
+                volunteersToDisplay.forEach(volunteer => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-xl shadow-md overflow-hidden card-hover fade-in transition-transform duration-200';
+                    card.innerHTML = `
+                        <div class="p-6">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800">${escapeHtml(volunteer.name) || 'Emergency Service'}</h3>
+                                    <div class="flex items-center mt-1">
+                                        <span class="${getServiceClass(volunteer.service)}">
+                                            ${getServiceName(volunteer.service)}
+                                        </span>
+                                        <span class="${getAvailabilityClass(volunteer.availability)} ml-2">
+                                            ${getAvailabilityName(volunteer.availability)}
+                                        </span>
+                                    </div>
+                                </div>
+                                ${volunteer.phone ? `
+                                <a href="tel:${volunteer.phone}" class="call-btn h-10 w-10 rounded-full bg-red-100 text-red-600 hover:bg-red-200 transition flex items-center justify-center">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                                ` : ''}
+                            </div>
+                            <div class="mt-4">
+                                ${volunteer.county ? `
+                                <div class="flex items-center text-sm text-gray-600 mb-2">
+                                    <i class="fas fa-map-marker-alt mr-2"></i>
+                                    <span>${escapeHtml(volunteer.county)} County</span>
+                                </div>
+                                ` : ''}
+                                ${volunteer.phone ? `
+                                <div class="flex items-center text-sm text-gray-600">
+                                    <i class="fas fa-phone-alt mr-2"></i>
+                                    <span>${formatPhoneNumber(volunteer.phone)}</span>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                    volunteerGrid.appendChild(card);
+                });
+            }
+            
+            // Helper functions
+            function getServiceName(service) {
+                const services = { 
+                    medic: "Medical", 
+                    legal: "Legal Aid", 
+                    police: "Police" 
+                };
+                return services[service] || "Emergency Service";
+            }
+            
+            function getServiceClass(service) {
+                return `service-tag ${service}-tag`;
+            }
+            
+            function getAvailabilityName(availability) {
+                return "24/7 Available";
+            }
+            
+            function getAvailabilityClass(availability) {
+                return `on-call`;
+            }
+            
+            function formatPhoneNumber(phone) {
+                // Format Kenyan phone numbers
+                if (phone.length === 4) return phone; // Short codes like 999, 1199
+                if (phone.startsWith('0')) return phone.replace(/(\d{3})(\d{3})(\d{3,4})/, '$1 $2 $3');
+                if (phone.startsWith('+254')) return phone.replace(/(\d{3})(\d{3})(\d{3,4})/, '$1 $2 $3');
+                return phone;
+            }
+            
+            function escapeHtml(unsafe) {
+                if (!unsafe) return '';
+                return unsafe.toString()
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+            
+            // Initialize the app
+            init();
+        });
+    </script>
 </body>
 </html>
