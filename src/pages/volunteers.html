@@ -3,273 +3,500 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Volunteer Signup - ProtestAid Kenya</title>
-    <!-- Preload critical resources -->
-    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Become a Volunteer | ProtestAid Kenya</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #f9fafb;
+        }
+        .card-gradient {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        .input-focus:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+    </style>
 </head>
-<body class="bg-gray-50">
-    <div class="max-w-4xl mx-auto py-12 px-4">
-        <div class="text-center mb-12">
-            <h1 class="text-3xl font-bold text-blue-800">Volunteer Signup</h1>
-            <p class="mt-4 text-gray-600">Join our network of medics, legal experts, and support volunteers</p>
-        </div>
-
-        <div id="volunteerFormContainer">
-            <!-- Form will be rendered here immediately -->
+<body class="min-h-screen flex items-center justify-center p-4">
+    <!-- Success Modal -->
+    <div id="successModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg max-w-md w-full mx-4">
+            <div class="text-green-500 text-5xl mb-4 text-center">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2 text-center">Thank You!</h3>
+            <p class="text-gray-600 mb-6 text-center">Your volunteer application has been submitted successfully.</p>
+            <button onclick="document.getElementById('successModal').classList.add('hidden')" 
+                    class="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                Close
+            </button>
         </div>
     </div>
 
-    <script type="module">
-        import { useState } from 'https://cdn.skypack.dev/react@17';
-        import { render } from 'https://cdn.skypack.dev/react-dom@17';
+    <div class="max-w-3xl w-full">
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-gray-900 mb-3">Join Our Volunteer Network</h1>
+            <p class="text-lg text-gray-600">Help us provide essential services during protests across Kenya</p>
+        </div>
 
-        const counties = [
-            "Mombasa", "Kwale", "Kilifi", "Tana River", "Lamu", 
-            "Taita Taveta", "Garissa", "Wajir", "Mandera", "Marsabit",
-            "Isiolo", "Meru", "Tharaka-Nithi", "Embu", "Kitui",
-            "Machakos", "Makueni", "Nyandarua", "Nyeri", "Kirinyaga",
-            "Murang'a", "Kiambu", "Turkana", "West Pokot", "Samburu",
-            "Trans Nzoia", "Uasin Gishu", "Elgeyo-Marakwet", "Nandi", "Baringo",
-            "Laikipia", "Nakuru", "Narok", "Kajiado", "Kericho",
-            "Bomet", "Kakamega", "Vihiga", "Bungoma", "Busia",
-            "Siaya", "Kisumu", "Homa Bay", "Migori", "Kisii",
-            "Nyamira", "Nairobi"
-        ];
+        <!-- Progress Steps -->
+        <div class="flex justify-between mb-10 relative">
+            <div class="absolute top-1/2 left-0 right-0 h-1 bg-gray-200 -z-10"></div>
+            <div class="absolute top-1/2 left-0 h-1 bg-blue-500 -z-10 transition-all duration-300" id="progressBar"></div>
+            
+            <div class="step flex flex-col items-center" data-step="1">
+                <div class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-medium mb-2">1</div>
+                <span class="text-sm font-medium text-gray-700">Personal Info</span>
+            </div>
+            <div class="step flex flex-col items-center" data-step="2">
+                <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-medium mb-2">2</div>
+                <span class="text-sm font-medium text-gray-500">Your Role</span>
+            </div>
+            <div class="step flex flex-col items-center" data-step="3">
+                <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-medium mb-2">3</div>
+                <span class="text-sm font-medium text-gray-500">Availability</span>
+            </div>
+            <div class="step flex flex-col items-center" data-step="4">
+                <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-medium mb-2">4</div>
+                <span class="text-sm font-medium text-gray-500">Review</span>
+            </div>
+        </div>
 
-        function VolunteerForm() {
-            const [submitted, setSubmitted] = useState(false);
-            const [error, setError] = useState(null);
-            const [isLoading, setIsLoading] = useState(false);
-
-            const handleSubmit = async (event) => {
-                event.preventDefault();
-                setIsLoading(true);
-
-                const form = event.target;
-                const formData = new FormData(form);
-                const formValues = Object.fromEntries(formData.entries());
-
-                formValues.experience = [...form.querySelectorAll('input[name="experience"]:checked')].map(el => el.value);
-                formValues.certifications = [...form.querySelectorAll('input[name="certifications"]:checked')].map(el => el.value);
-
-                try {
-                    const response = await fetch('/.netlify/functions/volunteers', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formValues)
-                    });
-
-                    if (!response.ok) throw new Error('Submission failed');
-
-                    setSubmitted(true);
-                    form.reset();
-                } catch (err) {
-                    setError('Failed to submit. Please try again.');
-                    console.error(err);
-                } finally {
-                    setIsLoading(false);
-                }
-            };
-
-            if (submitted) {
-                return (
-                    <div className="mt-8 bg-green-50 border border-green-200 rounded-md p-4">
-                        <div className="flex">
-                            <div className="flex-shrink-0">
-                                <i className="fas fa-check-circle text-green-400"></i>
-                            </div>
-                            <div className="ml-3">
-                                <h3 className="text-sm font-medium text-green-800">Thank you for volunteering!</h3>
-                                <div className="mt-2 text-sm text-green-700">
-                                    <p>Your information has been saved. We'll contact you soon.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                );
-            }
-
-            return (
-                <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-8">
-                    {error && (
-                        <div className="mb-4 bg-red-50 border border-red-200 rounded-md p-4 text-red-700">
-                            {error}
-                        </div>
-                    )}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Personal Information */}
-                        <div className="col-span-2">
-                            <h2 className="text-xl font-semibold text-gray-800 mb-4">Personal Information</h2>
-                            <div className="space-y-4">
-                                <div>
-                                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">Full Name</label>
-                                    <input type="text" id="fullName" name="fullName" required 
-                                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"/>
-                                </div>
-                                <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                                    <input type="email" id="email" name="email" required 
-                                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"/>
-                                </div>
-                                <div>
-                                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
-                                    <input type="tel" id="phone" name="phone" required 
-                                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"/>
-                                </div>
-                                <div>
-                                    <label htmlFor="location" className="block text-sm font-medium text-gray-700">County</label>
-                                    <select id="location" name="location" required 
-                                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="">Select your county</option>
-                                        {counties.map(county => (
-                                            <option key={county} value={county}>{county}</option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Volunteer Role */}
+        <!-- Form Container -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <form id="volunteerForm" class="p-8">
+                <!-- Step 1: Personal Info -->
+                <div class="form-step active" data-step="1">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Tell us about yourself</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <h2 className="text-xl font-semibold text-gray-800 mb-4">Volunteer Role</h2>
-                            <div className="space-y-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700">Service Type</label>
-                                    <div className="mt-2 space-y-2">
-                                        <div className="flex items-center">
-                                            <input id="medic" name="serviceType" type="radio" value="medic" required 
-                                                   className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"/>
-                                            <label htmlFor="medic" className="ml-3 block text-sm font-medium text-gray-700">Medical Professional</label>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <input id="legal" name="serviceType" type="radio" value="legal" 
-                                                   className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"/>
-                                            <label htmlFor="legal" className="ml-3 block text-sm font-medium text-gray-700">Legal Expert</label>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <input id="logistics" name="serviceType" type="radio" value="logistics" 
-                                                   className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"/>
-                                            <label htmlFor="logistics" className="ml-3 block text-sm font-medium text-gray-700">Logistics/Driver</label>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <input id="other" name="serviceType" type="radio" value="other" 
-                                                   className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"/>
-                                            <label htmlFor="other" className="ml-3 block text-sm font-medium text-gray-700">Other Support</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" required
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
                         </div>
-
-                        {/* Emergency Contacts */}
                         <div>
-                            <h2 className="text-xl font-semibold text-gray-800 mb-4">Emergency Contacts</h2>
-                            <div className="space-y-4">
-                                <div>
-                                    <label htmlFor="emergencyContact1" className="block text-sm font-medium text-gray-700">Primary Contact</label>
-                                    <input type="text" id="emergencyContact1" name="emergencyContact1" required 
-                                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"/>
-                                </div>
-                                <div>
-                                    <label htmlFor="emergencyContact2" className="block text-sm font-medium text-gray-700">Secondary Contact</label>
-                                    <input type="text" id="emergencyContact2" name="emergencyContact2" 
-                                           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"/>
-                                </div>
-                                <div>
-                                    <label htmlFor="availability" className="block text-sm font-medium text-gray-700">Availability</label>
-                                    <select id="availability" name="availability" required 
-                                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="">Select availability</option>
-                                        <option value="full-time">Full-time during protests</option>
-                                        <option value="part-time">Part-time (specific hours)</option>
-                                        <option value="on-call">On-call basis</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="email" name="email" required
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
                         </div>
-
-                        {/* Additional Information */}
-                        <div className="col-span-2">
-                            <h2 className="text-xl font-semibold text-gray-800 mb-4">Additional Information</h2>
-                            <div className="space-y-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Experience</label>
-                                    <div className="space-y-2">
-                                        <div className="flex items-center">
-                                            <input id="exp-medical" name="experience" type="checkbox" value="medical" 
-                                                   className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"/>
-                                            <label htmlFor="exp-medical" className="ml-3 block text-sm text-gray-700">Medical/First Aid</label>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <input id="exp-legal" name="experience" type="checkbox" value="legal" 
-                                                   className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"/>
-                                            <label htmlFor="exp-legal" className="ml-3 block text-sm text-gray-700">Legal Assistance</label>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <input id="exp-counseling" name="experience" type="checkbox" value="counseling" 
-                                                   className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"/>
-                                            <label htmlFor="exp-counseling" className="ml-3 block text-sm text-gray-700">Counseling</label>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <input id="exp-logistics" name="experience" type="checkbox" value="logistics" 
-                                                   className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"/>
-                                            <label htmlFor="exp-logistics" className="ml-3 block text-sm text-gray-700">Logistics/Transport</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Certifications</label>
-                                    <div className="space-y-2">
-                                        <div className="flex items-center">
-                                            <input id="cert-firstaid" name="certifications" type="checkbox" value="firstaid" 
-                                                   className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"/>
-                                            <label htmlFor="cert-firstaid" className="ml-3 block text-sm text-gray-700">First Aid Certified</label>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <input id="cert-legal" name="certifications" type="checkbox" value="legal" 
-                                                   className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"/>
-                                            <label htmlFor="cert-legal" className="ml-3 block text-sm text-gray-700">Legal Training</label>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <input id="cert-crisis" name="certifications" type="checkbox" value="crisis" 
-                                                   className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"/>
-                                            <label htmlFor="cert-crisis" className="ml-3 block text-sm text-gray-700">Crisis Management</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flex items-start">
-                                    <div className="flex items-center h-5">
-                                        <input id="consent" name="consent" type="checkbox" required 
-                                               className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"/>
-                                    </div>
-                                    <div className="ml-3 text-sm">
-                                        <label htmlFor="consent" className="font-medium text-gray-700">I consent to my information being stored and used for protest emergency response purposes</label>
-                                    </div>
-                                </div>
-                            </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                        </div>
+                        <div>
+                            <label for="location" class="block text-sm font-medium text-gray-700 mb-1">County</label>
+                            <select id="location" name="location" required
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                                <option value="" disabled selected>Select your county</option>
+                                <option value="Nairobi">Nairobi</option>
+                                <option value="Mombasa">Mombasa</option>
+                                <option value="Kisumu">Kisumu</option>
+                                <option value="Nakuru">Nakuru</option>
+                                <option value="Uasin Gishu">Uasin Gishu</option>
+                                <option value="Kiambu">Kiambu</option>
+                                <option value="Kakamega">Kakamega</option>
+                                <option value="Bungoma">Bungoma</option>
+                                <option value="Kericho">Kericho</option>
+                                <option value="Machakos">Machakos</option>
+                                <option value="Meru">Meru</option>
+                                <option value="Kilifi">Kilifi</option>
+                                <option value="Kisii">Kisii</option>
+                                <option value="Nyeri">Nyeri</option>
+                                <option value="Turkana">Turkana</option>
+                                <option value="Kitui">Kitui</option>
+                                <option value="Garissa">Garissa</option>
+                                <option value="Wajir">Wajir</option>
+                                <option value="Mandera">Mandera</option>
+                                <option value="Marsabit">Marsabit</option>
+                                <option value="Isiolo">Isiolo</option>
+                                <option value="Narok">Narok</option>
+                                <option value="Nyandarua">Nyandarua</option>
+                                <option value="Kirinyaga">Kirinyaga</option>
+                                <option value="Murang'a">Murang'a</option>
+                                <option value="Embu">Embu</option>
+                                <option value="Tharaka-Nithi">Tharaka-Nithi</option>
+                                <option value="Nandi">Nandi</option>
+                                <option value="Bomet">Bomet</option>
+                                <option value="Trans Nzoia">Trans Nzoia</option>
+                                <option value="West Pokot">West Pokot</option>
+                                <option value="Samburu">Samburu</option>
+                                <option value="Laikipia">Laikipia</option>
+                                <option value="Makueni">Makueni</option>
+                                <option value="Taita Taveta">Taita Taveta</option>
+                                <option value="Kwale">Kwale</option>
+                                <option value="Tana River">Tana River</option>
+                                <option value="Lamu">Lamu</option>
+                                <option value="Busia">Busia</option>
+                                <option value="Siaya">Siaya</option>
+                                <option value="Homa Bay">Homa Bay</option>
+                                <option value="Migori">Migori</option>
+                                <option value="Nyamira">Nyamira</option>
+                                <option value="Vihiga">Vihiga</option>
+                                <option value="Elgeyo-Marakwet">Elgeyo-Marakwet</option>
+                                <option value="Baringo">Baringo</option>
+                                <option value="Nyandarua">Nyandarua</option>
+                            </select>
                         </div>
                     </div>
 
-                    <div className="mt-8 flex justify-end">
-                        <button type="submit" disabled={isLoading}
-                                className={`inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white ${isLoading ? 'bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}>
-                            {isLoading ? (
-                                <>
-                                    <i className="fas fa-spinner fa-spin mr-2"></i>
-                                    Submitting...
-                                </>
-                            ) : 'Submit Volunteer Application'}
+                    <div class="flex justify-end mt-8">
+                        <button type="button" class="next-btn px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+                            Continue <i class="fas fa-arrow-right ml-2"></i>
                         </button>
                     </div>
-                </form>
-            );
-        }
+                </div>
 
-        // Render the form immediately when the page loads
-        render(<VolunteerForm />, document.getElementById('volunteerFormContainer'));
+                <!-- Step 2: Volunteer Role -->
+                <div class="form-step hidden" data-step="2">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Your volunteer role</h2>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-800 mb-3">What type of support can you provide?</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <label class="role-option flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition">
+                                    <input type="radio" name="serviceType" value="medic" required class="h-5 w-5 text-blue-600 focus:ring-blue-500">
+                                    <div class="ml-3">
+                                        <span class="block font-medium text-gray-800">Medical Professional</span>
+                                        <span class="block text-sm text-gray-500">Doctors, nurses, first aiders</span>
+                                    </div>
+                                </label>
+                                <label class="role-option flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition">
+                                    <input type="radio" name="serviceType" value="legal" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
+                                    <div class="ml-3">
+                                        <span class="block font-medium text-gray-800">Legal Expert</span>
+                                        <span class="block text-sm text-gray-500">Lawyers, paralegals, rights monitors</span>
+                                    </div>
+                                </label>
+                                <label class="role-option flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition">
+                                    <input type="radio" name="serviceType" value="logistics" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
+                                    <div class="ml-3">
+                                        <span class="block font-medium text-gray-800">Logistics/Driver</span>
+                                        <span class="block text-sm text-gray-500">Transport, supplies, coordination</span>
+                                    </div>
+                                </label>
+                                <label class="role-option flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition">
+                                    <input type="radio" name="serviceType" value="other" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
+                                    <div class="ml-3">
+                                        <span class="block font-medium text-gray-800">Other Support</span>
+                                        <span class="block text-sm text-gray-500">Counseling, media, coordination</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-800 mb-3">Your skills & certifications</h3>
+                            <div class="space-y-3">
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="certifications" value="firstaid" class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
+                                    <span class="ml-3 text-gray-700">First Aid Certified</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="certifications" value="legal" class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
+                                    <span class="ml-3 text-gray-700">Legal Training</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="certifications" value="crisis" class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
+                                    <span class="ml-3 text-gray-700">Crisis Management</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between mt-8">
+                        <button type="button" class="prev-btn px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-medium">
+                            <i class="fas fa-arrow-left mr-2"></i> Back
+                        </button>
+                        <button type="button" class="next-btn px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+                            Continue <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Availability -->
+                <div class="form-step hidden" data-step="3">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Your availability</h2>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label for="availability" class="block text-lg font-medium text-gray-800 mb-3">When are you available?</label>
+                            <select id="availability" name="availability" required
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                                <option value="" disabled selected>Select your availability</option>
+                                <option value="full-time">Full-time during protests</option>
+                                <option value="part-time">Part-time (specific hours)</option>
+                                <option value="on-call">On-call basis</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="emergencyContact1" class="block text-lg font-medium text-gray-800 mb-3">Emergency Contact #1</label>
+                            <input type="text" id="emergencyContact1" name="emergencyContact1" required
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                        </div>
+
+                        <div>
+                            <label for="emergencyContact2" class="block text-lg font-medium text-gray-800 mb-3">Emergency Contact #2</label>
+                            <input type="text" id="emergencyContact2" name="emergencyContact2"
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between mt-8">
+                        <button type="button" class="prev-btn px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-medium">
+                            <i class="fas fa-arrow-left mr-2"></i> Back
+                        </button>
+                        <button type="button" class="next-btn px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+                            Continue <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Review & Submit -->
+                <div class="form-step hidden" data-step="4">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Review your information</h2>
+                    
+                    <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                        <h3 class="text-lg font-medium text-gray-800 mb-4">Personal Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <p class="text-sm text-gray-500">Full Name</p>
+                                <p id="review-fullName" class="font-medium"></p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Email</p>
+                                <p id="review-email" class="font-medium"></p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Phone</p>
+                                <p id="review-phone" class="font-medium"></p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">County</p>
+                                <p id="review-location" class="font-medium"></p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-medium text-gray-800 mb-4 mt-6">Volunteer Details</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <p class="text-sm text-gray-500">Role</p>
+                                <p id="review-serviceType" class="font-medium"></p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Availability</p>
+                                <p id="review-availability" class="font-medium"></p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Certifications</p>
+                                <p id="review-certifications" class="font-medium"></p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-medium text-gray-800 mb-4 mt-6">Emergency Contacts</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-sm text-gray-500">Primary Contact</p>
+                                <p id="review-emergencyContact1" class="font-medium"></p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Secondary Contact</p>
+                                <p id="review-emergencyContact2" class="font-medium"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center mb-6">
+                        <input type="checkbox" id="termsAgreement" name="termsAgreement" required class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
+                        <label for="termsAgreement" class="ml-3 text-sm text-gray-700">
+                            I agree to the <a href="#" class="text-blue-600 hover:underline">Terms of Service</a> and <a href="#" class="text-blue-600 hover:underline">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <div class="flex justify-between mt-8">
+                        <button type="button" class="prev-btn px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-medium">
+                            <i class="fas fa-arrow-left mr-2"></i> Back
+                        </button>
+                        <button type="submit" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium">
+                            Submit Application <i class="fas fa-check ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('volunteerForm');
+            const formSteps = document.querySelectorAll('.form-step');
+            const nextBtns = document.querySelectorAll('.next-btn');
+            const prevBtns = document.querySelectorAll('.prev-btn');
+            const progressBar = document.getElementById('progressBar');
+            const stepIndicators = document.querySelectorAll('.step');
+
+            let currentStep = 1;
+
+            // Update form step visibility
+            function updateFormSteps() {
+                formSteps.forEach(step => {
+                    if (parseInt(step.dataset.step) === currentStep) {
+                        step.classList.remove('hidden');
+                        step.classList.add('active');
+                    } else {
+                        step.classList.add('hidden');
+                        step.classList.remove('active');
+                    }
+                });
+
+                // Update progress bar
+                progressBar.style.width = `${((currentStep - 1) / (formSteps.length - 1)) * 100}%`;
+
+                // Update step indicators
+                stepIndicators.forEach(step => {
+                    const stepNumber = parseInt(step.dataset.step);
+                    const numberElement = step.querySelector('div');
+                    const textElement = step.querySelector('span');
+
+                    if (stepNumber === currentStep) {
+                        numberElement.classList.remove('bg-gray-200', 'text-gray-600');
+                        numberElement.classList.add('bg-blue-500', 'text-white');
+                        textElement.classList.remove('text-gray-500');
+                        textElement.classList.add('text-gray-700');
+                    } else if (stepNumber < currentStep) {
+                        numberElement.classList.remove('bg-gray-200', 'text-gray-600');
+                        numberElement.classList.add('bg-blue-500', 'text-white');
+                        textElement.classList.remove('text-gray-500');
+                        textElement.classList.add('text-gray-700');
+                    } else {
+                        numberElement.classList.remove('bg-blue-500', 'text-white');
+                        numberElement.classList.add('bg-gray-200', 'text-gray-600');
+                        textElement.classList.remove('text-gray-700');
+                        textElement.classList.add('text-gray-500');
+                    }
+                });
+            }
+
+            // Next button click handler
+            nextBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Validate current step before proceeding
+                    const currentStepElement = document.querySelector(`.form-step[data-step="${currentStep}"]`);
+                    const inputs = currentStepElement.querySelectorAll('input[required], select[required]');
+                    let isValid = true;
+
+                    inputs.forEach(input => {
+                        if (!input.value) {
+                            input.classList.add('border-red-500');
+                            isValid = false;
+                        } else {
+                            input.classList.remove('border-red-500');
+                        }
+                    });
+
+                    if (isValid) {
+                        if (currentStep < formSteps.length) {
+                            currentStep++;
+                            updateFormSteps();
+                            updateReviewSection();
+                        }
+                    }
+                });
+            });
+
+            // Previous button click handler
+            prevBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (currentStep > 1) {
+                        currentStep--;
+                        updateFormSteps();
+                    }
+                });
+            });
+
+            // Update review section with form data
+            function updateReviewSection() {
+                if (currentStep === 4) {
+                    document.getElementById('review-fullName').textContent = document.getElementById('fullName').value;
+                    document.getElementById('review-email').textContent = document.getElementById('email').value;
+                    document.getElementById('review-phone').textContent = document.getElementById('phone').value;
+                    document.getElementById('review-location').textContent = document.getElementById('location').value;
+                    
+                    const serviceType = document.querySelector('input[name="serviceType"]:checked');
+                    document.getElementById('review-serviceType').textContent = serviceType ? serviceType.parentElement.querySelector('span:first-child').textContent : '';
+                    
+                    document.getElementById('review-availability').textContent = document.getElementById('availability').options[document.getElementById('availability').selectedIndex].text;
+                    
+                    const certifications = Array.from(document.querySelectorAll('input[name="certifications"]:checked'))
+                        .map(el => el.parentElement.querySelector('span').textContent)
+                        .join(', ');
+                    document.getElementById('review-certifications').textContent = certifications || 'None';
+                    
+                    document.getElementById('review-emergencyContact1').textContent = document.getElementById('emergencyContact1').value;
+                    document.getElementById('review-emergencyContact2').textContent = document.getElementById('emergencyContact2').value || 'None';
+                }
+            }
+
+            // Form submission handler
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+
+                try {
+                    const formData = new FormData(form);
+                    const data = {
+                        fullName: formData.get('fullName'),
+                        email: formData.get('email'),
+                        phone: formData.get('phone'),
+                        location: formData.get('location'),
+                        serviceType: formData.get('serviceType'),
+                        availability: formData.get('availability'),
+                        emergencyContact1: formData.get('emergencyContact1'),
+                        emergencyContact2: formData.get('emergencyContact2'),
+                        certifications: Array.from(form.querySelectorAll('input[name="certifications"]:checked'))
+                                       .map(el => el.value),
+                        timestamp: new Date().toISOString()
+                    };
+
+                    const response = await fetch('/.netlify/functions/saveVolunteer', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+
+                    if (!response.ok) {
+                        const error = await response.json();
+                        throw new Error(error.message || 'Submission failed');
+                    }
+
+                    // Show success modal
+                    document.getElementById('successModal').classList.remove('hidden');
+                    form.reset();
+                    currentStep = 1;
+                    updateFormSteps();
+                } catch (error) {
+                    alert('Error: ' + error.message);
+                    console.error('Submission error:', error);
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnText;
+                }
+            });
+
+            // Initialize form
+            updateFormSteps();
+        });
     </script>
 </body>
 </html>
