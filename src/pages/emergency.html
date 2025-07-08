@@ -8,104 +8,118 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .service-tag {
-            @apply inline-block px-3 py-1 rounded-full text-xs font-semibold;
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
         }
         .medic-tag {
-            @apply bg-red-100 text-red-800;
+            background-color: #fee2e2;
+            color: #991b1b;
         }
         .legal-tag {
-            @apply bg-blue-100 text-blue-800;
+            background-color: #dbeafe;
+            color: #1e40af;
         }
         .logistics-tag {
-            @apply bg-green-100 text-green-800;
+            background-color: #ecfccb;
+            color: #3f6212;
         }
         .availability-badge {
-            @apply inline-block px-2 py-1 rounded-full text-xs font-medium;
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
         }
         .full-time {
-            @apply bg-green-100 text-green-800;
+            background-color: #dcfce7;
+            color: #166534;
         }
         .part-time {
-            @apply bg-yellow-100 text-yellow-800;
+            background-color: #fef9c3;
+            color: #854d0e;
         }
         .on-call {
-            @apply bg-blue-100 text-blue-800;
+            background-color: #e0f2fe;
+            color: #075985;
         }
         .card-hover {
-            @apply transition-all duration-200 ease-in-out;
+            transition: all 0.2s ease;
         }
         .card-hover:hover {
-            @apply transform -translate-y-1 shadow-lg;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <div class="max-w-7xl mx-auto px-4 py-8">
-        <!-- Header -->
+        <!-- Header Section -->
         <div class="text-center mb-12">
             <h1 class="text-4xl font-bold text-gray-800 mb-2">Emergency Assistance</h1>
-            <p class="text-lg text-gray-600">Find immediate help from our volunteer network across Kenya</p>
+            <p class="text-lg text-gray-600">Connect with verified volunteers across Kenya</p>
         </div>
 
-        <!-- Emergency Filter Panel -->
+        <!-- Filter Panel -->
         <div class="bg-white rounded-xl shadow-md p-6 mb-8">
-            <h2 class="text-xl font-semibold text-gray-800 mb-4">What type of help do you need?</h2>
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Find Help</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <!-- County Filter -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Your County</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">County</label>
                     <select id="countyFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-    <option value="">All Counties</option>
-    <option value="Baringo">Baringo</option>
-    <option value="Bomet">Bomet</option>
-    <option value="Bungoma">Bungoma</option>
-    <option value="Busia">Busia</option>
-    <option value="Elgeyo-Marakwet">Elgeyo-Marakwet</option>
-    <option value="Embu">Embu</option>
-    <option value="Garissa">Garissa</option>
-    <option value="Homa Bay">Homa Bay</option>
-    <option value="Isiolo">Isiolo</option>
-    <option value="Kajiado">Kajiado</option>
-    <option value="Kakamega">Kakamega</option>
-    <option value="Kericho">Kericho</option>
-    <option value="Kiambu">Kiambu</option>
-    <option value="Kilifi">Kilifi</option>
-    <option value="Kirinyaga">Kirinyaga</option>
-    <option value="Kisii">Kisii</option>
-    <option value="Kisumu">Kisumu</option>
-    <option value="Kitui">Kitui</option>
-    <option value="Kwale">Kwale</option>
-    <option value="Laikipia">Laikipia</option>
-    <option value="Lamu">Lamu</option>
-    <option value="Machakos">Machakos</option>
-    <option value="Makueni">Makueni</option>
-    <option value="Mandera">Mandera</option>
-    <option value="Marsabit">Marsabit</option>
-    <option value="Meru">Meru</option>
-    <option value="Migori">Migori</option>
-    <option value="Mombasa">Mombasa</option>
-    <option value="Murang'a">Murang'a</option>
-    <option value="Nairobi">Nairobi</option>
-    <option value="Nakuru">Nakuru</option>
-    <option value="Nandi">Nandi</option>
-    <option value="Narok">Narok</option>
-    <option value="Nyamira">Nyamira</option>
-    <option value="Nyandarua">Nyandarua</option>
-    <option value="Nyeri">Nyeri</option>
-    <option value="Samburu">Samburu</option>
-    <option value="Siaya">Siaya</option>
-    <option value="Taita-Taveta">Taita-Taveta</option>
-    <option value="Tana River">Tana River</option>
-    <option value="Tharaka-Nithi">Tharaka-Nithi</option>
-    <option value="Trans Nzoia">Trans Nzoia</option>
-    <option value="Turkana">Turkana</option>
-    <option value="Uasin Gishu">Uasin Gishu</option>
-    <option value="Vihiga">Vihiga</option>
-    <option value="Wajir">Wajir</option>
-    <option value="West Pokot">West Pokot</option>
-</select>
-
+                        <option value="">All Counties</option>
+                        <option value="Baringo">Baringo</option>
+                        <option value="Bomet">Bomet</option>
+                        <option value="Bungoma">Bungoma</option>
+                        <option value="Busia">Busia</option>
+                        <option value="Elgeyo-Marakwet">Elgeyo-Marakwet</option>
+                        <option value="Embu">Embu</option>
+                        <option value="Garissa">Garissa</option>
+                        <option value="Homa Bay">Homa Bay</option>
+                        <option value="Isiolo">Isiolo</option>
+                        <option value="Kajiado">Kajiado</option>
+                        <option value="Kakamega">Kakamega</option>
+                        <option value="Kericho">Kericho</option>
+                        <option value="Kiambu">Kiambu</option>
+                        <option value="Kilifi">Kilifi</option>
+                        <option value="Kirinyaga">Kirinyaga</option>
+                        <option value="Kisii">Kisii</option>
+                        <option value="Kisumu">Kisumu</option>
+                        <option value="Kitui">Kitui</option>
+                        <option value="Kwale">Kwale</option>
+                        <option value="Laikipia">Laikipia</option>
+                        <option value="Lamu">Lamu</option>
+                        <option value="Machakos">Machakos</option>
+                        <option value="Makueni">Makueni</option>
+                        <option value="Mandera">Mandera</option>
+                        <option value="Marsabit">Marsabit</option>
+                        <option value="Meru">Meru</option>
+                        <option value="Migori">Migori</option>
+                        <option value="Mombasa">Mombasa</option>
+                        <option value="Murang'a">Murang'a</option>
+                        <option value="Nairobi">Nairobi</option>
+                        <option value="Nakuru">Nakuru</option>
+                        <option value="Nandi">Nandi</option>
+                        <option value="Narok">Narok</option>
+                        <option value="Nyamira">Nyamira</option>
+                        <option value="Nyandarua">Nyandarua</option>
+                        <option value="Nyeri">Nyeri</option>
+                        <option value="Samburu">Samburu</option>
+                        <option value="Siaya">Siaya</option>
+                        <option value="Taita-Taveta">Taita-Taveta</option>
+                        <option value="Tana River">Tana River</option>
+                        <option value="Tharaka-Nithi">Tharaka-Nithi</option>
+                        <option value="Trans Nzoia">Trans Nzoia</option>
+                        <option value="Turkana">Turkana</option>
+                        <option value="Uasin Gishu">Uasin Gishu</option>
+                        <option value="Vihiga">Vihiga</option>
+                        <option value="Wajir">Wajir</option>
+                        <option value="West Pokot">West Pokot</option>
+                    </select>
                 </div>
                 
                 <!-- Service Filter -->
@@ -113,336 +127,230 @@
                     <label class="block text-sm font-medium text-gray-700 mb-1">Service Type</label>
                     <select id="serviceFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         <option value="">All Services</option>
-                        <option value="medic">Medical Emergency</option>
-                        <option value="legal">Legal Assistance</option>
-                        <option value="logistics">Transport/Logistics</option>
+                        <option value="medic">Medical</option>
+                        <option value="legal">Legal</option>
+                        <option value="logistics">Logistics</option>
                     </select>
                 </div>
                 
-                <!-- Urgency Filter -->
+                <!-- Availability Filter -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Urgency Level</label>
-                    <select id="urgencyFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Availability</label>
+                    <select id="availabilityFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         <option value="">Any Availability</option>
-                        <option value="full-time">Immediate Help</option>
-                        <option value="on-call">Urgent but can wait</option>
+                        <option value="full-time">Full-time</option>
+                        <option value="part-time">Part-time</option>
+                        <option value="on-call">On-call</option>
                     </select>
-                </div>
-            </div>
-            
-            <!-- Search Box -->
-            <div class="mt-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Search Keywords</label>
-                <div class="relative">
-                    <input type="text" id="searchInput" placeholder="E.g. 'doctor', 'lawyer', 'transport'..." 
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pl-10">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-search text-gray-400"></i>
-                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Results Section -->
-        <div>
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold text-gray-800">Available Help</h2>
-                <span id="resultCount" class="text-sm text-gray-500">Loading help resources...</span>
-            </div>
-            
-            <!-- Help Cards Grid -->
-            <div id="helpGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Help cards will be inserted here by JavaScript -->
-            </div>
-            
-            <!-- Empty State -->
-            <div id="emptyState" class="text-center py-16 hidden">
-                <i class="fas fa-user-slash text-gray-300 text-5xl mb-4"></i>
-                <h3 class="text-lg font-medium text-gray-700">No help found</h3>
-                <p class="text-gray-500 mt-1">Try adjusting your filters or try again later</p>
-            </div>
-            
+        <div id="resultsContainer">
             <!-- Loading State -->
-            <div id="loadingState" class="text-center py-16">
+            <div class="text-center py-16" id="loadingState">
                 <i class="fas fa-spinner fa-spin text-blue-500 text-4xl mb-4"></i>
-                <p class="text-gray-500">Loading help resources...</p>
+                <p class="text-gray-500">Loading volunteers...</p>
             </div>
 
-            <!-- Error State -->
-            <div id="errorState" class="text-center py-16 hidden">
+            <!-- Empty State (hidden by default) -->
+            <div class="text-center py-16 hidden" id="emptyState">
+                <i class="fas fa-user-slash text-gray-300 text-4xl mb-4"></i>
+                <h3 class="text-lg font-medium text-gray-700">No volunteers found</h3>
+                <p class="text-gray-500 mt-1">Try adjusting your filters</p>
+            </div>
+
+            <!-- Error State (hidden by default) -->
+            <div class="text-center py-16 hidden" id="errorState">
                 <i class="fas fa-exclamation-triangle text-red-400 text-4xl mb-4"></i>
-                <h3 class="text-lg font-medium text-gray-700">Failed to load help resources</h3>
-                <p id="errorMessage" class="text-gray-500 mt-1"></p>
+                <h3 class="text-lg font-medium text-gray-700">Failed to load data</h3>
+                <p class="text-gray-500 mt-1" id="errorMessage"></p>
                 <button id="retryButton" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
                     Retry
                 </button>
             </div>
+
+            <!-- Volunteer Cards Container -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="volunteerGrid"></div>
         </div>
     </div>
 
-    <!-- Help Card Template -->
-    <template id="helpTemplate">
-        <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
-            <div class="p-6">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-800" data-name>Volunteer Name</h3>
-                        <div class="flex items-center mt-1">
-                            <span class="service-tag" data-service>Service</span>
-                            <span class="availability-badge ml-2" data-availability>Availability</span>
-                        </div>
-                    </div>
-                    <button class="call-btn h-10 w-10 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition flex items-center justify-center">
-                        <i class="fas fa-phone"></i>
-                    </button>
-                </div>
-                
-                <div class="mt-4">
-                    <div class="flex items-center text-sm text-gray-600 mb-2">
-                        <i class="fas fa-map-marker-alt mr-2"></i>
-                        <span data-county>County</span>
-                    </div>
-                    <div class="flex items-center text-sm text-gray-600 mb-3">
-                        <i class="fas fa-user-tie mr-2"></i>
-                        <span data-service-type>Service Type</span>
-                    </div>
-                    <div class="flex items-center text-sm text-gray-600">
-                        <i class="fas fa-phone-alt mr-2"></i>
-                        <span data-phone>Phone</span>
-                    </div>
-                </div>
-                
-                <div class="mt-4 pt-4 border-t border-gray-100">
-                    <p class="text-sm text-gray-600" data-message>Volunteer message</p>
-                </div>
-                
-                <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <span data-last-active>Last active: Today</span>
-                    <span data-distance>5km away</span>
-                </div>
-            </div>
-        </div>
-    </template>
-
     <script>
         // DOM Elements
-        const helpGrid = document.getElementById('helpGrid');
+        const volunteerGrid = document.getElementById('volunteerGrid');
         const loadingState = document.getElementById('loadingState');
         const emptyState = document.getElementById('emptyState');
         const errorState = document.getElementById('errorState');
         const errorMessage = document.getElementById('errorMessage');
         const retryButton = document.getElementById('retryButton');
-        const resultCount = document.getElementById('resultCount');
-        const helpTemplate = document.getElementById('helpTemplate');
         
         // Filter Elements
         const countyFilter = document.getElementById('countyFilter');
         const serviceFilter = document.getElementById('serviceFilter');
-        const urgencyFilter = document.getElementById('urgencyFilter');
-        const searchInput = document.getElementById('searchInput');
-        
+        const availabilityFilter = document.getElementById('availabilityFilter');
+
         // Volunteer Data
         let volunteers = [];
-        
-        // GitHub Configuration
-        const GITHUB_REPO = 'DKTJONATHAN/ProtestAid';
-        const DATA_PATH = 'data/volunteers.json';
-        const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/contents/${DATA_PATH}`;
-        
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            loadHelpResources();
+            loadVolunteerData();
             
             // Set up event listeners for filters
-            countyFilter.addEventListener('change', filterHelpResources);
-            serviceFilter.addEventListener('change', filterHelpResources);
-            urgencyFilter.addEventListener('change', filterHelpResources);
-            searchInput.addEventListener('input', filterHelpResources);
+            countyFilter.addEventListener('change', filterVolunteers);
+            serviceFilter.addEventListener('change', filterVolunteers);
+            availabilityFilter.addEventListener('change', filterVolunteers);
             
-            // Retry button event listener
-            retryButton.addEventListener('click', () => {
-                loadingState.classList.remove('hidden');
-                errorState.classList.add('hidden');
-                loadHelpResources();
-            });
+            // Retry button
+            retryButton.addEventListener('click', loadVolunteerData);
         });
-        
-        // Load volunteer data from GitHub API
-        async function loadHelpResources() {
+
+        // Load volunteer data from Netlify Function
+        async function loadVolunteerData() {
             try {
                 // Show loading state
                 loadingState.classList.remove('hidden');
                 emptyState.classList.add('hidden');
                 errorState.classList.add('hidden');
-                
-                // Prepare headers with authentication
-                const headers = {
-                    'Accept': 'application/vnd.github.v3+json',
-                    'Authorization': `token ${process.env.GITHUB_TOKEN}`
-                };
-                
-                // Fetch from GitHub API
-                const response = await fetch(GITHUB_API_URL, { headers });
+                volunteerGrid.innerHTML = '';
+
+                const response = await fetch('/.netlify/functions/volunteers');
                 
                 if (!response.ok) {
-                    throw new Error(`GitHub API error: ${response.status}`);
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
+
+                volunteers = await response.json();
                 
-                const data = await response.json();
+                // Add simulated metadata
+                volunteers = volunteers.map(volunteer => ({
+                    ...volunteer,
+                    lastActive: getRandomLastActive(),
+                    distance: getRandomDistance()
+                }));
+
+                filterVolunteers();
                 
-                // Check if content is base64 encoded
-                if (data.content && data.encoding === 'base64') {
-                    const decodedContent = atob(data.content);
-                    volunteers = JSON.parse(decodedContent);
-                    
-                    // Process volunteers - add additional fields if needed
-                    volunteers = volunteers.map(volunteer => ({
-                        ...volunteer,
-                        lastActive: getRandomLastActive(),
-                        distance: getRandomDistance()
-                    }));
-                    
-                    loadingState.classList.add('hidden');
-                    filterHelpResources();
-                } else {
-                    throw new Error('Unexpected response format from GitHub API');
-                }
             } catch (error) {
-                console.error('Error loading help resources:', error);
+                console.error('Error loading volunteer data:', error);
                 showErrorState(error);
+            } finally {
+                loadingState.classList.add('hidden');
             }
         }
-        
-        // Helper functions for sample data
-        function getRandomLastActive() {
-            const options = ['Today', 'Yesterday', '2 days ago', 'This week'];
-            return options[Math.floor(Math.random() * options.length)];
-        }
-        
-        function getRandomDistance() {
-            return `${Math.floor(Math.random() * 20) + 1}km away`;
-        }
-        
-        function showErrorState(error) {
-            loadingState.classList.add('hidden');
-            emptyState.classList.add('hidden');
-            errorState.classList.remove('hidden');
-            
-            errorMessage.textContent = error.message || 'Failed to load help resources. Please check your internet connection and try again.';
-        }
-        
+
         // Filter volunteers based on selected criteria
-        function filterHelpResources() {
-            const county = countyFilter.value.toLowerCase();
-            const service = serviceFilter.value.toLowerCase();
-            const urgency = urgencyFilter.value.toLowerCase();
-            const searchTerm = searchInput.value.toLowerCase();
+        function filterVolunteers() {
+            const county = countyFilter.value;
+            const service = serviceFilter.value;
+            const availability = availabilityFilter.value;
             
             const filtered = volunteers.filter(volunteer => {
-                // County filter
-                if (county && !volunteer.county.toLowerCase().includes(county)) {
-                    return false;
-                }
-                
-                // Service filter
-                if (service && !volunteer.service.toLowerCase().includes(service)) {
-                    return false;
-                }
-                
-                // Urgency filter
-                if (urgency && !volunteer.availability.toLowerCase().includes(urgency)) {
-                    return false;
-                }
-                
-                // Search term (name, service, county, message)
-                if (searchTerm) {
-                    const searchFields = [
-                        volunteer.name,
-                        volunteer.service,
-                        volunteer.county,
-                        volunteer.message || ''
-                    ].join(' ').toLowerCase();
-                    
-                    if (!searchFields.includes(searchTerm)) {
-                        return false;
-                    }
-                }
-                
-                return true;
+                return (
+                    (!county || volunteer.county === county) &&
+                    (!service || volunteer.service === service) &&
+                    (!availability || volunteer.availability === availability)
+                );
             });
-            
-            displayHelpResources(filtered);
+
+            displayVolunteers(filtered);
         }
-        
+
         // Display filtered volunteers
-        function displayHelpResources(filteredVolunteers) {
-            helpGrid.innerHTML = '';
-            
+        function displayVolunteers(filteredVolunteers) {
+            volunteerGrid.innerHTML = '';
+
             if (filteredVolunteers.length === 0) {
                 emptyState.classList.remove('hidden');
-                resultCount.textContent = '0 help resources found';
                 return;
             }
-            
-            emptyState.classList.add('hidden');
-            resultCount.textContent = `${filteredVolunteers.length} ${filteredVolunteers.length === 1 ? 'resource' : 'resources'} found`;
-            
+
             filteredVolunteers.forEach(volunteer => {
-                const card = helpTemplate.content.cloneNode(true);
-                
-                // Basic info
-                card.querySelector('[data-name]').textContent = volunteer.name;
-                card.querySelector('[data-county]').textContent = volunteer.county;
-                card.querySelector('[data-phone]').textContent = volunteer.phone;
-                card.querySelector('[data-message]').textContent = volunteer.message || 'Ready to help';
-                card.querySelector('[data-last-active]').textContent = `Last active: ${volunteer.lastActive}`;
-                card.querySelector('[data-distance]').textContent = volunteer.distance;
-                
-                // Service tag
-                const serviceTag = card.querySelector('[data-service]');
-                serviceTag.textContent = getServiceDisplayName(volunteer.service);
-                serviceTag.classList.add(getServiceClass(volunteer.service));
-                
-                // Service type display
-                card.querySelector('[data-service-type]').textContent = getServiceDisplayName(volunteer.service);
-                
-                // Availability badge
-                const availabilityBadge = card.querySelector('[data-availability]');
-                availabilityBadge.textContent = getAvailabilityDisplayName(volunteer.availability);
-                availabilityBadge.classList.add(volunteer.availability.replace(' ', '-'));
-                
-                // Set up call button
-                const callBtn = card.querySelector('.call-btn');
-                callBtn.addEventListener('click', () => {
-                    window.location.href = `tel:${volunteer.phone}`;
-                });
-                
-                helpGrid.appendChild(card);
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl shadow-md overflow-hidden card-hover';
+                card.innerHTML = `
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">${volunteer.name}</h3>
+                                <div class="flex items-center mt-1">
+                                    <span class="${getServiceClass(volunteer.service)}">${getServiceName(volunteer.service)}</span>
+                                    <span class="${getAvailabilityClass(volunteer.availability)} ml-2">${getAvailabilityName(volunteer.availability)}</span>
+                                </div>
+                            </div>
+                            <a href="tel:${volunteer.phone}" class="call-btn h-10 w-10 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition flex items-center justify-center">
+                                <i class="fas fa-phone"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <div class="flex items-center text-sm text-gray-600 mb-2">
+                                <i class="fas fa-map-marker-alt mr-2"></i>
+                                <span>${volunteer.county}</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-phone-alt mr-2"></i>
+                                <span>${volunteer.phone}</span>
+                            </div>
+                        </div>
+                        
+                        ${volunteer.message ? `
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <p class="text-sm text-gray-600">${volunteer.message}</p>
+                        </div>
+                        ` : ''}
+                        
+                        <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
+                            <span>Last active: ${volunteer.lastActive}</span>
+                            <span>${volunteer.distance}</span>
+                        </div>
+                    </div>
+                `;
+                volunteerGrid.appendChild(card);
             });
         }
-        
-        // Helper functions for display formatting
-        function getServiceDisplayName(service) {
+
+        // Helper functions
+        function showErrorState(error) {
+            errorMessage.textContent = error.message || 'Failed to load volunteer data. Please check your internet connection.';
+            errorState.classList.remove('hidden');
+        }
+
+        function getServiceName(service) {
             const services = {
-                'medic': 'Medical Professional',
-                'legal': 'Legal Expert',
-                'logistics': 'Logistics/Transport',
+                'medic': 'Medical',
+                'legal': 'Legal',
+                'logistics': 'Logistics',
                 'other': 'Other Support'
             };
             return services[service] || service;
         }
-        
+
         function getServiceClass(service) {
-            return `${service}-tag`;
+            return `service-tag ${service}-tag`;
         }
-        
-        function getAvailabilityDisplayName(availability) {
+
+        function getAvailabilityName(availability) {
             const availabilities = {
-                'full-time': 'Immediate',
-                'part-time': 'Available',
-                'on-call': 'On Call'
+                'full-time': 'Full-time',
+                'part-time': 'Part-time',
+                'on-call': 'On-call'
             };
             return availabilities[availability] || availability;
+        }
+
+        function getAvailabilityClass(availability) {
+            return `availability-badge ${availability.replace(' ', '-')}`;
+        }
+
+        function getRandomLastActive() {
+            const options = ['Today', 'Yesterday', 'This week', 'Last week'];
+            return options[Math.floor(Math.random() * options.length)];
+        }
+
+        function getRandomDistance() {
+            return `${Math.floor(Math.random() * 20) + 1}km away`;
         }
     </script>
 </body>
