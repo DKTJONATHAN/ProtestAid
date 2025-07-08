@@ -1,70 +1,79 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('volunteerForm');
-    const successMessage = document.getElementById('successMessage');
+    // Specialization field toggle
     const serviceTypeRadios = document.querySelectorAll('input[name="serviceType"]');
     const specializationField = document.getElementById('specializationField');
 
-    // Show/hide specialization field based on service type
     serviceTypeRadios.forEach(radio => {
         radio.addEventListener('change', function() {
-            if (this.value === 'medic' || this.value === 'legal') {
+            if (this.value === 'other') {
                 specializationField.classList.remove('hidden');
+                document.getElementById('specialization').setAttribute('required', '');
             } else {
                 specializationField.classList.add('hidden');
+                document.getElementById('specialization').removeAttribute('required');
             }
         });
     });
 
     // Form submission handler
-    form.addEventListener('submit', async function(e) {
+    const volunteerForm = document.getElementById('volunteerForm');
+    const successMessage = document.getElementById('successMessage');
+
+    volunteerForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        const formData = new FormData(form);
-        const volunteerData = {
-            id: Date.now().toString(),
-            timestamp: new Date().toISOString(),
-            status: 'pending',
-            fullName: formData.get('fullName'),
-            email: formData.get('email'),
-            phone: formData.get('phone'),
-            location: formData.get('location'),
-            serviceType: formData.get('serviceType'),
-            specialization: formData.get('specialization') || null,
-            emergencyContacts: {
-                primary: formData.get('emergencyContact1'),
-                secondary: formData.get('emergencyContact2') || null
+        if (!this.checkValidity()) {
+            this.reportValidity();
+            return;
+        }
+
+        const formData = {
+            personalInfo: {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                location: document.getElementById('location').value
             },
-            availability: formData.get('availability'),
-            experience: formData.get('experience') || null,
-            training: formData.get('training') || null
+            volunteerRole: {
+                serviceType: document.querySelector('input[name="serviceType"]:checked').value,
+                specialization: document.getElementById('specialization').value || null
+            },
+            emergencyContacts: {
+                primary: document.getElementById('emergencyContact1').value,
+                secondary: document.getElementById('emergencyContact2').value || null,
+                availability: document.getElementById('availability').value
+            },
+            additionalInfo: {
+                experience: document.getElementById('experience').value || null,
+                training: document.getElementById('training').value || null,
+                consent: document.getElementById('consent').checked,
+                timestamp: new Date().toISOString()
+            }
         };
 
         try {
-            // Save to Netlify function (will update GitHub)
-            const response = await saveVolunteerData(volunteerData);
-            
+            // Send data to Netlify function
+            const response = await fetch('/.netlify/functions/saveVolunteer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
             if (response.ok) {
-                form.reset();
-                form.classList.add('hidden');
+                volunteerForm.reset();
+                volunteerForm.classList.add('hidden');
                 successMessage.classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                successMessage.scrollIntoView({ behavior: 'smooth' });
             } else {
-                throw new Error('Failed to save volunteer data');
+                throw new Error(result.error || 'Failed to save data');
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('There was an error submitting your form. Please try again.');
+            alert('Error submitting form: ' + error.message);
         }
     });
-
-    async function saveVolunteerData(data) {
-        // This will call our Netlify function
-        return await fetch('/.netlify/functions/update-volunteers', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        });
-    }
 });
