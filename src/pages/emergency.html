@@ -6,143 +6,442 @@
     <title>Emergency Help - ProtestAid Kenya</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="../assets/js/emergency.js" defer></script>
+    <style>
+        .emergency-card {
+            transition: all 0.3s ease;
+        }
+        .emergency-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .loading-spinner {
+            display: none;
+        }
+        .loading .loading-spinner {
+            display: inline-block;
+        }
+    </style>
 </head>
-<body class="bg-gray-50">
-    <div class="max-w-4xl mx-auto py-12 px-4">
-        <div class="text-center mb-12">
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-4xl mx-auto py-8 px-4">
+        <!-- Header -->
+        <div class="text-center mb-8">
             <h1 class="text-3xl font-bold text-red-600">Emergency Assistance</h1>
-            <p class="mt-4 text-gray-600">Request immediate help from our volunteer network</p>
+            <p class="mt-2 text-gray-600">Connect with the nearest help in your area</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Emergency Form -->
-            <div class="bg-white shadow-md rounded-lg p-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">Request Help</h2>
-                <form id="emergencyForm">
-                    <div class="space-y-4">
-                        <div>
-                            <label for="emergencyType" class="block text-sm font-medium text-gray-700">Type of Emergency</label>
-                            <select id="emergencyType" name="emergencyType" required 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                <option value="">Select emergency type</option>
-                                <option value="medical">Medical Emergency</option>
-                                <option value="police">Police Brutality</option>
-                                <option value="abduction">Abduction Risk</option>
-                                <option value="legal">Legal Assistance</option>
-                                <option value="other">Other Emergency</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label for="location" class="block text-sm font-medium text-gray-700">Your Location</label>
-                            <div class="mt-1 flex rounded-md shadow-sm">
-                                <input type="text" id="location" name="location" required 
-                                       class="flex-1 block w-full border border-gray-300 rounded-l-md py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                <button type="button" id="getLocation" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 hover:bg-gray-100">
-                                    <i class="fas fa-location-arrow"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <label for="details" class="block text-sm font-medium text-gray-700">Emergency Details</label>
-                            <textarea id="details" name="details" rows="3" required 
-                                      class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5">
-                                <input id="shareContact" name="shareContact" type="checkbox" 
-                                       class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
-                            </div>
-                            <div class="ml-3 text-sm">
-                                <label for="shareContact" class="font-medium text-gray-700">Share my contact information with responders</label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-6">
-                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                            Request Emergency Help
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Emergency Selection Panel -->
+            <div class="bg-white shadow-md rounded-xl p-6 emergency-card">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Select Emergency Type</h2>
+                
+                <div class="space-y-4">
+                    <!-- Emergency Type Buttons -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <button data-type="medical" class="emergency-type-btn py-3 px-4 border border-red-200 rounded-lg flex flex-col items-center justify-center bg-red-50 hover:bg-red-100 transition">
+                            <i class="fas fa-plus-circle text-red-600 text-2xl mb-2"></i>
+                            <span class="font-medium">Medical</span>
+                        </button>
+                        <button data-type="legal" class="emergency-type-btn py-3 px-4 border border-blue-200 rounded-lg flex flex-col items-center justify-center bg-blue-50 hover:bg-blue-100 transition">
+                            <i class="fas fa-gavel text-blue-600 text-2xl mb-2"></i>
+                            <span class="font-medium">Legal</span>
+                        </button>
+                        <button data-type="police" class="emergency-type-btn py-3 px-4 border border-purple-200 rounded-lg flex flex-col items-center justify-center bg-purple-50 hover:bg-purple-100 transition">
+                            <i class="fas fa-shield-alt text-purple-600 text-2xl mb-2"></i>
+                            <span class="font-medium">Police</span>
+                        </button>
+                        <button data-type="abduction" class="emergency-type-btn py-3 px-4 border border-yellow-200 rounded-lg flex flex-col items-center justify-center bg-yellow-50 hover:bg-yellow-100 transition">
+                            <i class="fas fa-exclamation-triangle text-yellow-600 text-2xl mb-2"></i>
+                            <span class="font-medium">Abduction</span>
                         </button>
                     </div>
-                </form>
-            </div>
-            
-            <!-- Emergency Contacts -->
-            <div class="bg-white shadow-md rounded-lg p-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">Immediate Contacts</h2>
-                <div class="space-y-4">
-                    <div class="p-4 border border-gray-200 rounded-md">
-                        <h3 class="font-medium text-gray-900">Medical Emergency</h3>
-                        <div class="mt-2 flex justify-between items-center">
-                            <span class="text-sm text-gray-600">Nearest volunteer medics</span>
-                            <button class="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-green-600 hover:bg-green-700">
-                                <i class="fas fa-phone mr-1"></i> Call Now
-                            </button>
-                        </div>
-                    </div>
                     
-                    <div class="p-4 border border-gray-200 rounded-md">
-                        <h3 class="font-medium text-gray-900">Legal Assistance</h3>
-                        <div class="mt-2 flex justify-between items-center">
-                            <span class="text-sm text-gray-600">Protest legal aid hotline</span>
-                            <button class="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700">
-                                <i class="fas fa-phone mr-1"></i> Call Now
+                    <!-- Location Detection -->
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="font-medium text-gray-800">Your Location</h3>
+                                <p id="locationText" class="text-sm text-gray-500">Not yet detected</p>
+                            </div>
+                            <button id="detectLocationBtn" class="flex items-center space-x-2 bg-blue-50 hover:bg-blue-100 text-blue-600 px-4 py-2 rounded-lg transition">
+                                <i class="fas fa-location-arrow"></i>
+                                <span>Detect</span>
                             </button>
-                        </div>
-                    </div>
-                    
-                    <div class="p-4 border border-gray-200 rounded-md">
-                        <h3 class="font-medium text-gray-900">Police Brutality</h3>
-                        <div class="mt-2 flex justify-between items-center">
-                            <span class="text-sm text-gray-600">Independent police oversight</span>
-                            <button class="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-purple-600 hover:bg-purple-700">
-                                <i class="fas fa-phone mr-1"></i> Call Now
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="p-4 border border-gray-200 rounded-md bg-yellow-50">
-                        <h3 class="font-medium text-gray-900">Safe Zones Nearby</h3>
-                        <div class="mt-2">
-                            <p class="text-sm text-gray-600">Loading safe locations near you...</p>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Help Options Panel -->
+            <div class="bg-white shadow-md rounded-xl p-6 emergency-card">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold text-gray-800">Available Help</h2>
+                    <div id="helpTypeBadge" class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium">
+                        Select emergency type
+                    </div>
+                </div>
+
+                <div id="helpOptions" class="space-y-4">
+                    <!-- Initial state before selection -->
+                    <div class="text-center py-10">
+                        <i class="fas fa-hands-helping text-gray-300 text-4xl mb-3"></i>
+                        <p class="text-gray-500">Please select an emergency type to see available help</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        
+
         <!-- Emergency Instructions -->
-        <div class="mt-8 bg-white shadow-md rounded-lg p-6">
+        <div class="mt-6 bg-white shadow-md rounded-xl p-6 emergency-card">
             <h2 class="text-xl font-semibold text-gray-800 mb-4">Emergency Instructions</h2>
-            <div class="prose prose-sm max-w-none">
-                <h3 class="text-lg font-medium text-gray-900">If you're injured:</h3>
-                <ul class="list-disc pl-5 space-y-1">
-                    <li>Find a safe place away from the conflict</li>
-                    <li>Apply pressure to bleeding wounds with clean cloth</li>
-                    <li>For tear gas, rinse eyes with clean water or milk</li>
-                    <li>Call for medical help using the form or buttons above</li>
-                </ul>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-4 bg-red-50 rounded-lg">
+                    <h3 class="font-medium text-red-800 flex items-center">
+                        <i class="fas fa-plus-circle mr-2"></i> Medical Emergency
+                    </h3>
+                    <ul class="mt-2 space-y-1 text-sm text-red-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-2 text-xs"></i>
+                            <span>Find a safe place first</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-2 text-xs"></i>
+                            <span>Apply pressure to bleeding</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-2 text-xs"></i>
+                            <span>For tear gas, rinse with clean water</span>
+                        </li>
+                    </ul>
+                </div>
                 
-                <h3 class="text-lg font-medium text-gray-900 mt-4">If you're arrested:</h3>
-                <ul class="list-disc pl-5 space-y-1">
-                    <li>Remain calm and don't resist</li>
-                    <li>Demand to see a lawyer immediately</li>
-                    <li>You have the right to remain silent - don't sign anything</li>
-                    <li>Ask to contact ProtestAid legal team</li>
-                </ul>
+                <div class="p-4 bg-blue-50 rounded-lg">
+                    <h3 class="font-medium text-blue-800 flex items-center">
+                        <i class="fas fa-gavel mr-2"></i> Legal Assistance
+                    </h3>
+                    <ul class="mt-2 space-y-1 text-sm text-blue-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-2 text-xs"></i>
+                            <span>Remain calm if arrested</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-2 text-xs"></i>
+                            <span>Demand to see a lawyer</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-2 text-xs"></i>
+                            <span>Don't sign anything</span>
+                        </li>
+                    </ul>
+                </div>
                 
-                <h3 class="text-lg font-medium text-gray-900 mt-4">If you witness an abduction:</h3>
-                <ul class="list-disc pl-5 space-y-1">
-                    <li>Note the vehicle details (color, plate, direction)</li>
-                    <li>Record video if safe to do so</li>
-                    <li>Alert others nearby loudly</li>
-                    <li>Immediately contact our network using the form</li>
-                </ul>
+                <div class="p-4 bg-yellow-50 rounded-lg">
+                    <h3 class="font-medium text-yellow-800 flex items-center">
+                        <i class="fas fa-exclamation-triangle mr-2"></i> Abduction Risk
+                    </h3>
+                    <ul class="mt-2 space-y-1 text-sm text-yellow-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-2 text-xs"></i>
+                            <span>Note vehicle details</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-2 text-xs"></i>
+                            <span>Record video if safe</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle mt-1 mr-2 text-xs"></i>
+                            <span>Alert others loudly</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Help Option Template (Hidden) -->
+    <template id="helpOptionTemplate">
+        <div class="p-4 border rounded-lg">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="font-medium text-gray-900" data-name>Volunteer Name</h3>
+                    <div class="mt-1 flex items-center text-sm text-gray-500">
+                        <i class="fas fa-map-marker-alt mr-1.5"></i>
+                        <span data-location>Location</span>
+                    </div>
+                    <div class="mt-1 flex items-center text-sm text-gray-500">
+                        <i class="fas fa-certificate mr-1.5"></i>
+                        <span data-certifications>Certifications</span>
+                    </div>
+                </div>
+                <div class="flex space-x-2">
+                    <button class="call-btn inline-flex items-center justify-center h-10 w-10 rounded-full bg-green-100 text-green-600 hover:bg-green-200 transition">
+                        <i class="fas fa-phone"></i>
+                    </button>
+                    <button class="please-call-btn inline-flex items-center justify-center h-10 w-10 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition">
+                        <i class="fas fa-phone-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center">
+                <span class="text-xs text-gray-400" data-distance>Distance calculating...</span>
+                <span class="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600" data-availability>Availability</span>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        // County coordinates (simplified for demo)
+        const countyCoordinates = {
+            "Nairobi": { lat: -1.286389, lng: 36.817223 },
+            "Mombasa": { lat: -4.0435, lng: 39.6682 },
+            "Kisumu": { lat: -0.1022, lng: 34.7617 },
+            "Nakuru": { lat: -0.3031, lng: 36.0800 },
+            "Kakamega": { lat: 0.2827, lng: 34.7519 },
+            // Add more counties as needed
+        };
+
+        // DOM Elements
+        const emergencyTypeBtns = document.querySelectorAll('.emergency-type-btn');
+        const detectLocationBtn = document.getElementById('detectLocationBtn');
+        const locationText = document.getElementById('locationText');
+        const helpOptions = document.getElementById('helpOptions');
+        const helpTypeBadge = document.getElementById('helpTypeBadge');
+        const helpOptionTemplate = document.getElementById('helpOptionTemplate');
+
+        // State
+        let currentEmergencyType = null;
+        let userLocation = null;
+        let nearestCounty = null;
+        let volunteersData = [];
+
+        // Event Listeners
+        emergencyTypeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentEmergencyType = btn.dataset.type;
+                updateEmergencyTypeUI();
+                if (userLocation) {
+                    findNearestHelp();
+                }
+            });
+        });
+
+        detectLocationBtn.addEventListener('click', detectUserLocation);
+
+        // Load volunteer data from JSON file
+        async function loadVolunteerData() {
+            try {
+                const response = await fetch('data/volunteers.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load volunteer data');
+                }
+                volunteersData = await response.json();
+                console.log('Volunteer data loaded successfully');
+            } catch (error) {
+                console.error('Error loading volunteer data:', error);
+                // Fallback to sample data if JSON load fails
+                volunteersData = [
+                    {
+                        "fullName": "Jonathan Mwaniki",
+                        "email": "jonathanmwaniki07@gmail.com",
+                        "phone": "0706396305",
+                        "location": "Kakamega",
+                        "serviceType": "medic",
+                        "availability": "on-call",
+                        "emergencyContact1": "0706396305",
+                        "emergencyContact2": "1122",
+                        "certifications": ["firstaid"],
+                        "timestamp": "2025-07-08T09:49:02.742Z"
+                    }
+                ];
+            }
+        }
+
+        // Initialize by loading volunteer data
+        loadVolunteerData();
+
+        // Functions
+        function updateEmergencyTypeUI() {
+            // Update active button state
+            emergencyTypeBtns.forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-offset-2');
+                if (btn.dataset.type === currentEmergencyType) {
+                    const colorClass = {
+                        medical: 'ring-red-500',
+                        legal: 'ring-blue-500',
+                        police: 'ring-purple-500',
+                        abduction: 'ring-yellow-500'
+                    }[currentEmergencyType];
+                    btn.classList.add('ring-2', 'ring-offset-2', colorClass);
+                }
+            });
+
+            // Update help type badge
+            const typeNames = {
+                medical: 'Medical Help',
+                legal: 'Legal Help',
+                police: 'Police Help',
+                abduction: 'Abduction Help'
+            };
+            helpTypeBadge.textContent = typeNames[currentEmergencyType] || 'Select emergency type';
+            helpTypeBadge.className = `px-3 py-1 rounded-full text-sm font-medium ${
+                currentEmergencyType ? 
+                {
+                    medical: 'bg-red-100 text-red-600',
+                    legal: 'bg-blue-100 text-blue-600',
+                    police: 'bg-purple-100 text-purple-600',
+                    abduction: 'bg-yellow-100 text-yellow-600'
+                }[currentEmergencyType] : 'bg-gray-100 text-gray-600'
+            }`;
+        }
+
+        function detectUserLocation() {
+            detectLocationBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Detecting...';
+            detectLocationBtn.disabled = true;
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        determineNearestCounty();
+                        locationText.textContent = `Detected in ${nearestCounty}`;
+                        detectLocationBtn.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Detected';
+                        
+                        if (currentEmergencyType) {
+                            findNearestHelp();
+                        }
+                    },
+                    error => {
+                        console.error("Error getting location:", error);
+                        locationText.textContent = "Could not detect location";
+                        detectLocationBtn.innerHTML = '<i class="fas fa-location-arrow mr-2"></i> Try Again';
+                        detectLocationBtn.disabled = false;
+                    }
+                );
+            } else {
+                locationText.textContent = "Geolocation not supported";
+                detectLocationBtn.innerHTML = '<i class="fas fa-times-circle mr-2"></i> Not Supported';
+            }
+        }
+
+        function determineNearestCounty() {
+            if (!userLocation) return;
+            
+            let nearest = null;
+            let shortestDistance = Infinity;
+            
+            for (const [county, coords] of Object.entries(countyCoordinates)) {
+                const distance = calculateDistance(
+                    userLocation.lat, userLocation.lng,
+                    coords.lat, coords.lng
+                );
+                
+                if (distance < shortestDistance) {
+                    shortestDistance = distance;
+                    nearest = county;
+                }
+            }
+            
+            nearestCounty = nearest;
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            // Haversine formula to calculate distance between two coordinates
+            const R = 6371; // Earth radius in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function findNearestHelp() {
+            if (!currentEmergencyType || !nearestCounty || volunteersData.length === 0) return;
+            
+            // Filter volunteers by type and location
+            const matchingVolunteers = volunteersData.filter(volunteer => 
+                volunteer.serviceType === currentEmergencyType && 
+                volunteer.location.toLowerCase() === nearestCounty.toLowerCase()
+            );
+            
+            // Sort by availability (simple demo - would use more complex logic in real app)
+            matchingVolunteers.sort((a, b) => {
+                if (a.availability === "available" && b.availability !== "available") return -1;
+                if (b.availability === "available" && a.availability !== "available") return 1;
+                return 0;
+            });
+            
+            displayHelpOptions(matchingVolunteers);
+        }
+
+        function displayHelpOptions(volunteers) {
+            helpOptions.innerHTML = '';
+            
+            if (volunteers.length === 0) {
+                helpOptions.innerHTML = `
+                    <div class="text-center py-10">
+                        <i class="fas fa-exclamation-circle text-gray-300 text-4xl mb-3"></i>
+                        <p class="text-gray-500">No volunteers found in your area</p>
+                        <p class="text-sm text-gray-400 mt-2">Try checking nearby counties or different emergency type</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            volunteers.forEach(volunteer => {
+                const helpOption = helpOptionTemplate.content.cloneNode(true);
+                
+                // Fill in volunteer data
+                helpOption.querySelector('[data-name]').textContent = volunteer.fullName;
+                helpOption.querySelector('[data-location]').textContent = volunteer.location;
+                helpOption.querySelector('[data-certifications]').textContent = volunteer.certifications?.join(', ') || 'Not specified';
+                helpOption.querySelector('[data-availability]').textContent = volunteer.availability;
+                
+                // Calculate approximate distance
+                const countyCoords = countyCoordinates[volunteer.location];
+                if (countyCoords && userLocation) {
+                    const distance = calculateDistance(
+                        userLocation.lat, userLocation.lng,
+                        countyCoords.lat, countyCoords.lng
+                    );
+                    helpOption.querySelector('[data-distance]').textContent = `~${Math.round(distance)} km away`;
+                }
+                
+                // Set up call buttons
+                const callBtn = helpOption.querySelector('.call-btn');
+                const pleaseCallBtn = helpOption.querySelector('.please-call-btn');
+                
+                // Use emergency contact if available, otherwise use phone
+                const contactNumber = volunteer.emergencyContact1 || volunteer.phone;
+                
+                callBtn.addEventListener('click', () => {
+                    if (contactNumber) {
+                        window.location.href = `tel:${contactNumber}`;
+                    } else {
+                        alert('No contact number available for this volunteer');
+                    }
+                });
+                
+                pleaseCallBtn.addEventListener('click', () => {
+                    if (contactNumber) {
+                        // For Safaricom: *131*<number>#
+                        // For Airtel: *140*<number>#
+                        const pleaseCallCode = `*131*${contactNumber.replace(/\D/g, '')}#`;
+                        window.location.href = `tel:${pleaseCallCode}`;
+                    } else {
+                        alert('No contact number available for this volunteer');
+                    }
+                });
+                
+                helpOptions.appendChild(helpOption);
+            });
+        }
+    </script>
 </body>
 </html>
