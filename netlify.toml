@@ -1,23 +1,16 @@
 [build]
-  # Point to your source directory
+  # Publish the raw 'src' folder (since index.html is inside it)
   publish = "src"
-  # Or if you need to build first, set this to your build output directory
-  # publish = "dist"
-  
-  # Set the base directory for your pages
-  base = "src"
 
-  functions = "netlify/functions"
+  # No build command needed (static HTML)
+  command = "echo 'No build step required'"
 
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
 
-[functions]
-  node_bundler = "esbuild"
-
-# Add this to handle client-side routing if you're using a SPA
+# SPA-style redirects (for client-side routing if needed)
 [[redirects]]
   from = "/*"
   to = "/index.html"
