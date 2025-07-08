@@ -631,8 +631,8 @@
                     });
 
                     pleaseCallBtn.addEventListener('click', () => {
-                        // Safaricom/Airtel Please Call Me
-                        const pleaseCallCode = `*131*${phoneNumber.replace(/\D/g, '')}#`;
+                        // Correct Safaricom/Airtel Please Call Me code for Kenya (*130#)
+                        const pleaseCallCode = `*130*${phoneNumber.replace(/\D/g, '')}#`;
                         window.location.href = `tel:${pleaseCallCode}`;
                     });
                 } else {
