@@ -1,23 +1,48 @@
 [build]
-  # Publish the raw 'src' folder (since index.html is inside it)
   publish = "src"
-
-  # No build command needed (static HTML)
   command = "echo 'No build step required'"
 
+# Environment variables
+[build.environment]
+  GITHUB_TOKEN = "@github_token"  # Set this in Netlify UI
+  GITHUB_REPO = "DKTJONATHAN/ProtestAid"
+
+# API redirects
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
+  force = true
 
-# SPA-style redirects (for client-side routing if needed)
+# SPA-style redirects
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-# Disable caching for JSON files (adds this new section)
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# JSON caching
 [[headers]]
   for = "/*.json"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
+    Access-Control-Allow-Origin = "*"
+
+# HTML caching
+[[headers]]
+  for = "/pages/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+# Static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
