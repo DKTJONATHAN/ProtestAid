@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "fullName": "Hihin kgivh",
+    "email": "oyh@gif.gig",
+    "phone": "0755672565755",
+    "location": "Uasin Gishu",
+    "serviceType": "medic",
+    "availability": "on-call",
+    "emergencyContact1": "68477",
+    "emergencyContact2": "7467",
+    "certifications": [
+      "legal"
+    ],
+    "timestamp": "2025-07-08T15:40:39.480Z"
+  }
+]
