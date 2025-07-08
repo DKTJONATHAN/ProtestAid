@@ -1,25 +1,30 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Toggle specialization field
-    const serviceRadios = document.querySelectorAll('input[name="serviceType"]');
-    const specField = document.getElementById('specializationField');
+    // Toggle specialization field visibility
+    const serviceTypeRadios = document.querySelectorAll('input[name="serviceType"]');
+    const specializationField = document.getElementById('specializationField');
     
-    serviceRadios.forEach(radio => {
+    serviceTypeRadios.forEach(radio => {
         radio.addEventListener('change', function() {
-            specField.classList.toggle('hidden', this.value !== 'other');
-            document.getElementById('specialization').toggleAttribute('required', this.value === 'other');
+            const showField = this.value === 'other';
+            specializationField.classList.toggle('hidden', !showField);
+            document.getElementById('specialization').toggleAttribute('required', showField);
         });
     });
 
-    // Form submission
+    // Form submission handler
     const form = document.getElementById('volunteerForm');
-    form.addEventListener('submit', async (e) => {
+    const successMessage = document.getElementById('successMessage');
+
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
+        // Validate form
         if (!form.checkValidity()) {
             form.reportValidity();
             return;
         }
 
+        // Prepare form data
         const formData = {
             fullName: form.fullName.value,
             email: form.email.value,
@@ -32,28 +37,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 secondary: form.emergencyContact2.value || null
             },
             availability: form.availability.value,
-            experience: form.experience.value || null,
-            training: form.training.value || null,
-            consent: form.consent.checked,
-            timestamp: new Date().toISOString()
+            experience: form.experience.value,
+            training: form.training.value,
+            consent: form.consent.checked
         };
 
         try {
+            // Submit to Netlify function
             const response = await fetch('/.netlify/functions/volunteers', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(formData)
             });
 
+            const result = await response.json();
+
             if (response.ok) {
+                // Show success and reset form
                 form.reset();
-                document.getElementById('successMessage').classList.remove('hidden');
+                form.classList.add('hidden');
+                successMessage.classList.remove('hidden');
+                window.scrollTo({
+                    top: successMessage.offsetTop,
+                    behavior: 'smooth'
+                });
             } else {
-                throw new Error(await response.text());
+                throw new Error(result.error || 'Submission failed');
             }
         } catch (error) {
             console.error('Submission error:', error);
-            alert('Failed to submit: ' + error.message);
+            alert(`Error: ${error.message}\nPlease try again.`);
         }
     });
 });
