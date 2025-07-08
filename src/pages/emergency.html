@@ -81,7 +81,7 @@
                 <div class="space-y-4">
                     <!-- Emergency Type Buttons -->
                     <div class="grid grid-cols-2 gap-3">
-                        <button data-type="medical" class="emergency-type-btn py-3 px-4 border border-red-200 rounded-lg flex flex-col items-center justify-center bg-red-50 hover:bg-red-100 transition">
+                        <button data-type="medic" class="emergency-type-btn py-3 px-4 border border-red-200 rounded-lg flex flex-col items-center justify-center bg-red-50 hover:bg-red-100 transition">
                             <i class="fas fa-plus-circle text-red-600 text-2xl mb-2"></i>
                             <span class="font-medium">Medical</span>
                         </button>
@@ -297,21 +297,71 @@
         // Load volunteer data from JSON file
         async function loadVolunteerData() {
             try {
-                const response = await fetch('data/volunteers.json');
-                if (!response.ok) throw new Error('Failed to load volunteer data');
+                // Try multiple possible paths
+                let response = await fetch('data/volunteers.json');
+                if (!response.ok) {
+                    response = await fetch('../data/volunteers.json');
+                    if (!response.ok) throw new Error('Failed to load volunteer data');
+                }
                 volunteersData = await response.json();
                 console.log('Volunteer data loaded:', volunteersData);
+                
+                // If no data loaded, use the sample data you provided
+                if (volunteersData.length === 0) {
+                    volunteersData = [
+                        {
+                            "fullName": "Jonathan Mwaniki ",
+                            "email": "jonathanmwaniki07@gmail.com",
+                            "phone": "0706396305",
+                            "location": "Kakamega",
+                            "serviceType": "medic",
+                            "availability": "on-call",
+                            "emergencyContact1": "0706396305",
+                            "emergencyContact2": "1122",
+                            "certifications": ["firstaid"],
+                            "timestamp": "2025-07-08T09:49:02.742Z"
+                        },
+                        {
+                            "fullName": "JONATHAN MMWANIKI",
+                            "email": "vlatkaparfulr@outlook.pt",
+                            "phone": "0706396305",
+                            "location": "Meru",
+                            "serviceType": "medic",
+                            "availability": "on-call",
+                            "emergencyContact1": "0706396305",
+                            "emergencyContact2": "8675",
+                            "certifications": ["firstaid", "legal", "crisis"],
+                            "timestamp": "2025-07-08T10:45:20.258Z"
+                        }
+                    ];
+                }
             } catch (error) {
                 console.error('Error loading volunteer data:', error);
-                // Fallback to sample data
+                // Use the sample data as fallback
                 volunteersData = [
                     {
-                        "fullName": "Jonathan Mwaniki",
+                        "fullName": "Jonathan Mwaniki ",
+                        "email": "jonathanmwaniki07@gmail.com",
                         "phone": "0706396305",
                         "location": "Kakamega",
                         "serviceType": "medic",
                         "availability": "on-call",
-                        "certifications": ["firstaid"]
+                        "emergencyContact1": "0706396305",
+                        "emergencyContact2": "1122",
+                        "certifications": ["firstaid"],
+                        "timestamp": "2025-07-08T09:49:02.742Z"
+                    },
+                    {
+                        "fullName": "JONATHAN MMWANIKI",
+                        "email": "vlatkaparfulr@outlook.pt",
+                        "phone": "0706396305",
+                        "location": "Meru",
+                        "serviceType": "medic",
+                        "availability": "on-call",
+                        "emergencyContact1": "0706396305",
+                        "emergencyContact2": "8675",
+                        "certifications": ["firstaid", "legal", "crisis"],
+                        "timestamp": "2025-07-08T10:45:20.258Z"
                     }
                 ];
             }
@@ -326,7 +376,7 @@
                 btn.classList.remove('ring-2', 'ring-offset-2');
                 if (btn.dataset.type === currentEmergencyType) {
                     const colorClass = {
-                        medical: 'ring-red-500',
+                        medic: 'ring-red-500',
                         legal: 'ring-blue-500',
                         police: 'ring-purple-500',
                         abduction: 'ring-yellow-500'
@@ -336,7 +386,7 @@
             });
 
             const typeNames = {
-                medical: 'Medical',
+                medic: 'Medical',
                 legal: 'Legal',
                 police: 'Police',
                 abduction: 'Abduction'
@@ -345,7 +395,7 @@
             helpTypeBadge.className = `px-3 py-1 rounded-full text-sm font-medium ${
                 currentEmergencyType ? 
                 {
-                    medical: 'bg-red-100 text-red-600',
+                    medic: 'bg-red-100 text-red-600',
                     legal: 'bg-blue-100 text-blue-600',
                     police: 'bg-purple-100 text-purple-600',
                     abduction: 'bg-yellow-100 text-yellow-600'
@@ -491,20 +541,31 @@
 
         // Find and display volunteers
         function findVolunteers() {
+            console.log("Current filters:", {
+                type: currentEmergencyType,
+                county: nearestCounty,
+                dataCount: volunteersData.length
+            });
+
             if (!currentEmergencyType || !nearestCounty || volunteersData.length === 0) {
-                console.log("Cannot find volunteers:", {
-                    type: currentEmergencyType,
-                    county: nearestCounty,
-                    data: volunteersData.length
-                });
+                helpOptions.innerHTML = `
+                    <div class="text-center py-10">
+                        <i class="fas fa-exclamation-triangle text-yellow-300 text-4xl mb-3"></i>
+                        <p class="text-gray-500">System not ready</p>
+                        <p class="text-sm text-gray-400 mt-2">Type: ${currentEmergencyType || 'none'}, 
+                        Location: ${nearestCounty || 'none'}, 
+                        Volunteers: ${volunteersData.length}</p>
+                    </div>
+                `;
                 return;
             }
 
-            // Case-insensitive matching for county and service type
             const matchedVolunteers = volunteersData.filter(volunteer => {
-                return volunteer.serviceType === currentEmergencyType && 
-                       volunteer.location && 
-                       volunteer.location.toLowerCase().includes(nearestCounty.toLowerCase());
+                const matches = (volunteer.serviceType || '').toLowerCase() === currentEmergencyType.toLowerCase() && 
+                              volunteer.location && 
+                              volunteer.location.toLowerCase().includes(nearestCounty.toLowerCase());
+                console.log(`Volunteer ${volunteer.fullName} matches:`, matches);
+                return matches;
             });
 
             console.log("Matched volunteers:", matchedVolunteers);
@@ -514,7 +575,7 @@
                     <div class="text-center py-10">
                         <i class="fas fa-user-slash text-gray-300 text-4xl mb-3"></i>
                         <p class="text-gray-500">No ${currentEmergencyType} volunteers found in ${nearestCounty}</p>
-                        <p class="text-sm text-gray-400 mt-2">Try nearby counties or different emergency type</p>
+                        <p class="text-sm text-gray-400 mt-2">Available volunteers: ${volunteersData.length}</p>
                     </div>
                 `;
                 return;
