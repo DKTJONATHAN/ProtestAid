@@ -1,8 +1,4 @@
 {
-  "name": "netlify-functions",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "dependencies": {
     "@octokit/rest": "^19.0.7"
   }
