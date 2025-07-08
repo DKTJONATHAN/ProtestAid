@@ -1,79 +1,59 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Specialization field toggle
-    const serviceTypeRadios = document.querySelectorAll('input[name="serviceType"]');
-    const specializationField = document.getElementById('specializationField');
-
-    serviceTypeRadios.forEach(radio => {
+    // Toggle specialization field
+    const serviceRadios = document.querySelectorAll('input[name="serviceType"]');
+    const specField = document.getElementById('specializationField');
+    
+    serviceRadios.forEach(radio => {
         radio.addEventListener('change', function() {
-            if (this.value === 'other') {
-                specializationField.classList.remove('hidden');
-                document.getElementById('specialization').setAttribute('required', '');
-            } else {
-                specializationField.classList.add('hidden');
-                document.getElementById('specialization').removeAttribute('required');
-            }
+            specField.classList.toggle('hidden', this.value !== 'other');
+            document.getElementById('specialization').toggleAttribute('required', this.value === 'other');
         });
     });
 
-    // Form submission handler
-    const volunteerForm = document.getElementById('volunteerForm');
-    const successMessage = document.getElementById('successMessage');
-
-    volunteerForm.addEventListener('submit', async function(e) {
+    // Form submission
+    const form = document.getElementById('volunteerForm');
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        if (!this.checkValidity()) {
-            this.reportValidity();
+        if (!form.checkValidity()) {
+            form.reportValidity();
             return;
         }
 
         const formData = {
-            personalInfo: {
-                fullName: document.getElementById('fullName').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                location: document.getElementById('location').value
-            },
-            volunteerRole: {
-                serviceType: document.querySelector('input[name="serviceType"]:checked').value,
-                specialization: document.getElementById('specialization').value || null
-            },
+            fullName: form.fullName.value,
+            email: form.email.value,
+            phone: form.phone.value,
+            location: form.location.value,
+            serviceType: form.querySelector('input[name="serviceType"]:checked').value,
+            specialization: form.specialization?.value || null,
             emergencyContacts: {
-                primary: document.getElementById('emergencyContact1').value,
-                secondary: document.getElementById('emergencyContact2').value || null,
-                availability: document.getElementById('availability').value
+                primary: form.emergencyContact1.value,
+                secondary: form.emergencyContact2.value || null
             },
-            additionalInfo: {
-                experience: document.getElementById('experience').value || null,
-                training: document.getElementById('training').value || null,
-                consent: document.getElementById('consent').checked,
-                timestamp: new Date().toISOString()
-            }
+            availability: form.availability.value,
+            experience: form.experience.value || null,
+            training: form.training.value || null,
+            consent: form.consent.checked,
+            timestamp: new Date().toISOString()
         };
 
         try {
-            // Send data to Netlify function
-            const response = await fetch('/.netlify/functions/saveVolunteer', {
+            const response = await fetch('/.netlify/functions/volunteers', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
 
-            const result = await response.json();
-
             if (response.ok) {
-                volunteerForm.reset();
-                volunteerForm.classList.add('hidden');
-                successMessage.classList.remove('hidden');
-                successMessage.scrollIntoView({ behavior: 'smooth' });
+                form.reset();
+                document.getElementById('successMessage').classList.remove('hidden');
             } else {
-                throw new Error(result.error || 'Failed to save data');
+                throw new Error(await response.text());
             }
         } catch (error) {
-            console.error('Error:', error);
-            alert('Error submitting form: ' + error.message);
+            console.error('Submission error:', error);
+            alert('Failed to submit: ' + error.message);
         }
     });
 });
