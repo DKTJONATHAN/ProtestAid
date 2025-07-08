@@ -294,16 +294,15 @@
         cancelCountyBtn.addEventListener('click', closeCountyModal);
         confirmCountyBtn.addEventListener('click', confirmCountySelection);
 
-        // Load volunteer data from JSON file
+        // Load volunteer data from GitHub raw content
         async function loadVolunteerData() {
             try {
-                // Try multiple possible paths
-                let response = await fetch('../../data/volunteers.json');
+                const response = await fetch('https://raw.githubusercontent.com/DKTJONATHAN/ProtestAid/main/data/volunteers.json');
+                
                 if (!response.ok) {
-                    // Fallback to absolute path if relative path fails
-                    response = await fetch('/data/volunteers.json');
-                    if (!response.ok) throw new Error('Failed to load volunteer data');
+                    throw new Error('Failed to load volunteer data');
                 }
+                
                 volunteersData = await response.json();
                 console.log('Volunteer data loaded:', volunteersData);
             } catch (error) {
