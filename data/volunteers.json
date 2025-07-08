@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "fullName": "John Deere ",
+    "email": "jgug@gdjh.jg",
+    "phone": "0722600600",
+    "location": "Nakuru",
+    "serviceType": "medic",
+    "availability": "on-call",
+    "emergencyContact1": "86776",
+    "emergencyContact2": "86555",
+    "certifications": [
+      "firstaid",
+      "crisis"
+    ],
+    "timestamp": "2025-07-08T13:09:58.389Z"
+  }
+]
