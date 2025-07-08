@@ -305,65 +305,15 @@
                 }
                 volunteersData = await response.json();
                 console.log('Volunteer data loaded:', volunteersData);
-                
-                // If no data loaded, use the sample data you provided
-                if (volunteersData.length === 0) {
-                    volunteersData = [
-                        {
-                            "fullName": "Jonathan Mwaniki ",
-                            "email": "jonathanmwaniki07@gmail.com",
-                            "phone": "0706396305",
-                            "location": "Kakamega",
-                            "serviceType": "medic",
-                            "availability": "on-call",
-                            "emergencyContact1": "0706396305",
-                            "emergencyContact2": "1122",
-                            "certifications": ["firstaid"],
-                            "timestamp": "2025-07-08T09:49:02.742Z"
-                        },
-                        {
-                            "fullName": "JONATHAN MMWANIKI",
-                            "email": "vlatkaparfulr@outlook.pt",
-                            "phone": "0706396305",
-                            "location": "Meru",
-                            "serviceType": "medic",
-                            "availability": "on-call",
-                            "emergencyContact1": "0706396305",
-                            "emergencyContact2": "8675",
-                            "certifications": ["firstaid", "legal", "crisis"],
-                            "timestamp": "2025-07-08T10:45:20.258Z"
-                        }
-                    ];
-                }
             } catch (error) {
                 console.error('Error loading volunteer data:', error);
-                // Use the sample data as fallback
-                volunteersData = [
-                    {
-                        "fullName": "Jonathan Mwaniki ",
-                        "email": "jonathanmwaniki07@gmail.com",
-                        "phone": "0706396305",
-                        "location": "Kakamega",
-                        "serviceType": "medic",
-                        "availability": "on-call",
-                        "emergencyContact1": "0706396305",
-                        "emergencyContact2": "1122",
-                        "certifications": ["firstaid"],
-                        "timestamp": "2025-07-08T09:49:02.742Z"
-                    },
-                    {
-                        "fullName": "JONATHAN MMWANIKI",
-                        "email": "vlatkaparfulr@outlook.pt",
-                        "phone": "0706396305",
-                        "location": "Meru",
-                        "serviceType": "medic",
-                        "availability": "on-call",
-                        "emergencyContact1": "0706396305",
-                        "emergencyContact2": "8675",
-                        "certifications": ["firstaid", "legal", "crisis"],
-                        "timestamp": "2025-07-08T10:45:20.258Z"
-                    }
-                ];
+                helpOptions.innerHTML = `
+                    <div class="text-center py-10">
+                        <i class="fas fa-exclamation-triangle text-red-300 text-4xl mb-3"></i>
+                        <p class="text-gray-500">Failed to load volunteer data</p>
+                        <p class="text-sm text-gray-400 mt-2">Please check your internet connection</p>
+                    </div>
+                `;
             }
         }
 
@@ -464,7 +414,7 @@
                 nearestCounty = allCounties.find(c => c.toLowerCase() === selectedCounty.toLowerCase());
                 locationText.textContent = `Using ${nearestCounty}`;
                 closeCountyModal();
-                
+
                 if (currentEmergencyType) {
                     findVolunteers();
                 }
