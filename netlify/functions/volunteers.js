@@ -1,65 +1,68 @@
-const fetch = require('node-fetch');
+const { Octokit } = require("@octokit/rest");
 
-exports.handler = async (event) => {
-    if (event.httpMethod !== 'POST') {
-        return { statusCode: 405, body: 'Method Not Allowed' };
+exports.handler = async function(event, context) {
+    if (event.httpMethod !== "POST") {
+        return {
+            statusCode: 405,
+            body: JSON.stringify({ message: "Method Not Allowed" })
+        };
     }
 
     try {
-        const formData = JSON.parse(event.body);
-        const { GITHUB_TOKEN, GITHUB_REPO } = process.env;
-        const filePath = 'data/volunteers.json';
+        const data = JSON.parse(event.body);
+        
+        // Initialize Octokit with your GitHub token
+        const octokit = new Octokit({
+            auth: process.env.GITHUB_TOKEN
+        });
 
-        // Get current data from GitHub
-        const getResponse = await fetch(
-            `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`,
-            { headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
-        );
+        // Get the current content of the file
+        const repoInfo = process.env.GITHUB_REPO.split('/');
+        const owner = repoInfo[0];
+        const repo = repoInfo[1];
+        const path = "data/volunteers.json";
 
         let currentData = [];
-        let sha = null;
-
-        if (getResponse.ok) {
-            const fileData = await getResponse.json();
-            currentData = JSON.parse(Buffer.from(fileData.content, 'base64').toString());
-            sha = fileData.sha;
+        try {
+            const { data: fileData } = await octokit.repos.getContent({
+                owner,
+                repo,
+                path,
+                ref: 'main'
+            });
+            
+            // Decode the content from base64
+            const content = Buffer.from(fileData.content, 'base64').toString('utf-8');
+            currentData = JSON.parse(content);
+        } catch (error) {
+            if (error.status !== 404) throw error;
+            // File doesn't exist yet, we'll create it
         }
 
-        // Add new volunteer
-        currentData.push(formData);
+        // Add new volunteer data
+        currentData.push(data);
 
-        // Update file on GitHub
-        const updateResponse = await fetch(
-            `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`,
-            {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: `New volunteer: ${formData.personalInfo.fullName}`,
-                    content: Buffer.from(JSON.stringify(currentData, null, 2)).toString('base64'),
-                    sha: sha
-                })
-            }
-        );
-
-        if (!updateResponse.ok) {
-            throw new Error('Failed to update GitHub file');
-        }
+        // Update the file on GitHub
+        await octokit.repos.createOrUpdateFileContents({
+            owner,
+            repo,
+            path,
+            message: `Add new volunteer: ${data.fullName}`,
+            content: Buffer.from(JSON.stringify(currentData, null, 2)).toString('base64'),
+            branch: 'main'
+        });
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ success: true })
+            body: JSON.stringify({ message: "Volunteer data saved successfully" })
         };
-
     } catch (error) {
+        console.error("Error:", error);
         return {
             statusCode: 500,
             body: JSON.stringify({ 
-                error: 'Failed to process submission',
-                details: error.message 
+                message: "Failed to save volunteer data",
+                error: error.message 
             })
         };
     }
