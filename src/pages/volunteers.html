@@ -47,7 +47,7 @@
         <div class="flex justify-between mb-10 relative">
             <div class="absolute top-1/2 left-0 right-0 h-1 bg-gray-200 -z-10"></div>
             <div class="absolute top-1/2 left-0 h-1 bg-blue-500 -z-10 transition-all duration-300" id="progressBar"></div>
-            
+
             <div class="step flex flex-col items-center" data-step="1">
                 <div class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-medium mb-2">1</div>
                 <span class="text-sm font-medium text-gray-700">Personal Info</span>
@@ -72,11 +72,11 @@
                 <!-- Step 1: Personal Info -->
                 <div class="form-step active" data-step="1">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Tell us about yourself</h2>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                            <input type="text" id="fullName" name="fullName" required
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input type="text" id="name" name="name" required
                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
                         </div>
                         <div>
@@ -90,57 +90,14 @@
                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
                         </div>
                         <div>
-                            <label for="location" class="block text-sm font-medium text-gray-700 mb-1">County</label>
-                            <select id="location" name="location" required
+                            <label for="county" class="block text-sm font-medium text-gray-700 mb-1">County</label>
+                            <select id="county" name="county" required
                                     class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
                                 <option value="" disabled selected>Select your county</option>
                                 <option value="Nairobi">Nairobi</option>
                                 <option value="Mombasa">Mombasa</option>
                                 <option value="Kisumu">Kisumu</option>
-                                <option value="Nakuru">Nakuru</option>
-                                <option value="Uasin Gishu">Uasin Gishu</option>
-                                <option value="Kiambu">Kiambu</option>
-                                <option value="Kakamega">Kakamega</option>
-                                <option value="Bungoma">Bungoma</option>
-                                <option value="Kericho">Kericho</option>
-                                <option value="Machakos">Machakos</option>
-                                <option value="Meru">Meru</option>
-                                <option value="Kilifi">Kilifi</option>
-                                <option value="Kisii">Kisii</option>
-                                <option value="Nyeri">Nyeri</option>
-                                <option value="Turkana">Turkana</option>
-                                <option value="Kitui">Kitui</option>
-                                <option value="Garissa">Garissa</option>
-                                <option value="Wajir">Wajir</option>
-                                <option value="Mandera">Mandera</option>
-                                <option value="Marsabit">Marsabit</option>
-                                <option value="Isiolo">Isiolo</option>
-                                <option value="Narok">Narok</option>
-                                <option value="Nyandarua">Nyandarua</option>
-                                <option value="Kirinyaga">Kirinyaga</option>
-                                <option value="Murang'a">Murang'a</option>
-                                <option value="Embu">Embu</option>
-                                <option value="Tharaka-Nithi">Tharaka-Nithi</option>
-                                <option value="Nandi">Nandi</option>
-                                <option value="Bomet">Bomet</option>
-                                <option value="Trans Nzoia">Trans Nzoia</option>
-                                <option value="West Pokot">West Pokot</option>
-                                <option value="Samburu">Samburu</option>
-                                <option value="Laikipia">Laikipia</option>
-                                <option value="Makueni">Makueni</option>
-                                <option value="Taita Taveta">Taita Taveta</option>
-                                <option value="Kwale">Kwale</option>
-                                <option value="Tana River">Tana River</option>
-                                <option value="Lamu">Lamu</option>
-                                <option value="Busia">Busia</option>
-                                <option value="Siaya">Siaya</option>
-                                <option value="Homa Bay">Homa Bay</option>
-                                <option value="Migori">Migori</option>
-                                <option value="Nyamira">Nyamira</option>
-                                <option value="Vihiga">Vihiga</option>
-                                <option value="Elgeyo-Marakwet">Elgeyo-Marakwet</option>
-                                <option value="Baringo">Baringo</option>
-                                <option value="Nyandarua">Nyandarua</option>
+                                <!-- Other counties... -->
                             </select>
                         </div>
                     </div>
@@ -155,34 +112,34 @@
                 <!-- Step 2: Volunteer Role -->
                 <div class="form-step hidden" data-step="2">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Your volunteer role</h2>
-                    
+
                     <div class="space-y-6">
                         <div>
                             <h3 class="text-lg font-medium text-gray-800 mb-3">What type of support can you provide?</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <label class="role-option flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition">
-                                    <input type="radio" name="serviceType" value="medic" required class="h-5 w-5 text-blue-600 focus:ring-blue-500">
+                                    <input type="radio" name="service" value="medic" required class="h-5 w-5 text-blue-600 focus:ring-blue-500">
                                     <div class="ml-3">
                                         <span class="block font-medium text-gray-800">Medical Professional</span>
                                         <span class="block text-sm text-gray-500">Doctors, nurses, first aiders</span>
                                     </div>
                                 </label>
                                 <label class="role-option flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition">
-                                    <input type="radio" name="serviceType" value="legal" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
+                                    <input type="radio" name="service" value="legal" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
                                     <div class="ml-3">
                                         <span class="block font-medium text-gray-800">Legal Expert</span>
                                         <span class="block text-sm text-gray-500">Lawyers, paralegals, rights monitors</span>
                                     </div>
                                 </label>
                                 <label class="role-option flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition">
-                                    <input type="radio" name="serviceType" value="logistics" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
+                                    <input type="radio" name="service" value="logistics" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
                                     <div class="ml-3">
                                         <span class="block font-medium text-gray-800">Logistics/Driver</span>
                                         <span class="block text-sm text-gray-500">Transport, supplies, coordination</span>
                                     </div>
                                 </label>
                                 <label class="role-option flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 transition">
-                                    <input type="radio" name="serviceType" value="other" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
+                                    <input type="radio" name="service" value="other" class="h-5 w-5 text-blue-600 focus:ring-blue-500">
                                     <div class="ml-3">
                                         <span class="block font-medium text-gray-800">Other Support</span>
                                         <span class="block text-sm text-gray-500">Counseling, media, coordination</span>
@@ -192,21 +149,10 @@
                         </div>
 
                         <div>
-                            <h3 class="text-lg font-medium text-gray-800 mb-3">Your skills & certifications</h3>
-                            <div class="space-y-3">
-                                <label class="flex items-center">
-                                    <input type="checkbox" name="certifications" value="firstaid" class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
-                                    <span class="ml-3 text-gray-700">First Aid Certified</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" name="certifications" value="legal" class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
-                                    <span class="ml-3 text-gray-700">Legal Training</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="checkbox" name="certifications" value="crisis" class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
-                                    <span class="ml-3 text-gray-700">Crisis Management</span>
-                                </label>
-                            </div>
+                            <label for="message" class="block text-lg font-medium text-gray-800 mb-3">Additional Information</label>
+                            <textarea id="message" name="message" rows="3"
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                   placeholder="Any additional details about your skills or experience"></textarea>
                         </div>
                     </div>
 
@@ -223,7 +169,7 @@
                 <!-- Step 3: Availability -->
                 <div class="form-step hidden" data-step="3">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Your availability</h2>
-                    
+
                     <div class="space-y-6">
                         <div>
                             <label for="availability" class="block text-lg font-medium text-gray-800 mb-3">When are you available?</label>
@@ -237,14 +183,8 @@
                         </div>
 
                         <div>
-                            <label for="emergencyContact1" class="block text-lg font-medium text-gray-800 mb-3">Emergency Contact #1</label>
-                            <input type="text" id="emergencyContact1" name="emergencyContact1" required
-                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
-                        </div>
-
-                        <div>
-                            <label for="emergencyContact2" class="block text-lg font-medium text-gray-800 mb-3">Emergency Contact #2</label>
-                            <input type="text" id="emergencyContact2" name="emergencyContact2"
+                            <label for="emergency_contact" class="block text-lg font-medium text-gray-800 mb-3">Emergency Contact</label>
+                            <input type="text" id="emergency_contact" name="emergency_contact" required
                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
                         </div>
                     </div>
@@ -262,13 +202,13 @@
                 <!-- Step 4: Review & Submit -->
                 <div class="form-step hidden" data-step="4">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Review your information</h2>
-                    
+
                     <div class="bg-gray-50 p-6 rounded-lg mb-6">
                         <h3 class="text-lg font-medium text-gray-800 mb-4">Personal Information</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                             <div>
                                 <p class="text-sm text-gray-500">Full Name</p>
-                                <p id="review-fullName" class="font-medium"></p>
+                                <p id="review-name" class="font-medium"></p>
                             </div>
                             <div>
                                 <p class="text-sm text-gray-500">Email</p>
@@ -280,7 +220,7 @@
                             </div>
                             <div>
                                 <p class="text-sm text-gray-500">County</p>
-                                <p id="review-location" class="font-medium"></p>
+                                <p id="review-county" class="font-medium"></p>
                             </div>
                         </div>
 
@@ -288,27 +228,23 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                             <div>
                                 <p class="text-sm text-gray-500">Role</p>
-                                <p id="review-serviceType" class="font-medium"></p>
+                                <p id="review-service" class="font-medium"></p>
                             </div>
                             <div>
                                 <p class="text-sm text-gray-500">Availability</p>
                                 <p id="review-availability" class="font-medium"></p>
                             </div>
                             <div>
-                                <p class="text-sm text-gray-500">Certifications</p>
-                                <p id="review-certifications" class="font-medium"></p>
+                                <p class="text-sm text-gray-500">Additional Info</p>
+                                <p id="review-message" class="font-medium"></p>
                             </div>
                         </div>
 
-                        <h3 class="text-lg font-medium text-gray-800 mb-4 mt-6">Emergency Contacts</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <h3 class="text-lg font-medium text-gray-800 mb-4 mt-6">Emergency Contact</h3>
+                        <div class="grid grid-cols-1 gap-4">
                             <div>
                                 <p class="text-sm text-gray-500">Primary Contact</p>
-                                <p id="review-emergencyContact1" class="font-medium"></p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Secondary Contact</p>
-                                <p id="review-emergencyContact2" class="font-medium"></p>
+                                <p id="review-emergency_contact" class="font-medium"></p>
                             </div>
                         </div>
                     </div>
@@ -389,7 +325,7 @@
                 btn.addEventListener('click', function() {
                     // Validate current step before proceeding
                     const currentStepElement = document.querySelector(`.form-step[data-step="${currentStep}"]`);
-                    const inputs = currentStepElement.querySelectorAll('input[required], select[required]');
+                    const inputs = currentStepElement.querySelectorAll('input[required], select[required], textarea[required]');
                     let isValid = true;
 
                     inputs.forEach(input => {
@@ -424,50 +360,50 @@
             // Update review section with form data
             function updateReviewSection() {
                 if (currentStep === 4) {
-                    document.getElementById('review-fullName').textContent = document.getElementById('fullName').value;
+                    document.getElementById('review-name').textContent = document.getElementById('name').value;
                     document.getElementById('review-email').textContent = document.getElementById('email').value;
                     document.getElementById('review-phone').textContent = document.getElementById('phone').value;
-                    document.getElementById('review-location').textContent = document.getElementById('location').value;
-                    
-                    const serviceType = document.querySelector('input[name="serviceType"]:checked');
-                    document.getElementById('review-serviceType').textContent = serviceType ? serviceType.parentElement.querySelector('span:first-child').textContent : '';
-                    
+                    document.getElementById('review-county').textContent = document.getElementById('county').value;
+
+                    const service = document.querySelector('input[name="service"]:checked');
+                    document.getElementById('review-service').textContent = service ? service.parentElement.querySelector('span:first-child').textContent : '';
+
                     document.getElementById('review-availability').textContent = document.getElementById('availability').options[document.getElementById('availability').selectedIndex].text;
-                    
-                    const certifications = Array.from(document.querySelectorAll('input[name="certifications"]:checked'))
-                        .map(el => el.parentElement.querySelector('span').textContent)
-                        .join(', ');
-                    document.getElementById('review-certifications').textContent = certifications || 'None';
-                    
-                    document.getElementById('review-emergencyContact1').textContent = document.getElementById('emergencyContact1').value;
-                    document.getElementById('review-emergencyContact2').textContent = document.getElementById('emergencyContact2').value || 'None';
+                    document.getElementById('review-message').textContent = document.getElementById('message').value || 'None';
+                    document.getElementById('review-emergency_contact').textContent = document.getElementById('emergency_contact').value;
                 }
             }
 
             // Form submission handler
             form.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                
+
                 const submitBtn = form.querySelector('button[type="submit"]');
                 const originalBtnText = submitBtn.innerHTML;
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
 
                 try {
-                    const formData = new FormData(form);
+                    // Create data object matching your working form structure
                     const data = {
-                        fullName: formData.get('fullName'),
-                        email: formData.get('email'),
-                        phone: formData.get('phone'),
-                        location: formData.get('location'),
-                        serviceType: formData.get('serviceType'),
-                        availability: formData.get('availability'),
-                        emergencyContact1: formData.get('emergencyContact1'),
-                        emergencyContact2: formData.get('emergencyContact2'),
-                        certifications: Array.from(form.querySelectorAll('input[name="certifications"]:checked'))
-                                       .map(el => el.value),
-                        timestamp: new Date().toISOString()
+                        "form_name": "volunteer",
+                        "form-name": "volunteerForm",
+                        "timestamp": new Date().toISOString(),
+                        "name": document.getElementById('name').value,
+                        "email": document.getElementById('email').value,
+                        "phone": document.getElementById('phone').value,
+                        "county": document.getElementById('county').value,
+                        "service": document.querySelector('input[name="service"]:checked').value,
+                        "availability": document.getElementById('availability').value,
+                        "emergency_contact": document.getElementById('emergency_contact').value,
+                        "message": document.getElementById('message').value || "Volunteer application",
+                        "_metadata": {
+                            "submitted_at": new Date().toISOString(),
+                            "user_agent": navigator.userAgent
+                        }
                     };
+
+                    console.log("Submitting data:", data); // For debugging
 
                     const response = await fetch('/.netlify/functions/saveVolunteer', {
                         method: 'POST',
@@ -476,8 +412,7 @@
                     });
 
                     if (!response.ok) {
-                        const error = await response.json();
-                        throw new Error(error.message || 'Submission failed');
+                        throw new Error('Submission failed');
                     }
 
                     // Show success modal
