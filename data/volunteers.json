@@ -8,7 +8,10 @@
     "availability": "on-call",
     "emergencyContact1": "1199",
     "emergencyContact2": "999",
-    "certifications": ["firstaid", "crisis"],
+    "certifications": [
+      "firstaid",
+      "crisis"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -20,7 +23,9 @@
     "availability": "on-call",
     "emergencyContact1": "0722600600",
     "emergencyContact2": "999",
-    "certifications": ["firstaid"],
+    "certifications": [
+      "firstaid"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -32,7 +37,9 @@
     "availability": "on-call",
     "emergencyContact1": "0202222181",
     "emergencyContact2": "999",
-    "certifications": ["firefighting"],
+    "certifications": [
+      "firefighting"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -44,7 +51,10 @@
     "availability": "on-call",
     "emergencyContact1": "1199",
     "emergencyContact2": "999",
-    "certifications": ["firstaid", "crisis"],
+    "certifications": [
+      "firstaid",
+      "crisis"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -56,7 +66,9 @@
     "availability": "on-call",
     "emergencyContact1": "0725225225",
     "emergencyContact2": "999",
-    "certifications": ["firstaid"],
+    "certifications": [
+      "firstaid"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -68,7 +80,9 @@
     "availability": "on-call",
     "emergencyContact1": "0202222181",
     "emergencyContact2": "999",
-    "certifications": ["firefighting"],
+    "certifications": [
+      "firefighting"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -80,7 +94,10 @@
     "availability": "on-call",
     "emergencyContact1": "1199",
     "emergencyContact2": "999",
-    "certifications": ["firstaid", "crisis"],
+    "certifications": [
+      "firstaid",
+      "crisis"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -92,7 +109,10 @@
     "availability": "on-call",
     "emergencyContact1": "0206000552",
     "emergencyContact2": "999",
-    "certifications": ["firstaid", "crisis"],
+    "certifications": [
+      "firstaid",
+      "crisis"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -104,7 +124,9 @@
     "availability": "on-call",
     "emergencyContact1": "0202222181",
     "emergencyContact2": "999",
-    "certifications": ["firefighting"],
+    "certifications": [
+      "firefighting"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -116,7 +138,9 @@
     "availability": "on-call",
     "emergencyContact1": "0706396305",
     "emergencyContact2": "112",
-    "certifications": ["firstaid"],
+    "certifications": [
+      "firstaid"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -128,7 +152,11 @@
     "availability": "on-call",
     "emergencyContact1": "0706396305",
     "emergencyContact2": "999",
-    "certifications": ["firstaid", "legal", "crisis"],
+    "certifications": [
+      "firstaid",
+      "legal",
+      "crisis"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -140,7 +168,10 @@
     "availability": "on-call",
     "emergencyContact1": "1199",
     "emergencyContact2": "999",
-    "certifications": ["firstaid", "crisis"],
+    "certifications": [
+      "firstaid",
+      "crisis"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -152,7 +183,9 @@
     "availability": "on-call",
     "emergencyContact1": "0758692000",
     "emergencyContact2": "999",
-    "certifications": ["firstaid"],
+    "certifications": [
+      "firstaid"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -164,7 +197,9 @@
     "availability": "on-call",
     "emergencyContact1": "0202222181",
     "emergencyContact2": "999",
-    "certifications": ["firefighting"],
+    "certifications": [
+      "firefighting"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -176,7 +211,10 @@
     "availability": "on-call",
     "emergencyContact1": "1199",
     "emergencyContact2": "999",
-    "certifications": ["firstaid", "crisis"],
+    "certifications": [
+      "firstaid",
+      "crisis"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -188,7 +226,10 @@
     "availability": "on-call",
     "emergencyContact1": "0206000552",
     "emergencyContact2": "999",
-    "certifications": ["firstaid", "crisis"],
+    "certifications": [
+      "firstaid",
+      "crisis"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -200,7 +241,9 @@
     "availability": "on-call",
     "emergencyContact1": "0202222181",
     "emergencyContact2": "999",
-    "certifications": ["firefighting"],
+    "certifications": [
+      "firefighting"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -212,7 +255,10 @@
     "availability": "on-call",
     "emergencyContact1": "1199",
     "emergencyContact2": "999",
-    "certifications": ["firstaid", "crisis"],
+    "certifications": [
+      "firstaid",
+      "crisis"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -224,7 +270,9 @@
     "availability": "on-call",
     "emergencyContact1": "0722600600",
     "emergencyContact2": "999",
-    "certifications": ["firstaid"],
+    "certifications": [
+      "firstaid"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -236,7 +284,9 @@
     "availability": "on-call",
     "emergencyContact1": "0202222181",
     "emergencyContact2": "999",
-    "certifications": ["firefighting"],
+    "certifications": [
+      "firefighting"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -248,7 +298,10 @@
     "availability": "on-call",
     "emergencyContact1": "1199",
     "emergencyContact2": "999",
-    "certifications": ["firstaid", "crisis"],
+    "certifications": [
+      "firstaid",
+      "crisis"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -260,7 +313,10 @@
     "availability": "on-call",
     "emergencyContact1": "0206000552",
     "emergencyContact2": "999",
-    "certifications": ["firstaid", "crisis"],
+    "certifications": [
+      "firstaid",
+      "crisis"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -272,7 +328,9 @@
     "availability": "on-call",
     "emergencyContact1": "0202222181",
     "emergencyContact2": "999",
-    "certifications": ["firefighting"],
+    "certifications": [
+      "firefighting"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -284,7 +342,10 @@
     "availability": "on-call",
     "emergencyContact1": "1199",
     "emergencyContact2": "999",
-    "certifications": ["firstaid", "crisis"],
+    "certifications": [
+      "firstaid",
+      "crisis"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -296,7 +357,9 @@
     "availability": "on-call",
     "emergencyContact1": "0722600600",
     "emergencyContact2": "999",
-    "certifications": ["firstaid"],
+    "certifications": [
+      "firstaid"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -308,7 +371,9 @@
     "availability": "on-call",
     "emergencyContact1": "0202222181",
     "emergencyContact2": "999",
-    "certifications": ["firefighting"],
+    "certifications": [
+      "firefighting"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -320,7 +385,10 @@
     "availability": "on-call",
     "emergencyContact1": "1199",
     "emergencyContact2": "999",
-    "certifications": ["firstaid", "crisis"],
+    "certifications": [
+      "firstaid",
+      "crisis"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -332,7 +400,10 @@
     "availability": "on-call",
     "emergencyContact1": "0206000552",
     "emergencyContact2": "999",
-    "certifications": ["firstaid", "crisis"],
+    "certifications": [
+      "firstaid",
+      "crisis"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -344,7 +415,9 @@
     "availability": "on-call",
     "emergencyContact1": "0202222181",
     "emergencyContact2": "999",
-    "certifications": ["firefighting"],
+    "certifications": [
+      "firefighting"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -356,7 +429,10 @@
     "availability": "on-call",
     "emergencyContact1": "1199",
     "emergencyContact2": "999",
-    "certifications": ["firstaid", "crisis"],
+    "certifications": [
+      "firstaid",
+      "crisis"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -368,7 +444,9 @@
     "availability": "on-call",
     "emergencyContact1": "0722600600",
     "emergencyContact2": "999",
-    "certifications": ["firstaid"],
+    "certifications": [
+      "firstaid"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -380,7 +458,9 @@
     "availability": "on-call",
     "emergencyContact1": "0800720434",
     "emergencyContact2": "999",
-    "certifications": ["legal"],
+    "certifications": [
+      "legal"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -392,7 +472,9 @@
     "availability": "on-call",
     "emergencyContact1": "0201234567",
     "emergencyContact2": "0800720434",
-    "certifications": ["legal"],
+    "certifications": [
+      "legal"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -404,7 +486,9 @@
     "availability": "on-call",
     "emergencyContact1": "0712345678",
     "emergencyContact2": "0800720434",
-    "certifications": ["legal"],
+    "certifications": [
+      "legal"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -416,7 +500,9 @@
     "availability": "on-call",
     "emergencyContact1": "0712345679",
     "emergencyContact2": "0800720434",
-    "certifications": ["legal"],
+    "certifications": [
+      "legal"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -428,7 +514,9 @@
     "availability": "on-call",
     "emergencyContact1": "999",
     "emergencyContact2": "112",
-    "certifications": ["lawenforcement"],
+    "certifications": [
+      "lawenforcement"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -440,7 +528,9 @@
     "availability": "on-call",
     "emergencyContact1": "999",
     "emergencyContact2": "112",
-    "certifications": ["lawenforcement"],
+    "certifications": [
+      "lawenforcement"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -452,7 +542,9 @@
     "availability": "on-call",
     "emergencyContact1": "999",
     "emergencyContact2": "112",
-    "certifications": ["lawenforcement"],
+    "certifications": [
+      "lawenforcement"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -464,7 +556,9 @@
     "availability": "on-call",
     "emergencyContact1": "999",
     "emergencyContact2": "112",
-    "certifications": ["lawenforcement"],
+    "certifications": [
+      "lawenforcement"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -476,7 +570,9 @@
     "availability": "on-call",
     "emergencyContact1": "999",
     "emergencyContact2": "112",
-    "certifications": ["lawenforcement"],
+    "certifications": [
+      "lawenforcement"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -488,7 +584,9 @@
     "availability": "on-call",
     "emergencyContact1": "999",
     "emergencyContact2": "112",
-    "certifications": ["lawenforcement"],
+    "certifications": [
+      "lawenforcement"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -500,7 +598,9 @@
     "availability": "on-call",
     "emergencyContact1": "999",
     "emergencyContact2": "112",
-    "certifications": ["lawenforcement"],
+    "certifications": [
+      "lawenforcement"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -512,7 +612,9 @@
     "availability": "on-call",
     "emergencyContact1": "999",
     "emergencyContact2": "112",
-    "certifications": ["lawenforcement"],
+    "certifications": [
+      "lawenforcement"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
   },
   {
@@ -524,7 +626,23 @@
     "availability": "on-call",
     "emergencyContact1": "999",
     "emergencyContact2": "112",
-    "certifications": ["lawenforcement"],
+    "certifications": [
+      "lawenforcement"
+    ],
     "timestamp": "2025-07-08T15:16:00.000Z"
+  },
+  {
+    "fullName": "Hibvb jvhvi",
+    "email": "hrug@hj.hf",
+    "phone": "084645255",
+    "location": "Nakuru",
+    "serviceType": "medic",
+    "availability": "on-call",
+    "emergencyContact1": "6565",
+    "emergencyContact2": "6468",
+    "certifications": [
+      "legal"
+    ],
+    "timestamp": "2025-07-08T15:19:52.357Z"
   }
 ]
