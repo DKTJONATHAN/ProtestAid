@@ -3,591 +3,384 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emergency Help - ProtestAid Kenya</title>
+    <title>Volunteer Network | ProtestAid Kenya</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .emergency-card {
-            transition: all 0.3s ease;
+        .card-hover {
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .emergency-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        .card-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
-        .availability-available {
+        .availability-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+        }
+        .full-time {
             background-color: #dcfce7;
             color: #166534;
         }
-        .availability-oncall {
+        .part-time {
             background-color: #fef9c3;
             color: #854d0e;
         }
-        .availability-unavailable {
+        .on-call {
+            background-color: #e0f2fe;
+            color: #075985;
+        }
+        .service-tag {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            background-color: #f3f4f6;
+            color: #4b5563;
+        }
+        .medic {
             background-color: #fee2e2;
             color: #991b1b;
         }
-        #countySuggestions {
-            position: absolute;
-            background: white;
-            border: 1px solid #ddd;
-            max-height: 200px;
-            overflow-y: auto;
-            width: 100%;
-            z-index: 1000;
-            display: none;
+        .legal {
+            background-color: #dbeafe;
+            color: #1e40af;
         }
-        #countySuggestions div {
-            padding: 8px 12px;
-            cursor: pointer;
-        }
-        #countySuggestions div:hover {
-            background-color: #f0f0f0;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 400px;
+        .logistics {
+            background-color: #ecfccb;
+            color: #3f6212;
         }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <div class="max-w-4xl mx-auto py-8 px-4">
+    <div class="max-w-7xl mx-auto px-4 py-8">
         <!-- Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-red-600">Emergency Assistance</h1>
-            <p class="mt-2 text-gray-600">Connect with volunteers in your area</p>
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Volunteer Network</h1>
+            <p class="text-lg text-gray-600">Connect with skilled volunteers across Kenya</p>
         </div>
 
-        <!-- Main Content -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Emergency Selection Panel -->
-            <div class="bg-white shadow-md rounded-xl p-6 emergency-card">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">Select Emergency Type</h2>
-
-                <div class="space-y-4">
-                    <!-- Emergency Type Buttons -->
-                    <div class="grid grid-cols-2 gap-3">
-                        <button data-type="medic" class="emergency-type-btn py-3 px-4 border border-red-200 rounded-lg flex flex-col items-center justify-center bg-red-50 hover:bg-red-100 transition">
-                            <i class="fas fa-plus-circle text-red-600 text-2xl mb-2"></i>
-                            <span class="font-medium">Medical</span>
-                        </button>
-                        <button data-type="legal" class="emergency-type-btn py-3 px-4 border border-blue-200 rounded-lg flex flex-col items-center justify-center bg-blue-50 hover:bg-blue-100 transition">
-                            <i class="fas fa-gavel text-blue-600 text-2xl mb-2"></i>
-                            <span class="font-medium">Legal</span>
-                        </button>
-                        <button data-type="police" class="emergency-type-btn py-3 px-4 border border-purple-200 rounded-lg flex flex-col items-center justify-center bg-purple-50 hover:bg-purple-100 transition">
-                            <i class="fas fa-shield-alt text-purple-600 text-2xl mb-2"></i>
-                            <span class="font-medium">Police</span>
-                        </button>
-                        <button data-type="abduction" class="emergency-type-btn py-3 px-4 border border-yellow-200 rounded-lg flex flex-col items-center justify-center bg-yellow-50 hover:bg-yellow-100 transition">
-                            <i class="fas fa-exclamation-triangle text-yellow-600 text-2xl mb-2"></i>
-                            <span class="font-medium">Abduction</span>
-                        </button>
+        <!-- Filter Panel -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Find Volunteers</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- County Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">County</label>
+                    <select id="countyFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">All Counties</option>
+                        <option value="Nairobi">Nairobi</option>
+                        <option value="Mombasa">Mombasa</option>
+                        <option value="Kiambu">Kiambu</option>
+                        <!-- Add all 47 counties here -->
+                    </select>
+                </div>
+                
+                <!-- Service Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Service Type</label>
+                    <select id="serviceFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">All Services</option>
+                        <option value="medic">Medical</option>
+                        <option value="legal">Legal</option>
+                        <option value="logistics">Logistics</option>
+                        <!-- Add other services as needed -->
+                    </select>
+                </div>
+                
+                <!-- Availability Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Availability</label>
+                    <select id="availabilityFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Any Availability</option>
+                        <option value="full-time">Full-time</option>
+                        <option value="part-time">Part-time</option>
+                        <option value="on-call">On-call</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Search Box -->
+            <div class="mt-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Search Volunteers</label>
+                <div class="relative">
+                    <input type="text" id="searchInput" placeholder="Search by name, skills, etc..." 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pl-10">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <!-- Location Detection -->
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <h3 class="font-medium text-gray-800">Your Location</h3>
-                                <p id="locationText" class="text-sm text-gray-500">Not yet detected</p>
-                            </div>
-                            <button id="detectLocationBtn" class="flex items-center space-x-2 bg-blue-50 hover:bg-blue-100 text-blue-600 px-4 py-2 rounded-lg transition">
-                                <i class="fas fa-location-arrow"></i>
-                                <span>Detect</span>
-                            </button>
+        <!-- Results Section -->
+        <div>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-gray-800">Available Volunteers</h2>
+                <span id="resultCount" class="text-sm text-gray-500">Loading volunteers...</span>
+            </div>
+            
+            <!-- Volunteer Cards Grid -->
+            <div id="volunteerGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Volunteer cards will be inserted here by JavaScript -->
+            </div>
+            
+            <!-- Empty State -->
+            <div id="emptyState" class="text-center py-16 hidden">
+                <i class="fas fa-user-slash text-gray-300 text-5xl mb-4"></i>
+                <h3 class="text-lg font-medium text-gray-700">No volunteers found</h3>
+                <p class="text-gray-500 mt-1">Try adjusting your filters or search terms</p>
+            </div>
+            
+            <!-- Loading State -->
+            <div id="loadingState" class="text-center py-16">
+                <i class="fas fa-spinner fa-spin text-blue-500 text-4xl mb-4"></i>
+                <p class="text-gray-500">Loading volunteer data...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Volunteer Card Template -->
+    <template id="volunteerTemplate">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+            <div class="p-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800" data-name>Volunteer Name</h3>
+                        <div class="flex items-center mt-1">
+                            <span class="service-tag" data-service>Service</span>
+                            <span class="availability-badge ml-2" data-availability>Availability</span>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Help Options Panel -->
-            <div class="bg-white shadow-md rounded-xl p-6 emergency-card">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-semibold text-gray-800">Available Volunteers</h2>
-                    <div id="helpTypeBadge" class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium">
-                        Select emergency type
-                    </div>
-                </div>
-
-                <div id="helpOptions" class="space-y-4">
-                    <!-- Initial state before selection -->
-                    <div class="text-center py-10">
-                        <i class="fas fa-hands-helping text-gray-300 text-4xl mb-3"></i>
-                        <p class="text-gray-500">Please select an emergency type to see volunteers</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Information Section -->
-        <div class="mt-6 bg-white shadow-md rounded-xl p-6 emergency-card">
-            <h2 class="text-xl font-semibold text-gray-800 mb-4">Important Information</h2>
-            <div class="prose prose-sm max-w-none">
-                <p class="text-gray-600">All volunteers are shown regardless of availability status. When you call:</p>
-                <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
-                    <li>The volunteer will inform you if they're available to help</li>
-                    <li>If unavailable, ask if they know other volunteers who might help</li>
-                    <li>Be clear about your emergency and location</li>
-                    <li>For critical emergencies, always call official emergency services first</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- County Selection Modal -->
-    <div id="countyModal" class="modal">
-        <div class="modal-content">
-            <h3 class="font-semibold text-lg mb-4">Enter Your County</h3>
-            <div class="relative">
-                <input type="text" id="countyInput" placeholder="Start typing your county..." 
-                       class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <div id="countySuggestions" class="mt-1 rounded-lg shadow-lg"></div>
-            </div>
-            <div class="mt-4 flex justify-end space-x-2">
-                <button id="cancelCountyBtn" class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-100">Cancel</button>
-                <button id="confirmCountyBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Confirm</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Volunteer Template (Hidden) -->
-    <template id="volunteerTemplate">
-        <div class="p-4 border rounded-lg">
-            <div class="flex justify-between items-start">
-                <div>
-                    <h3 class="font-medium text-gray-900" data-name>Volunteer Name</h3>
-                    <div class="mt-1 flex items-center text-sm text-gray-500">
-                        <i class="fas fa-map-marker-alt mr-1.5"></i>
-                        <span data-location>Location</span>
-                    </div>
-                    <div class="mt-1 flex items-center text-sm text-gray-500">
-                        <i class="fas fa-certificate mr-1.5"></i>
-                        <span data-certifications>Certifications</span>
-                    </div>
-                </div>
-                <div class="flex space-x-2">
-                    <button class="call-btn inline-flex items-center justify-center h-10 w-10 rounded-full bg-green-100 text-green-600 hover:bg-green-200 transition">
+                    <button class="call-btn h-10 w-10 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition flex items-center justify-center">
                         <i class="fas fa-phone"></i>
                     </button>
-                    <button class="please-call-btn inline-flex items-center justify-center h-10 w-10 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition">
-                        <i class="fas fa-phone-alt"></i>
-                    </button>
                 </div>
-            </div>
-            <div class="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center">
-                <span class="text-xs text-gray-400">County: <span data-county>County name</span></span>
-                <span class="text-xs px-2 py-1 rounded-full" data-availability>Availability</span>
+                
+                <div class="mt-4">
+                    <div class="flex items-center text-sm text-gray-600 mb-2">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        <span data-county>County</span>
+                    </div>
+                    <div class="flex items-center text-sm text-gray-600 mb-3">
+                        <i class="fas fa-envelope mr-2"></i>
+                        <span data-email>Email</span>
+                    </div>
+                    <div class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-phone-alt mr-2"></i>
+                        <span data-phone>Phone</span>
+                    </div>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <p class="text-sm text-gray-600" data-message>Volunteer message</p>
+                </div>
+                
+                <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
+                    <span data-timestamp>Added on: Nov 15, 2023</span>
+                    <span data-device>Mobile</span>
+                </div>
             </div>
         </div>
     </template>
 
     <script>
-        // County coordinates - all 47 Kenyan counties
-        const countyCoordinates = {
-            "Baringo": { lat: 0.6981, lng: 35.8297 },
-            "Bomet": { lat: -0.8014, lng: 35.3428 },
-            "Bungoma": { lat: 0.5695, lng: 34.5584 },
-            "Busia": { lat: 0.4602, lng: 34.1117 },
-            "Elgeyo-Marakwet": { lat: 0.9061, lng: 35.4781 },
-            "Embu": { lat: -0.5390, lng: 37.4574 },
-            "Garissa": { lat: -0.4536, lng: 39.6400 },
-            "Homa Bay": { lat: -0.5279, lng: 34.4561 },
-            "Isiolo": { lat: 0.3556, lng: 37.5833 },
-            "Kajiado": { lat: -1.8524, lng: 36.7768 },
-            "Kakamega": { lat: 0.2827, lng: 34.7519 },
-            "Kericho": { lat: -0.3676, lng: 35.2836 },
-            "Kiambu": { lat: -1.1714, lng: 36.8356 },
-            "Kilifi": { lat: -3.6305, lng: 39.8499 },
-            "Kirinyaga": { lat: -0.6599, lng: 37.5827 },
-            "Kisii": { lat: -0.6773, lng: 34.7796 },
-            "Kisumu": { lat: -0.1022, lng: 34.7617 },
-            "Kitui": { lat: -1.3670, lng: 38.0106 },
-            "Kwale": { lat: -4.1816, lng: 39.4606 },
-            "Laikipia": { lat: 0.0333, lng: 36.3667 },
-            "Lamu": { lat: -2.2697, lng: 40.9000 },
-            "Machakos": { lat: -1.5177, lng: 37.2634 },
-            "Makueni": { lat: -2.2810, lng: 37.8256 },
-            "Mandera": { lat: 3.9366, lng: 41.8670 },
-            "Marsabit": { lat: 2.3346, lng: 37.9909 },
-            "Meru": { lat: 0.0519, lng: 37.6456 },
-            "Migori": { lat: -1.0634, lng: 34.4731 },
-            "Mombasa": { lat: -4.0435, lng: 39.6682 },
-            "Murang'a": { lat: -0.7210, lng: 37.1526 },
-            "Nairobi": { lat: -1.2864, lng: 36.8172 },
-            "Nakuru": { lat: -0.3031, lng: 36.0800 },
-            "Nandi": { lat: 0.1833, lng: 35.1000 },
-            "Narok": { lat: -1.0809, lng: 35.8711 },
-            "Nyamira": { lat: -0.5667, lng: 34.9500 },
-            "Nyandarua": { lat: -0.5333, lng: 36.6000 },
-            "Nyeri": { lat: -0.4201, lng: 36.9476 },
-            "Samburu": { lat: 1.1000, lng: 36.6667 },
-            "Siaya": { lat: 0.0607, lng: 34.2881 },
-            "Taita-Taveta": { lat: -3.4000, lng: 38.3667 },
-            "Tana River": { lat: -1.5000, lng: 40.0167 },
-            "Tharaka-Nithi": { lat: -0.2962, lng: 37.7236 },
-            "Trans Nzoia": { lat: 1.0167, lng: 34.9833 },
-            "Turkana": { lat: 3.1167, lng: 35.6000 },
-            "Uasin Gishu": { lat: 0.5167, lng: 35.2833 },
-            "Vihiga": { lat: 0.0833, lng: 34.7167 },
-            "Wajir": { lat: 1.7500, lng: 40.0500 },
-            "West Pokot": { lat: 1.2500, lng: 35.1000 }
-        };
-
-        // All Kenyan counties for autocomplete
-        const allCounties = Object.keys(countyCoordinates);
-
         // DOM Elements
-        const emergencyTypeBtns = document.querySelectorAll('.emergency-type-btn');
-        const detectLocationBtn = document.getElementById('detectLocationBtn');
-        const locationText = document.getElementById('locationText');
-        const helpOptions = document.getElementById('helpOptions');
-        const helpTypeBadge = document.getElementById('helpTypeBadge');
+        const volunteerGrid = document.getElementById('volunteerGrid');
+        const loadingState = document.getElementById('loadingState');
+        const emptyState = document.getElementById('emptyState');
+        const resultCount = document.getElementById('resultCount');
         const volunteerTemplate = document.getElementById('volunteerTemplate');
-        const countyModal = document.getElementById('countyModal');
-        const countyInput = document.getElementById('countyInput');
-        const countySuggestions = document.getElementById('countySuggestions');
-        const cancelCountyBtn = document.getElementById('cancelCountyBtn');
-        const confirmCountyBtn = document.getElementById('confirmCountyBtn');
-
-        // State
-        let currentEmergencyType = null;
-        let userLocation = null;
-        let nearestCounty = null;
-        let volunteersData = [];
-
-        // Event Listeners
-        emergencyTypeBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                currentEmergencyType = btn.dataset.type;
-                updateEmergencyTypeUI();
-                if (nearestCounty) {
-                    findVolunteers();
-                } else {
-                    helpOptions.innerHTML = `
-                        <div class="text-center py-10">
-                            <i class="fas fa-map-marker-alt text-gray-300 text-4xl mb-3"></i>
-                            <p class="text-gray-500">Please detect your location first</p>
-                        </div>
-                    `;
-                }
-            });
+        
+        // Filter Elements
+        const countyFilter = document.getElementById('countyFilter');
+        const serviceFilter = document.getElementById('serviceFilter');
+        const availabilityFilter = document.getElementById('availabilityFilter');
+        const searchInput = document.getElementById('searchInput');
+        
+        // Volunteer Data
+        let volunteers = [];
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadVolunteerData();
+            
+            // Set up event listeners for filters
+            countyFilter.addEventListener('change', filterVolunteers);
+            serviceFilter.addEventListener('change', filterVolunteers);
+            availabilityFilter.addEventListener('change', filterVolunteers);
+            searchInput.addEventListener('input', filterVolunteers);
         });
-
-        detectLocationBtn.addEventListener('click', detectUserLocation);
-
-        // County selection modal events
-        countyInput.addEventListener('input', showCountySuggestions);
-        cancelCountyBtn.addEventListener('click', closeCountyModal);
-        confirmCountyBtn.addEventListener('click', confirmCountySelection);
-
-        // Load volunteer data from GitHub raw content
+        
+        // Load volunteer data from GitHub
         async function loadVolunteerData() {
             try {
                 const response = await fetch('https://raw.githubusercontent.com/DKTJONATHAN/ProtestAid/main/data/volunteers.json');
-
+                
                 if (!response.ok) {
                     throw new Error('Failed to load volunteer data');
                 }
-
-                const rawData = await response.json();
-
-                // Transform the data to match the expected format
-                volunteersData = rawData.map(volunteer => ({
-                    fullName: volunteer.name,
-                    email: volunteer.email,
-                    phone: volunteer.phone || volunteer.emergency_contact,
-                    location: volunteer.county,
-                    serviceType: volunteer.service,
-                    availability: volunteer.availability,
-                    certifications: volunteer.certifications || [],
-                    emergencyContact1: volunteer.emergency_contact
-                }));
-
-                console.log('Volunteer data loaded and transformed:', volunteersData);
+                
+                volunteers = await response.json();
+                loadingState.classList.add('hidden');
+                filterVolunteers();
+                
+                // Populate county filter dropdown
+                populateCountyFilter();
+                
             } catch (error) {
                 console.error('Error loading volunteer data:', error);
-                helpOptions.innerHTML = `
-                    <div class="text-center py-10">
-                        <i class="fas fa-exclamation-triangle text-red-300 text-4xl mb-3"></i>
-                        <p class="text-gray-500">Failed to load volunteer data</p>
-                        <p class="text-sm text-gray-400 mt-2">${error.message}</p>
-                    </div>
+                loadingState.innerHTML = `
+                    <i class="fas fa-exclamation-triangle text-red-400 text-4xl mb-4"></i>
+                    <h3 class="text-lg font-medium text-gray-700">Failed to load data</h3>
+                    <p class="text-gray-500 mt-1">${error.message}</p>
+                    <button onclick="loadVolunteerData()" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                        Retry
+                    </button>
                 `;
             }
         }
-
-        // Initialize by loading volunteer data
-        loadVolunteerData();
-
-        // Update emergency type UI
-        function updateEmergencyTypeUI() {
-            emergencyTypeBtns.forEach(btn => {
-                btn.classList.remove('ring-2', 'ring-offset-2');
-                if (btn.dataset.type === currentEmergencyType) {
-                    const colorClass = {
-                        medic: 'ring-red-500',
-                        legal: 'ring-blue-500',
-                        police: 'ring-purple-500',
-                        abduction: 'ring-yellow-500'
-                    }[currentEmergencyType];
-                    btn.classList.add('ring-2', 'ring-offset-2', colorClass);
-                }
+        
+        // Populate county filter dropdown with unique counties
+        function populateCountyFilter() {
+            const counties = [...new Set(volunteers.map(v => v.county))].sort();
+            const countyFilter = document.getElementById('countyFilter');
+            
+            counties.forEach(county => {
+                const option = document.createElement('option');
+                option.value = county;
+                option.textContent = county;
+                countyFilter.appendChild(option);
             });
-
-            const typeNames = {
-                medic: 'Medical',
-                legal: 'Legal',
-                police: 'Police',
-                abduction: 'Abduction'
-            };
-            helpTypeBadge.textContent = typeNames[currentEmergencyType] || 'Select type';
-            helpTypeBadge.className = `px-3 py-1 rounded-full text-sm font-medium ${
-                currentEmergencyType ? 
-                {
-                    medic: 'bg-red-100 text-red-600',
-                    legal: 'bg-blue-100 text-blue-600',
-                    police: 'bg-purple-100 text-purple-600',
-                    abduction: 'bg-yellow-100 text-yellow-600'
-                }[currentEmergencyType] : 'bg-gray-100 text-gray-600'
-            }`;
         }
-
-        // Detect user location
-        function detectUserLocation() {
-            detectLocationBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Detecting...';
-            detectLocationBtn.disabled = true;
-
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    position => {
-                        userLocation = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        };
-                        determineNearestCounty();
-                        locationText.textContent = `Detected in ${nearestCounty}`;
-                        detectLocationBtn.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Detected';
-                        detectLocationBtn.disabled = false;
-
-                        if (currentEmergencyType) {
-                            findVolunteers();
-                        }
-                    },
-                    error => {
-                        console.error("Location error:", error);
-                        locationText.textContent = "Could not detect location";
-                        detectLocationBtn.innerHTML = '<i class="fas fa-location-arrow mr-2"></i> Try Again';
-                        detectLocationBtn.disabled = false;
-
-                        // Show manual county entry modal
-                        showCountyModal();
-                    },
-                    { enableHighAccuracy: true, timeout: 10000 }
-                );
-            } else {
-                locationText.textContent = "Geolocation not supported";
-                detectLocationBtn.innerHTML = '<i class="fas fa-times-circle mr-2"></i> Not Supported';
-                // Show manual county entry modal
-                showCountyModal();
-            }
-        }
-
-        // Show county selection modal
-        function showCountyModal() {
-            countyModal.style.display = 'flex';
-            countyInput.value = '';
-            countySuggestions.innerHTML = '';
-            countySuggestions.style.display = 'none';
-            countyInput.focus();
-        }
-
-        // Close county selection modal
-        function closeCountyModal() {
-            countyModal.style.display = 'none';
-        }
-
-        // Confirm county selection from modal
-        function confirmCountySelection() {
-            const selectedCounty = countyInput.value.trim();
-            if (selectedCounty && allCounties.some(c => c.toLowerCase() === selectedCounty.toLowerCase())) {
-                nearestCounty = allCounties.find(c => c.toLowerCase() === selectedCounty.toLowerCase());
-                locationText.textContent = `Using ${nearestCounty}`;
-                closeCountyModal();
-
-                if (currentEmergencyType) {
-                    findVolunteers();
+        
+        // Filter volunteers based on selected criteria
+        function filterVolunteers() {
+            const county = countyFilter.value.toLowerCase();
+            const service = serviceFilter.value.toLowerCase();
+            const availability = availabilityFilter.value.toLowerCase();
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            const filtered = volunteers.filter(volunteer => {
+                // County filter
+                if (county && !volunteer.county.toLowerCase().includes(county)) {
+                    return false;
                 }
-            } else {
-                alert("Please select a valid county from the suggestions");
-            }
-        }
-
-        // Show county suggestions based on input
-        function showCountySuggestions() {
-            const input = countyInput.value.toLowerCase();
-            if (input.length === 0) {
-                countySuggestions.style.display = 'none';
-                return;
-            }
-
-            const matches = allCounties.filter(county => 
-                county.toLowerCase().includes(input)
-            );
-
-            if (matches.length > 0) {
-                countySuggestions.innerHTML = matches.map(county => 
-                    `<div onclick="selectCountySuggestion('${county}')">${county}</div>`
-                ).join('');
-                countySuggestions.style.display = 'block';
-            } else {
-                countySuggestions.style.display = 'none';
-            }
-        }
-
-        // Select a county from suggestions
-        function selectCountySuggestion(county) {
-            countyInput.value = county;
-            countySuggestions.style.display = 'none';
-        }
-
-        // Make selectCountySuggestion available globally
-        window.selectCountySuggestion = selectCountySuggestion;
-
-        // Determine nearest county
-        function determineNearestCounty() {
-            if (!userLocation) return;
-
-            let nearest = null;
-            let shortestDistance = Infinity;
-
-            for (const [county, coords] of Object.entries(countyCoordinates)) {
-                const distance = calculateDistance(
-                    userLocation.lat, userLocation.lng,
-                    coords.lat, coords.lng
-                );
-
-                if (distance < shortestDistance) {
-                    shortestDistance = distance;
-                    nearest = county;
-                }
-            }
-
-            nearestCounty = nearest;
-        }
-
-        // Find and display volunteers based only on service type and county
-        function findVolunteers() {
-            console.log("Current filters:", {
-                type: currentEmergencyType,
-                county: nearestCounty,
-                dataCount: volunteersData.length
-            });
-
-            if (!currentEmergencyType || !nearestCounty || volunteersData.length === 0) {
-                helpOptions.innerHTML = `
-                    <div class="text-center py-10">
-                        <i class="fas fa-exclamation-triangle text-yellow-300 text-4xl mb-3"></i>
-                        <p class="text-gray-500">System not ready</p>
-                        <p class="text-sm text-gray-400 mt-2">Type: ${currentEmergencyType || 'none'}, 
-                        Location: ${nearestCounty || 'none'}, 
-                        Volunteers: ${volunteersData.length}</p>
-                    </div>
-                `;
-                return;
-            }
-
-            // Filter volunteers based only on service type and county
-            const matchedVolunteers = volunteersData.filter(volunteer => {
-                const serviceMatch = (volunteer.serviceType || '').toLowerCase() === currentEmergencyType.toLowerCase();
-                const countyMatch = volunteer.location && 
-                                   volunteer.location.toLowerCase().includes(nearestCounty.toLowerCase());
                 
-                console.log(`Volunteer ${volunteer.fullName} - Service: ${serviceMatch}, County: ${countyMatch}`);
-                return serviceMatch && countyMatch;
+                // Service filter
+                if (service && volunteer.service.toLowerCase() !== service) {
+                    return false;
+                }
+                
+                // Availability filter
+                if (availability && !volunteer.availability.toLowerCase().includes(availability)) {
+                    return false;
+                }
+                
+                // Search term (name, message, etc.)
+                if (searchTerm) {
+                    const searchFields = [
+                        volunteer.name,
+                        volunteer.message,
+                        volunteer.county,
+                        volunteer.service
+                    ].join(' ').toLowerCase();
+                    
+                    if (!searchFields.includes(searchTerm)) {
+                        return false;
+                    }
+                }
+                
+                return true;
             });
-
-            console.log("Matched volunteers:", matchedVolunteers);
-
-            if (matchedVolunteers.length === 0) {
-                helpOptions.innerHTML = `
-                    <div class="text-center py-10">
-                        <i class="fas fa-user-slash text-gray-300 text-4xl mb-3"></i>
-                        <p class="text-gray-500">No ${currentEmergencyType} volunteers found in ${nearestCounty}</p>
-                        <p class="text-sm text-gray-400 mt-2">Available volunteers: ${volunteersData.length}</p>
-                    </div>
-                `;
+            
+            displayVolunteers(filtered);
+        }
+        
+        // Display filtered volunteers
+        function displayVolunteers(filteredVolunteers) {
+            volunteerGrid.innerHTML = '';
+            
+            if (filteredVolunteers.length === 0) {
+                emptyState.classList.remove('hidden');
+                resultCount.textContent = '0 volunteers found';
                 return;
             }
-
-            displayVolunteers(matchedVolunteers);
-        }
-
-        // Display volunteers
-        function displayVolunteers(volunteers) {
-            helpOptions.innerHTML = '';
-
-            volunteers.forEach(volunteer => {
-                const volunteerCard = volunteerTemplate.content.cloneNode(true);
-
-                // Fill volunteer data
-                volunteerCard.querySelector('[data-name]').textContent = volunteer.fullName;
-                volunteerCard.querySelector('[data-location]').textContent = volunteer.location;
-                volunteerCard.querySelector('[data-certifications]').textContent = 
-                    volunteer.certifications?.join(', ') || 'Not specified';
-                volunteerCard.querySelector('[data-county]').textContent = volunteer.location;
-
-                // Set availability
-                const availabilityEl = volunteerCard.querySelector('[data-availability]');
-                availabilityEl.textContent = volunteer.availability || 'unknown';
-
-                // Style based on availability
-                if (volunteer.availability?.toLowerCase().includes('available')) {
-                    availabilityEl.classList.add('availability-available');
-                } else if (volunteer.availability?.toLowerCase().includes('on-call')) {
-                    availabilityEl.classList.add('availability-oncall');
-                } else {
-                    availabilityEl.classList.add('availability-unavailable');
+            
+            emptyState.classList.add('hidden');
+            resultCount.textContent = `${filteredVolunteers.length} ${filteredVolunteers.length === 1 ? 'volunteer' : 'volunteers'} found`;
+            
+            filteredVolunteers.forEach(volunteer => {
+                const card = volunteerTemplate.content.cloneNode(true);
+                
+                // Basic info
+                card.querySelector('[data-name]').textContent = volunteer.name;
+                card.querySelector('[data-county]').textContent = volunteer.county;
+                card.querySelector('[data-email]').textContent = volunteer.email;
+                card.querySelector('[data-phone]').textContent = volunteer.phone;
+                card.querySelector('[data-message]').textContent = volunteer.message || 'No additional information provided';
+                
+                // Service tag
+                const serviceTag = card.querySelector('[data-service]');
+                serviceTag.textContent = getServiceDisplayName(volunteer.service);
+                serviceTag.classList.add(getServiceClass(volunteer.service));
+                
+                // Availability badge
+                const availabilityBadge = card.querySelector('[data-availability]');
+                availabilityBadge.textContent = getAvailabilityDisplayName(volunteer.availability);
+                availabilityBadge.classList.add(getAvailabilityClass(volunteer.availability));
+                
+                // Format timestamp
+                if (volunteer.timestamp) {
+                    const date = new Date(volunteer.timestamp);
+                    card.querySelector('[data-timestamp]').textContent = `Added on: ${date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}`;
                 }
-
-                // Set up call buttons
-                const phoneNumber = volunteer.phone || volunteer.emergencyContact1;
-                const callBtn = volunteerCard.querySelector('.call-btn');
-                const pleaseCallBtn = volunteerCard.querySelector('.please-call-btn');
-
-                if (phoneNumber) {
-                    callBtn.addEventListener('click', () => {
-                        window.location.href = `tel:${phoneNumber}`;
-                    });
-
-                    pleaseCallBtn.addEventListener('click', () => {
-                        // Correct Safaricom/Airtel Please Call Me code for Kenya (*130#)
-                        const pleaseCallCode = `*130*${phoneNumber.replace(/\D/g, '')}%23`;
-                        window.location.href = `tel:${pleaseCallCode}`;
-                    });
-                } else {
-                    callBtn.disabled = true;
-                    pleaseCallBtn.disabled = true;
-                    callBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                    pleaseCallBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                
+                // Detect device
+                if (volunteer._metadata?.user_agent) {
+                    const ua = volunteer._metadata.user_agent.toLowerCase();
+                    let device = 'Desktop';
+                    if (ua.includes('mobile')) device = 'Mobile';
+                    if (ua.includes('iphone') || ua.includes('android')) device = 'Mobile';
+                    card.querySelector('[data-device]').textContent = device;
                 }
-
-                helpOptions.appendChild(volunteerCard);
+                
+                // Set up call button
+                const callBtn = card.querySelector('.call-btn');
+                callBtn.addEventListener('click', () => {
+                    window.location.href = `tel:${volunteer.phone}`;
+                });
+                
+                volunteerGrid.appendChild(card);
             });
+        }
+        
+        // Helper functions for display formatting
+        function getServiceDisplayName(service) {
+            const services = {
+                'medic': 'Medical',
+                'legal': 'Legal',
+                'logistics': 'Logistics'
+            };
+            return services[service] || service;
+        }
+        
+        function getServiceClass(service) {
+            return service; // Uses the service type as class (medic, legal, logistics)
+        }
+        
+        function getAvailabilityDisplayName(availability) {
+            const availabilities = {
+                'full-time': 'Full-time',
+                'part-time': 'Part-time',
+                'on-call': 'On-call'
+            };
+            return availabilities[availability] || availability;
+        }
+        
+        function getAvailabilityClass(availability) {
+            return availability.replace(' ', '-'); // full-time, part-time, on-call
         }
     </script>
 </body>
