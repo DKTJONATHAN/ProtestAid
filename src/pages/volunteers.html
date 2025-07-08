@@ -15,7 +15,7 @@
             <p class="mt-4 text-gray-600">Join our network of medics, legal experts, and support volunteers</p>
         </div>
 
-        <form id="volunteerForm" class="bg-white shadow-md rounded-lg p-8">
+        <form id="volunteerForm" class="bg-white shadow-md rounded-lg p-8" onsubmit="event.preventDefault(); submitForm(this);">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Personal Information -->
                 <div class="col-span-2">
@@ -41,9 +41,53 @@
                             <select id="location" name="location" required 
                                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 <option value="">Select your county</option>
-                                <option value="Nairobi">Nairobi</option>
                                 <option value="Mombasa">Mombasa</option>
+                                <option value="Kwale">Kwale</option>
+                                <option value="Kilifi">Kilifi</option>
+                                <option value="Tana River">Tana River</option>
+                                <option value="Lamu">Lamu</option>
+                                <option value="Taita Taveta">Taita Taveta</option>
+                                <option value="Garissa">Garissa</option>
+                                <option value="Wajir">Wajir</option>
+                                <option value="Mandera">Mandera</option>
+                                <option value="Marsabit">Marsabit</option>
+                                <option value="Isiolo">Isiolo</option>
+                                <option value="Meru">Meru</option>
+                                <option value="Tharaka-Nithi">Tharaka-Nithi</option>
+                                <option value="Embu">Embu</option>
+                                <option value="Kitui">Kitui</option>
+                                <option value="Machakos">Machakos</option>
+                                <option value="Makueni">Makueni</option>
+                                <option value="Nyandarua">Nyandarua</option>
+                                <option value="Nyeri">Nyeri</option>
+                                <option value="Kirinyaga">Kirinyaga</option>
+                                <option value="Murang'a">Murang'a</option>
+                                <option value="Kiambu">Kiambu</option>
+                                <option value="Turkana">Turkana</option>
+                                <option value="West Pokot">West Pokot</option>
+                                <option value="Samburu">Samburu</option>
+                                <option value="Trans Nzoia">Trans Nzoia</option>
+                                <option value="Uasin Gishu">Uasin Gishu</option>
+                                <option value="Elgeyo-Marakwet">Elgeyo-Marakwet</option>
+                                <option value="Nandi">Nandi</option>
+                                <option value="Baringo">Baringo</option>
+                                <option value="Laikipia">Laikipia</option>
+                                <option value="Nakuru">Nakuru</option>
+                                <option value="Narok">Narok</option>
+                                <option value="Kajiado">Kajiado</option>
+                                <option value="Kericho">Kericho</option>
+                                <option value="Bomet">Bomet</option>
+                                <option value="Kakamega">Kakamega</option>
+                                <option value="Vihiga">Vihiga</option>
+                                <option value="Bungoma">Bungoma</option>
+                                <option value="Busia">Busia</option>
+                                <option value="Siaya">Siaya</option>
                                 <option value="Kisumu">Kisumu</option>
+                                <option value="Homa Bay">Homa Bay</option>
+                                <option value="Migori">Migori</option>
+                                <option value="Kisii">Kisii</option>
+                                <option value="Nyamira">Nyamira</option>
+                                <option value="Nairobi">Nairobi</option>
                             </select>
                         </div>
                     </div>
@@ -73,12 +117,6 @@
                                     <label for="other" class="ml-3 block text-sm font-medium text-gray-700">Other Support</label>
                                 </div>
                             </div>
-                        </div>
-
-                        <div id="specializationField" class="hidden">
-                            <label for="specialization" class="block text-sm font-medium text-gray-700">Specialization</label>
-                            <input type="text" id="specialization" name="specialization" 
-                                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                         </div>
                     </div>
                 </div>
@@ -115,14 +153,46 @@
                     <h2 class="text-xl font-semibold text-gray-800 mb-4">Additional Information</h2>
                     <div class="space-y-4">
                         <div>
-                            <label for="experience" class="block text-sm font-medium text-gray-700">Relevant Experience</label>
-                            <textarea id="experience" name="experience" rows="3" 
-                                      class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Relevant Experience</label>
+                            <div class="space-y-2">
+                                <div class="flex items-center">
+                                    <input id="exp-medical" name="experience" type="checkbox" value="medical" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <label for="exp-medical" class="ml-3 block text-sm text-gray-700">Medical/First Aid</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="exp-legal" name="experience" type="checkbox" value="legal" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <label for="exp-legal" class="ml-3 block text-sm text-gray-700">Legal Assistance</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="exp-counseling" name="experience" type="checkbox" value="counseling" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <label for="exp-counseling" class="ml-3 block text-sm text-gray-700">Counseling</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="exp-logistics" name="experience" type="checkbox" value="logistics" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <label for="exp-logistics" class="ml-3 block text-sm text-gray-700">Logistics/Transport</label>
+                                </div>
+                            </div>
                         </div>
                         <div>
-                            <label for="training" class="block text-sm font-medium text-gray-700">Training/Certifications</label>
-                            <textarea id="training" name="training" rows="2" 
-                                      class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Training/Certifications</label>
+                            <div class="space-y-2">
+                                <div class="flex items-center">
+                                    <input id="cert-firstaid" name="certifications" type="checkbox" value="firstaid" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <label for="cert-firstaid" class="ml-3 block text-sm text-gray-700">First Aid Certified</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="cert-legal" name="certifications" type="checkbox" value="legal" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <label for="cert-legal" class="ml-3 block text-sm text-gray-700">Legal Training</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="cert-crisis" name="certifications" type="checkbox" value="crisis" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <label for="cert-crisis" class="ml-3 block text-sm text-gray-700">Crisis Management</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="cert-none" name="certifications" type="checkbox" value="none" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <label for="cert-none" class="ml-3 block text-sm text-gray-700">None</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
