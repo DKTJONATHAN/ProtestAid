@@ -177,6 +177,52 @@
     </div>
 
     <script>
+async function loadVolunteerData() {
+  try {
+    showLoadingState();
+    
+    const response = await fetch('/.netlify/functions/volunteers');
+    const result = await response.json();
+    
+    if (response.ok) {
+      console.log(`Data loaded from: ${result.source}`);
+      displayVolunteers(result.data);
+    } else {
+      throw new Error(result.error || 'Unknown error');
+    }
+    
+  } catch (error) {
+    console.error('Load failed:', error);
+    
+    // Ultimate fallback - load from hardcoded backup URL
+    try {
+      const backupResponse = await fetch(
+        'https://cdn.jsdelivr.net/gh/DKTJONATHAN/ProtestAid@main/data/volunteers.json'
+      );
+      const backupData = await backupResponse.json();
+      displayVolunteers(backupData);
+      showWarning('Using backup data source');
+    } catch (backupError) {
+      showErrorState('All data sources failed. Please try again later.');
+    }
+  }
+}
+
+function showWarning(message) {
+  const warning = document.createElement('div');
+  warning.className = 'bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6';
+  warning.innerHTML = `
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+      </div>
+      <div class="ml-3">
+        <p class="text-sm text-yellow-700">${message}</p>
+      </div>
+    </div>
+  `;
+  document.getElementById('alertsContainer').appendChild(warning);
+}
         // DOM Elements
         const volunteerGrid = document.getElementById('volunteerGrid');
         const loadingState = document.getElementById('loadingState');
