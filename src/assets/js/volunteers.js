@@ -1,67 +1,73 @@
-async function submitForm(form) {
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalBtnText = submitBtn.innerHTML;
-    
+const { Octokit } = require("@octokit/rest");
+
+exports.handler = async function(event, context) {
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ message: "Method Not Allowed" }),
+    };
+  }
+
+  try {
+    const data = JSON.parse(event.body);
+    const octokit = new Octokit({
+      auth: process.env.GITHUB_TOKEN,
+    });
+
+    // Get the current file content
+    const repoInfo = process.env.GITHUB_REPO.split('/');
+    const owner = repoInfo[0];
+    const repo = repoInfo[1];
+    const path = "data/volunteers.json";
+
+    let currentContent = [];
+    let sha = null;
+
     try {
-        // Show loading state
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `
-            <span class="inline-block animate-spin mr-2">
-                <i class="fas fa-circle-notch"></i>
-            </span>
-            Processing...
-        `;
+      const { data: fileData } = await octokit.repos.getContent({
+        owner,
+        repo,
+        path,
+      });
 
-        // Collect form data
-        const formData = {
-            personalInfo: {
-                fullName: form.fullName.value,
-                email: form.email.value,
-                phone: form.phone.value,
-                location: form.location.value
-            },
-            volunteerRole: {
-                serviceType: form.querySelector('input[name="serviceType"]:checked').value
-            },
-            emergencyContacts: {
-                primary: form.emergencyContact1.value,
-                secondary: form.emergencyContact2.value || null,
-                availability: form.availability.value
-            },
-            additionalInfo: {
-                experience: Array.from(form.querySelectorAll('input[name="experience"]:checked')).map(el => el.value),
-                certifications: Array.from(form.querySelectorAll('input[name="certifications"]:checked')).map(el => el.value),
-                consent: form.consent.checked,
-                timestamp: new Date().toISOString()
-            }
-        };
-
-        // Submit to Netlify function
-        const response = await fetch('/.netlify/functions/volunteers', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to submit form');
-        }
-
-        // Show success
-        form.reset();
-        form.classList.add('hidden');
-        document.getElementById('successMessage').classList.remove('hidden');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-
+      const content = Buffer.from(fileData.content, 'base64').toString('utf8');
+      currentContent = JSON.parse(content);
+      sha = fileData.sha;
     } catch (error) {
-        alert('Error submitting form. Please try again.');
-        console.error('Submission error:', error);
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
+      if (error.status !== 404) {
+        throw error;
+      }
+      // File doesn't exist yet, we'll create it
     }
-}
 
-document.addEventListener('DOMContentLoaded', function() {
-    // No need for specialization toggle anymore
-});
+    // Add new volunteer data
+    currentContent.push({
+      ...data,
+      timestamp: new Date().toISOString(),
+    });
+
+    // Update the file on GitHub
+    await octokit.repos.createOrUpdateFileContents({
+      owner,
+      repo,
+      path,
+      message: "Add new volunteer signup",
+      content: Buffer.from(JSON.stringify(currentContent, null, 2)).toString('base64'),
+      sha,
+    });
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: "Volunteer data saved successfully" }),
+    };
+  } catch (error) {
+    console.error("Error:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ 
+        message: "Failed to save volunteer data",
+        error: error.message 
+      }),
+    };
+  }
+};
