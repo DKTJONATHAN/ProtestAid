@@ -42,5 +42,21 @@
       "crisis"
     ],
     "timestamp": "2025-07-08T13:11:44.598Z"
+  },
+  {
+    "fullName": "Hfugf",
+    "email": "hir@yjj.jg",
+    "phone": "08758885",
+    "location": "Nairobi",
+    "serviceType": "other",
+    "availability": "on-call",
+    "emergencyContact1": "9532",
+    "emergencyContact2": "85326",
+    "certifications": [
+      "firstaid",
+      "legal",
+      "crisis"
+    ],
+    "timestamp": "2025-07-08T13:12:17.532Z"
   }
 ]
