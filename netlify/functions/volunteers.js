@@ -6,15 +6,15 @@ exports.handler = async (event) => {
     }
 
     try {
-        const newVolunteer = JSON.parse(event.body);
+        const formData = JSON.parse(event.body);
         const { GITHUB_TOKEN, GITHUB_REPO } = process.env;
         const filePath = 'data/volunteers.json';
 
-        // 1. Get current data from GitHub
+        // Get current data from GitHub
         const getResponse = await fetch(
             `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`,
             { headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
-        });
+        );
 
         let currentData = [];
         let sha = null;
@@ -25,10 +25,10 @@ exports.handler = async (event) => {
             sha = fileData.sha;
         }
 
-        // 2. Add new entry
-        currentData.push(newVolunteer);
+        // Add new volunteer
+        currentData.push(formData);
 
-        // 3. Update file
+        // Update file on GitHub
         const updateResponse = await fetch(
             `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`,
             {
@@ -38,11 +38,16 @@ exports.handler = async (event) => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    message: `New volunteer: ${newVolunteer.fullName}`,
+                    message: `New volunteer: ${formData.personalInfo.fullName}`,
                     content: Buffer.from(JSON.stringify(currentData, null, 2)).toString('base64'),
                     sha: sha
                 })
-            });
+            }
+        );
+
+        if (!updateResponse.ok) {
+            throw new Error('Failed to update GitHub file');
+        }
 
         return {
             statusCode: 200,
@@ -52,7 +57,10 @@ exports.handler = async (event) => {
     } catch (error) {
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: error.message })
+            body: JSON.stringify({ 
+                error: 'Failed to process submission',
+                details: error.message 
+            })
         };
     }
 };
