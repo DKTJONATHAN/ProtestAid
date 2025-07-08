@@ -1,3 +1,5 @@
+// scripts/main.js
+
 // DOM Elements
 const volunteerGrid = document.getElementById('volunteerGrid');
 const loadingState = document.getElementById('loadingState');
@@ -5,8 +7,8 @@ const emptyState = document.getElementById('emptyState');
 const errorState = document.getElementById('errorState');
 const errorMessage = document.getElementById('errorMessage');
 const retryButton = document.getElementById('retryButton');
-const alertsContainer = document.getElementById('alertsContainer');
 const lastAttemptTime = document.getElementById('lastAttemptTime');
+const alertsContainer = document.getElementById('alertsContainer');
 
 // Filter Elements
 const countyFilter = document.getElementById('countyFilter');
@@ -15,82 +17,92 @@ const availabilityFilter = document.getElementById('availabilityFilter');
 
 // Volunteer Data
 let volunteers = [];
-let lastUpdateTimestamp = null;
+const MAX_RETRIES = 2;
 let retryCount = 0;
-const MAX_RETRIES = 3;
 
 // Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    loadVolunteerData();
+document.addEventListener('DOMContentLoaded', init);
 
-    // Set up event listeners for filters
+function init() {
+    // Load local data immediately
+    loadLocalData();
+    
+    // Then try to fetch remote data
+    loadRemoteData();
+
+    // Set up event listeners
     countyFilter.addEventListener('change', filterVolunteers);
     serviceFilter.addEventListener('change', filterVolunteers);
     availabilityFilter.addEventListener('change', filterVolunteers);
-
-    // Retry button
     retryButton.addEventListener('click', () => {
         retryCount = 0;
-        loadVolunteerData();
+        loadRemoteData();
     });
-});
+}
 
-// Main data loading function
-async function loadVolunteerData() {
-    try {
-        showLoading();
-        updateLastAttemptTime();
-
-        // Try to fetch from primary source
-        let response = await fetchWithTimeout('/.netlify/functions/volunteers', {}, 8000);
-        let result = await response.json();
-
-        if (!response.ok) throw new Error(result.error || 'Function failed');
-
-        volunteers = Array.isArray(result.data) ? result.data : [];
-        lastUpdateTimestamp = result.timestamp || new Date().toISOString();
-
-        // Add metadata if missing
-        volunteers = volunteers.map(volunteer => ({
-            ...volunteer,
-            lastActive: volunteer.lastActive || getRandomLastActive(),
-            distance: volunteer.distance || getRandomDistance()
+// 1. First load local data
+function loadLocalData() {
+    if (window.emergencyVolunteers && window.emergencyVolunteers.length > 0) {
+        volunteers = window.emergencyVolunteers.map(v => ({
+            ...v,
+            lastActive: v.lastActive || getRandomLastActive(),
+            distance: v.distance || getRandomDistance()
         }));
-
         filterVolunteers();
-        showDataStatus('success', `Data loaded from ${result.source || 'primary source'}`);
-
-    } catch (error) {
-        console.error('Data load failed:', error);
-        
-        // Fall back to local data
-        if (window.emergencyVolunteers && window.emergencyVolunteers.length > 0) {
-            volunteers = window.emergencyVolunteers;
-            filterVolunteers();
-            showDataStatus('error', 'Using emergency backup data');
-        } else {
-            showError('All data sources failed');
-        }
-    } finally {
-        hideLoading();
     }
 }
 
-// Fetch with timeout
-async function fetchWithTimeout(resource, options = {}, timeout = 8000) {
-    const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), timeout);
+// 2. Then try to fetch remote data
+async function loadRemoteData() {
+    if (retryCount >= MAX_RETRIES) {
+        showDataStatus('error', 'Max retries reached. Using local data.');
+        return;
+    }
 
-    const response = await fetch(resource, {
-        ...options,
-        signal: controller.signal  
-    });
+    showLoading();
+    retryCount++;
+    updateLastAttemptTime();
 
-    clearTimeout(id);
-    return response;
+    try {
+        const response = await fetchWithTimeout('/.netlify/functions/volunteers', {}, 3000);
+        
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
+        const result = await response.json();
+        
+        if (Array.isArray(result?.data)) {
+            volunteers = result.data.map(v => ({
+                ...v,
+                lastActive: v.lastActive || getRandomLastActive(),
+                distance: v.distance || getRandomDistance()
+            }));
+            showDataStatus('success', 'Data updated successfully');
+        } else {
+            throw new Error('Invalid data format');
+        }
+    } catch (error) {
+        console.error('Fetch failed:', error);
+        showDataStatus('warning', `Attempt ${retryCount}/${MAX_RETRIES} failed. ${error.message}`);
+        
+        if (volunteers.length === 0) {
+            loadLocalData(); // Fallback if no data exists
+        }
+    } finally {
+        hideLoading();
+        filterVolunteers();
+    }
 }
 
-// Filter volunteers based on selections
+// Helper Functions
+function fetchWithTimeout(url, options, timeout) {
+    return Promise.race([
+        fetch(url, options),
+        new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Request timeout')), timeout)
+        )
+    ]);
+}
+
 function filterVolunteers() {
     const county = countyFilter.value;
     const service = serviceFilter.value;
@@ -107,7 +119,6 @@ function filterVolunteers() {
     displayVolunteers(filtered);
 }
 
-// Display volunteers in the grid
 function displayVolunteers(volunteersToDisplay) {
     volunteerGrid.innerHTML = '';
 
@@ -123,72 +134,73 @@ function displayVolunteers(volunteersToDisplay) {
         card.className = 'bg-white rounded-xl shadow-md overflow-hidden card-hover fade-in';
         card.innerHTML = `
             <div class="p-6">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-800">${escapeHtml(volunteer.name) || 'Volunteer'}</h3>
-                        <div class="flex items-center mt-1">
-                            <span class="${getServiceClass(volunteer.service)}">
-                                ${getServiceName(volunteer.service)}
-                            </span>
-                            <span class="${getAvailabilityClass(volunteer.availability)} ml-2">
-                                ${getAvailabilityName(volunteer.availability)}
-                            </span>
-                        </div>
-                    </div>
-                    ${volunteer.phone ? `
-                    <a href="tel:${volunteer.phone}" class="call-btn h-10 w-10 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition flex items-center justify-center">
-                        <i class="fas fa-phone"></i>
-                    </a>
-                    ` : ''}
-                </div>
-                
-                <div class="mt-4">
-                    ${volunteer.county ? `
-                    <div class="flex items-center text-sm text-gray-600 mb-2">
-                        <i class="fas fa-map-marker-alt mr-2"></i>
-                        <span>${escapeHtml(volunteer.county)}</span>
-                    </div>
-                    ` : ''}
-                    
-                    ${volunteer.phone ? `
-                    <div class="flex items-center text-sm text-gray-600">
-                        <i class="fas fa-phone-alt mr-2"></i>
-                        <span>${formatPhoneNumber(volunteer.phone)}</span>
-                    </div>
-                    ` : ''}
-                </div>
-                
-                ${volunteer.message ? `
-                <div class="mt-4 pt-4 border-t border-gray-100">
-                    <p class="text-sm text-gray-600">${escapeHtml(volunteer.message)}</p>
-                </div>
-                ` : ''}
-                
-                <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
-                    <span>Last active: ${volunteer.lastActive || 'Recently'}</span>
-                    <span>${volunteer.distance || 'Nearby'}</span>
-                </div>
+                <!-- Card content remains the same as before -->
+                ${generateVolunteerCardHTML(volunteer)}
             </div>
         `;
         volunteerGrid.appendChild(card);
     });
 }
 
-// Helper functions
+function generateVolunteerCardHTML(volunteer) {
+    return `
+        <div class="flex justify-between items-start">
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800">${escapeHtml(volunteer.name) || 'Volunteer'}</h3>
+                <div class="flex items-center mt-1">
+                    <span class="${getServiceClass(volunteer.service)}">
+                        ${getServiceName(volunteer.service)}
+                    </span>
+                    <span class="${getAvailabilityClass(volunteer.availability)} ml-2">
+                        ${getAvailabilityName(volunteer.availability)}
+                    </span>
+                </div>
+            </div>
+            ${volunteer.phone ? `
+            <a href="tel:${volunteer.phone}" class="call-btn h-10 w-10 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition flex items-center justify-center">
+                <i class="fas fa-phone"></i>
+            </a>
+            ` : ''}
+        </div>
+        <div class="mt-4">
+            ${volunteer.county ? `
+            <div class="flex items-center text-sm text-gray-600 mb-2">
+                <i class="fas fa-map-marker-alt mr-2"></i>
+                <span>${escapeHtml(volunteer.county)}</span>
+            </div>
+            ` : ''}
+            ${volunteer.phone ? `
+            <div class="flex items-center text-sm text-gray-600">
+                <i class="fas fa-phone-alt mr-2"></i>
+                <span>${formatPhoneNumber(volunteer.phone)}</span>
+            </div>
+            ` : ''}
+        </div>
+        ${volunteer.message ? `
+        <div class="mt-4 pt-4 border-t border-gray-100">
+            <p class="text-sm text-gray-600">${escapeHtml(volunteer.message)}</p>
+        </div>
+        ` : ''}
+        <div class="mt-4 flex justify-between items-center text-xs text-gray-400">
+            <span>Last active: ${volunteer.lastActive || 'Recently'}</span>
+            <span>${volunteer.distance || 'Nearby'}</span>
+        </div>
+    `;
+}
+
+// Utility Functions
 function getServiceName(service) {
     const services = { 
         medic: "Medical", 
         legal: "Legal", 
         logistics: "Logistics",
-        counseling: "Counseling"
+        counseling: "Counseling" 
     };
     return services[service] || "Helper";
 }
 
 function getServiceClass(service) {
-    const baseClass = "service-tag";
-    const typeClass = service ? `${service}-tag` : "other-tag";
-    return `${baseClass} ${typeClass}`;
+    return `service-tag ${service}-tag`;
 }
 
 function getAvailabilityName(availability) {
@@ -201,9 +213,7 @@ function getAvailabilityName(availability) {
 }
 
 function getAvailabilityClass(availability) {
-    const baseClass = "availability-badge";
-    const availabilityClass = availability ? availability.replace(' ', '-') : "unknown";
-    return `${baseClass} ${availabilityClass}`;
+    return `availability-badge ${availability}`;
 }
 
 function getRandomLastActive() {
@@ -221,7 +231,7 @@ function formatPhoneNumber(phone) {
 
 function escapeHtml(unsafe) {
     if (!unsafe) return '';
-    return unsafe
+    return unsafe.toString()
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
@@ -229,7 +239,7 @@ function escapeHtml(unsafe) {
         .replace(/'/g, "&#039;");
 }
 
-// UI State Management
+// UI State Functions
 function showLoading() {
     loadingState.classList.remove('hidden');
     emptyState.classList.add('hidden');
@@ -259,37 +269,22 @@ function updateLastAttemptTime() {
 }
 
 function showDataStatus(type, message) {
-    const colors = {
-        success: 'green',
-        warning: 'yellow',
-        error: 'red'
-    };
+    const alert = document.createElement('div');
+    alert.className = `alert-${type} p-4 mb-4 rounded fade-in`;
+    alert.innerHTML = `
+        <div class="flex items-center">
+            <i class="fas fa-${getStatusIcon(type)} mr-3"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    alertsContainer.prepend(alert);
+    setTimeout(() => alert.remove(), 5000);
+}
 
-    const icon = {
+function getStatusIcon(type) {
+    return {
         success: 'check-circle',
         warning: 'exclamation-triangle',
         error: 'times-circle'
-    };
-
-    const alert = document.createElement('div');
-    alert.className = `bg-${colors[type]}-50 border-l-4 border-${colors[type]}-400 p-4 mb-4 fade-in`;
-    alert.innerHTML = `
-        <div class="flex items-center">
-            <div class="flex-shrink-0 text-${colors[type]}-400">
-                <i class="fas fa-${icon[type]}"></i>
-            </div>
-            <div class="ml-3">
-                <p class="text-sm text-${colors[type]}-700">
-                    ${message} <span class="text-xs opacity-75">(${new Date().toLocaleTimeString()})</span>
-                </p>
-            </div>
-        </div>
-    `;
-
-    alertsContainer.insertBefore(alert, alertsContainer.firstChild);
-
-    setTimeout(() => {
-        alert.classList.add('opacity-0', 'transition-opacity', 'duration-300');
-        setTimeout(() => alert.remove(), 300);
-    }, 15000);
+    }[type];
 }
