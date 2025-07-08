@@ -199,46 +199,47 @@
     <script>
         // County coordinates - all 47 Kenyan counties
         const countyCoordinates = {
-            "Nairobi": { lat: -1.286389, lng: 36.817223 },
-            "Mombasa": { lat: -4.0435, lng: 39.6682 },
-            "Kisumu": { lat: -0.1022, lng: 34.7617 },
-            "Nakuru": { lat: -0.3031, lng: 36.0800 },
-            "Kakamega": { lat: 0.2827, lng: 34.7519 },
-            "Eldoret": { lat: 0.5204, lng: 35.2699 },
-            "Thika": { lat: -1.0333, lng: 37.0833 },
-            "Malindi": { lat: -3.2175, lng: 40.1191 },
-            "Kiambu": { lat: -1.1667, lng: 36.8333 },
-            "Machakos": { lat: -1.5167, lng: 37.2667 },
-            "Meru": { lat: 0.0500, lng: 37.6500 },
-            "Nyeri": { lat: -0.4167, lng: 36.9500 },
-            "Kisii": { lat: -0.6833, lng: 34.7667 },
-            "Kericho": { lat: -0.3667, lng: 35.2833 },
-            "Bungoma": { lat: 0.5667, lng: 34.5667 },
-            "Busia": { lat: 0.4667, lng: 34.1167 },
-            "Embu": { lat: -0.5333, lng: 37.4500 },
+            "Baringo": { lat: 0.6981, lng: 35.8297 },
+            "Bomet": { lat: -0.8014, lng: 35.3428 },
+            "Bungoma": { lat: 0.5695, lng: 34.5584 },
+            "Busia": { lat: 0.4602, lng: 34.1117 },
+            "Elgeyo-Marakwet": { lat: 0.9061, lng: 35.4781 },
+            "Embu": { lat: -0.5390, lng: 37.4574 },
             "Garissa": { lat: -0.4536, lng: 39.6400 },
-            "Homa Bay": { lat: -0.5167, lng: 34.4500 },
-            "Isiolo": { lat: 0.3500, lng: 37.5833 },
-            "Kajiado": { lat: -1.8500, lng: 36.7833 },
-            "Kilifi": { lat: -3.6333, lng: 39.8500 },
-            "Kirinyaga": { lat: -0.5000, lng: 37.2833 },
-            "Kitui": { lat: -1.3667, lng: 38.0167 },
-            "Kwale": { lat: -4.1833, lng: 39.4500 },
+            "Homa Bay": { lat: -0.5279, lng: 34.4561 },
+            "Isiolo": { lat: 0.3556, lng: 37.5833 },
+            "Kajiado": { lat: -1.8524, lng: 36.7768 },
+            "Kakamega": { lat: 0.2827, lng: 34.7519 },
+            "Kericho": { lat: -0.3676, lng: 35.2836 },
+            "Kiambu": { lat: -1.1714, lng: 36.8356 },
+            "Kilifi": { lat: -3.6305, lng: 39.8499 },
+            "Kirinyaga": { lat: -0.6599, lng: 37.5827 },
+            "Kisii": { lat: -0.6773, lng: 34.7796 },
+            "Kisumu": { lat: -0.1022, lng: 34.7617 },
+            "Kitui": { lat: -1.3670, lng: 38.0106 },
+            "Kwale": { lat: -4.1816, lng: 39.4606 },
             "Laikipia": { lat: 0.0333, lng: 36.3667 },
             "Lamu": { lat: -2.2697, lng: 40.9000 },
-            "Makueni": { lat: -2.2833, lng: 37.8333 },
-            "Mandera": { lat: 3.9333, lng: 41.8667 },
-            "Marsabit": { lat: 2.3333, lng: 37.9833 },
-            "Migori": { lat: -1.0667, lng: 34.4667 },
-            "Murang'a": { lat: -0.7167, lng: 37.1500 },
+            "Machakos": { lat: -1.5177, lng: 37.2634 },
+            "Makueni": { lat: -2.2810, lng: 37.8256 },
+            "Mandera": { lat: 3.9366, lng: 41.8670 },
+            "Marsabit": { lat: 2.3346, lng: 37.9909 },
+            "Meru": { lat: 0.0519, lng: 37.6456 },
+            "Migori": { lat: -1.0634, lng: 34.4731 },
+            "Mombasa": { lat: -4.0435, lng: 39.6682 },
+            "Murang'a": { lat: -0.7210, lng: 37.1526 },
+            "Nairobi": { lat: -1.2864, lng: 36.8172 },
+            "Nakuru": { lat: -0.3031, lng: 36.0800 },
+            "Nandi": { lat: 0.1833, lng: 35.1000 },
+            "Narok": { lat: -1.0809, lng: 35.8711 },
             "Nyamira": { lat: -0.5667, lng: 34.9500 },
-            "Nandi": { lat: 0.2000, lng: 35.1000 },
-            "Narok": { lat: -1.0833, lng: 35.8667 },
             "Nyandarua": { lat: -0.5333, lng: 36.6000 },
+            "Nyeri": { lat: -0.4201, lng: 36.9476 },
             "Samburu": { lat: 1.1000, lng: 36.6667 },
-            "Siaya": { lat: 0.0667, lng: 34.2833 },
+            "Siaya": { lat: 0.0607, lng: 34.2881 },
             "Taita-Taveta": { lat: -3.4000, lng: 38.3667 },
             "Tana River": { lat: -1.5000, lng: 40.0167 },
+            "Tharaka-Nithi": { lat: -0.2962, lng: 37.7236 },
             "Trans Nzoia": { lat: 1.0167, lng: 34.9833 },
             "Turkana": { lat: 3.1167, lng: 35.6000 },
             "Uasin Gishu": { lat: 0.5167, lng: 35.2833 },
@@ -302,9 +303,22 @@
                 if (!response.ok) {
                     throw new Error('Failed to load volunteer data');
                 }
+
+                const rawData = await response.json();
                 
-                volunteersData = await response.json();
-                console.log('Volunteer data loaded:', volunteersData);
+                // Transform the data to match the expected format
+                volunteersData = rawData.map(volunteer => ({
+                    fullName: volunteer.name,
+                    email: volunteer.email,
+                    phone: volunteer.phone || volunteer.emergency_contact,
+                    location: volunteer.county,
+                    serviceType: volunteer.service,
+                    availability: volunteer.availability,
+                    certifications: volunteer.certifications || [],
+                    emergencyContact1: volunteer.emergency_contact
+                }));
+                
+                console.log('Volunteer data loaded and transformed:', volunteersData);
             } catch (error) {
                 console.error('Error loading volunteer data:', error);
                 helpOptions.innerHTML = `
